@@ -12,6 +12,7 @@ lib/
 
 # node
 node_modules/
+build
 
 # dotenv environment variables file
 .env
