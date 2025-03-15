@@ -1,26 +1,32 @@
-import React, { Component } from "react";
+import React from "react";
 import ParticlesBg from "particles-bg";
-import Fade from "react-reveal";
+import { motion } from "framer-motion";
 
-class Header extends Component {
-  render() {
-
-    return (
-      <header id="home">
-        <ParticlesBg type="circle" bg={true} />
-        <div className="row banner">
-          <div className="banner-text">
-            <Fade bottom>
-              <h1 className="responsive-headline">speeir</h1>
-            </Fade>
-            <Fade bottom duration={1200}>
-              <h3>@Speeir LTD</h3>
-            </Fade>
-          </div>
+const Header = () => {
+  return (
+    <header id="home">
+      <ParticlesBg type="circle" bg={true} />
+      <div className="row banner">
+        <div className="banner-text">
+          <motion.h1
+            className="responsive-headline"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            speeir
+          </motion.h1>
+          <motion.h3
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2 }}
+          >
+            @Speeir LTD
+          </motion.h3>
         </div>
-      </header>
-    );
-  }
-}
+      </div>
+    </header>
+  );
+};
 
 export default Header;
