@@ -24,6 +24,7 @@ const SectionTitle = ({
           {paragraph}
         </p>
       </div>
+      
     </>
   );
 };

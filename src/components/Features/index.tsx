@@ -45,6 +45,13 @@ const Features = () => {
             ))}
           </div>
         </div>
+         {/* Floating elements */}
+      <div className="absolute bottom-0 left-0 right-0 hidden h-40 md:block">
+        <div className="relative h-full w-full">
+          <div className="absolute left-[10%] bottom-0 h-24 w-24 animate-[float_6s_ease-in-out_infinite] rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 shadow-lg backdrop-blur-sm"></div>
+          <div className="absolute right-[10%] bottom-10 h-16 w-16 animate-[float_8s_ease-in-out_infinite_reverse] rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 shadow-lg backdrop-blur-sm"></div>
+        </div>
+      </div>
       </section>
     </>
   );
