@@ -30,4 +30,17 @@
   input#checkboxLabel:checked ~ .box span {
     @apply opacity-100;
   }
+
+  @keyframes borderLight {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  @keyframes float1 {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-20px) translateX(10px); }
+  }
+  @keyframes float2 {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(15px) translateX(-15px); }
+  }
 }
