@@ -51,7 +51,7 @@ const Hero = () => {
                 >
                   <span className="relative inline-block">
                     <span className="relative z-10">
-                      Free and Open-Source Next.js Template
+                    Speeir
                     </span>
                     <span className="absolute -bottom-1 left-0 h-2 w-full animate-[underline_3s_ease-in-out_infinite] bg-gradient-to-r from-blue-500 to-purple-600 opacity-80"></span>
                   </span>

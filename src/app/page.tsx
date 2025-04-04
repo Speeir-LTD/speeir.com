@@ -11,7 +11,7 @@ import Testimonials from "@/components/Testimonials";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Next.js Template for Startup and SaaS",
+  title: "Speeir - Home",
   description: "This is Home for Startup Nextjs Template",
   // other metadata
 };
