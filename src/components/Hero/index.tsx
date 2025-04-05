@@ -1,16 +1,14 @@
 import Link from "next/link";
 
 const Hero = () => {
-
   return (
     <>
       <section
-        // ref={heroRef}
         id="home"
-        className="relative z-10 overflow-hidden bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-900/90 pb-16 pt-[120px] md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
+        className="relative z-10 overflow-hidden bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-900/90 min-h-screen flex items-center pb-16 pt-[120px] md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
       >
         {/* Animated Background Elements */}
-        <div  className="absolute inset-0 z-[-1] overflow-hidden">
+        <div className="absolute inset-0 z-[-1] overflow-hidden">
           {/* Gradient Mesh Background */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-purple-500/10 dark:from-blue-900/20 dark:to-purple-900/20"></div>
           
@@ -40,13 +38,12 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="container">
+        <div className="container flex items-center justify-center min-h-[calc(100vh-120px)]">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div className="mx-auto max-w-[800px] text-center">
                 {/* Animated Title */}
                 <h1
-                  // ref={titleRef}
                   className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight lg:text-6xl lg:leading-tight"
                 >
                   <span className="relative inline-block">
@@ -63,7 +60,6 @@ const Hero = () => {
 
                 {/* Animated Subtitle */}
                 <p
-                  // ref={subtitleRef}
                   className="mb-12 text-base !leading-relaxed text-gray-600 dark:text-gray-300 sm:text-lg md:text-xl"
                 >
                   We craft fast, beautiful websites and powerful mobile apps that put your customers first. 
@@ -75,7 +71,6 @@ const Hero = () => {
 
                 {/* Animated CTA Buttons */}
                 <div
-                  // ref={ctaRef}
                   className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
                 >
                   <Link
