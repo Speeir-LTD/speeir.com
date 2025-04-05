@@ -1,1 +1,738 @@
-<svg fill="none" height="27" viewBox="0 0 138 27" width="138" xmlns="http://www.w3.org/2000/svg"><path d="m53.248 7.52912h3.8316c-.0554-3.37003-2.8252-5.69673-7.0355-5.69673-4.1456 0-7.1832 2.28977-7.1647 5.72443-.0093 2.78838 1.9573 4.38568 5.1519 5.15198l2.059.5171c2.0589.4985 3.2038 1.0894 3.2131 2.3636-.0093 1.3849-1.3204 2.3267-3.3516 2.3267-2.0774 0-3.5732-.9602-3.7024-2.853h-3.8686c.1015 4.0902 3.0284 6.2046 7.6172 6.2046 4.6164 0 7.3309-2.2067 7.3402-5.6691-.0093-3.1484-2.3821-4.8196-5.6691-5.5582l-1.6988-.40627c-1.6435-.37855-3.0192-.98792-2.9915-2.34517 0-1.21875 1.0802-2.11435 3.0376-2.11435 1.9112 0 3.0838.8679 3.2316 2.35441zm14.2487-.71094h-2.6683v-3.39773h-3.9332v3.39773h-1.939v2.95455h1.939v7.38637c-.0185 2.7791 1.8742 4.1548 4.7272 4.0348 1.0157-.0369 1.7358-.2401 2.1328-.3693l-.6186-2.9269c-.1939.037-.6093.1293-.9787.1293-.7848 0-1.3295-.2955-1.3295-1.385v-6.86927h2.6683zm6.6062 14.44962c2.0959 0 3.4531-.9141 4.1456-2.2344h.1108v1.9666h3.7301v-9.5653c0-3.3793-2.8622-4.80118-6.0199-4.80118-3.3977 0-5.6321 1.625-6.1768 4.21028l3.6378.2954c.2677-.9418 1.1079-1.63423 2.5205-1.63423 1.3388 0 2.1052.67403 2.1052 1.83733v.0554c0 .9141-.9695 1.0341-3.4347 1.2742-2.8068.2585-5.3274 1.2003-5.3274 4.3672 0 2.8068 2.0035 4.2287 4.7088 4.2287zm1.1264-2.7145c-1.2095 0-2.0774-.5632-2.0774-1.6435 0-1.108.9141-1.6527 2.299-1.8466.8587-.12 2.2621-.3231 2.733-.6371v1.505c0 1.4865-1.228 2.6222-2.9546 2.6222zm9.9116 2.4467h3.9332v-8.0234c0-1.7451 1.2742-2.9454 3.01-2.9454.5447 0 1.2926.0924 1.6619.2124v-3.49005c-.3508-.0831-.8402-.13849-1.2372-.13849-1.5881 0-2.8899.92329-3.407 2.67755h-.1477v-2.47443h-3.8132zm18.8931-14.18182h-2.668v-3.39773h-3.9337v3.39773h-1.939v2.95455h1.939v7.38637c-.0185 2.7791 1.8743 4.1548 4.7277 4.0348 1.015-.0369 1.735-.2401 2.132-.3693l-.618-2.9269c-.194.037-.61.1293-.979.1293-.785 0-1.329-.2955-1.329-1.385v-6.86927h2.668zm11.656 8.14342c.01 1.902-1.292 2.8992-2.705 2.8992-1.486 0-2.447-1.0433-2.456-2.7145v-8.32812h-3.933v9.02982c.009 3.3146 1.948 5.3367 4.801 5.3367 2.133 0 3.666-1.0988 4.303-2.7607h.147v2.576h3.777v-14.18182h-3.934zm7.08 11.3566h3.933v-7.5895h.12c.545 1.1818 1.736 2.5021 4.026 2.5021 3.231 0 5.752-2.5575 5.752-7.3032 0-4.87504-2.632-7.29408-5.743-7.29408-2.373 0-3.509 1.41264-4.035 2.56676h-.175v-2.3821h-3.878zm3.85-12.4091c0-2.5298 1.071-4.14561 2.982-4.14561 1.948 0 2.982 1.68961 2.982 4.14561 0 2.4744-1.052 4.1918-2.982 4.1918-1.893 0-2.982-1.662-2.982-4.1918z" fill="#fff"/><g fill="#4a6cf7"><path d="m0 0c13.8071 0 25 11.1929 25 25h-23c-1.10457 0-2-.8954-2-2z"/><path d="m6 25c0-13.8071 11.1929-25 25-25v23c0 1.1046-.8954 2-2 2z" opacity=".5"/></g></svg>
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 328 181" width="181" height="100">
+	<title>speeir (3)</title>
+	<defs>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp1">
+			<path d="m72 9h25v4h-25z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp2">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp3">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp4">
+			<path d="m23 58h2v6h-2z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp5">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp6">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp7">
+			<path d="m0 3h164v178h-164z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp8">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp9">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp10">
+			<path d="m34 12h37v25h-37z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp11">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp12">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp13">
+			<path d="m20 64h3v6h-3z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp14">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp15">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp16">
+			<path d="m18 70h3v6h-3z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp17">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp18">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp19">
+			<path d="m20 34h15v24h-15z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp20">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp21">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp22">
+			<path d="m165 44h4v4h-4z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp23">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp24">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp25">
+			<path d="m163 41h2v2h-2z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp26">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp27">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp28">
+			<path d="m152 28h5v4h-5z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp29">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp30">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp31">
+			<path d="m110 153h6v4h-6z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp32">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp33">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp34">
+			<path d="m105 157h5v3h-5z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp35">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp36">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp37">
+			<path d="m115 154h2v4h-2z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp38">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp39">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp40">
+			<path d="m17 52h4v9h-4z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp41">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp42">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp43">
+			<path d="m102 159h4v2h-4z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp44">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp45">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp46">
+			<path d="m9 58h104v113h-104z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp47">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp48">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp49">
+			<path d="m41 144h3v2h-3z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp50">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp51">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp52">
+			<path d="m94 161h7v2h-7z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp53">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp54">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp55">
+			<path d="m109 158h2v3h-2z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp56">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp57">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp58">
+			<path d="m99 1h12v2h-12z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp59">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp60">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp61">
+			<path d="m56 155h35v9h-35z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp62">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp63">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp64">
+			<path d="m84 0h11v2h-11z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp65">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp66">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp67">
+			<path d="m71 0h7v4h-7z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp68">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp69">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp70">
+			<path d="m62 4h2v3h-2z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp71">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp72">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp73">
+			<path d="m57 6h3v3h-3z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp74">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp75">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp76">
+			<path d="m35 9h19v13h-19z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp77">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp78">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp79">
+			<path d="m36 21h2v2h-2z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp80">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp81">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp82">
+			<path d="m112 162h3v2h-3z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp83">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp84">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp85">
+			<path d="m29 21h5v6h-5z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp86">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp87">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp88">
+			<path d="m22 29h4v6h-4z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp89">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp90">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp91">
+			<path d="m17 36h3v4h-3z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp92">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp93">
+			<path d="m165.99-4.84l10.83 180.43-172.2 10.33-10.82-180.42z"/>
+		</clipPath>
+	</defs>
+	<style>
+		.s0 { fill: #a15fdc } 
+	</style>
+	<g id="Clip-Path" clip-path="url(#cp1)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp2)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp3)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m96.8 9.8c0.3 0.3-3 0.5-6.4 0.6-1.7-0.1-3.4 0.2-4.8 0.3-1.3 0.1-2.3 0.2-2.4 0.2-1.8-0.1-6.4 1-9 1.5-1.3 0.2-2.1 0.5-1.8 0.3q0.6-0.3 1.3-0.5 1.2-0.3 3.6-0.9c2-0.5 4-1.2 5.8-1.2 0.2-0.1 1.1-0.2 2.4-0.4 1.2-0.1 2.8-0.5 4.4-0.5 3.3 0 6.5-0.1 6.9 0.6z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp4)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp5)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp6)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m24.6 59c1.1-0.3-2.2 8.1-0.9 2.4 0.1-0.4 0.5-2.3 0.9-2.4z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp7)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp8)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp9)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m87.8 3.9c8.1-0.3 16.3 0.4 24.1 2.2 7.8 2 15.3 4.9 22.2 8.6 1.7 1 3.3 2.1 4.9 3.1 0.8 0.6 1.7 1.1 2.5 1.6l2.2 1.8c1.5 1.2 3.1 2.3 4.5 3.6l4 3.9c0.5 0.7 1.6 2.2 2.9 3.9 1.4 1.7 3.1 3.5 4.3 5.5 1.4 1.9 2.6 3.6 3.4 4.8 0.7 1.4 1 2.1 0.6 1.8-1.5-1.2-3.6-3.5-5.7-6.3-1-1.4-2.3-2.7-3.5-4.1-1.3-1.3-2.4-2.7-3.8-3.7-7.3-6.4-15.9-12.2-25.1-16.4-9.2-4.1-18.9-6.6-27.7-7-13.5-0.8-27 2-38.9 7.1-1.5 0.6-2.9 1.4-4.3 2.1q-2.2 1.2-4.3 2.3-2 1.3-4 2.6c-1.3 0.8-2.7 1.6-3.9 2.7-2.4 1.9-5 3.7-7.1 5.9l-3.3 3.1c-1.1 1.1-2.1 2.2-3.1 3.3-4.8 5.1-8.5 10.9-11.8 16.7q-1.1 2.3-2.2 4.5l-1.1 2.2-0.9 2.4-1.7 4.6c-0.6 1.5-0.9 3.1-1.4 4.7-3.3 12.6-3.7 25.9-0.5 38.3 3.2 13 10.1 25.5 19.7 35.8 1.2 1.4 2.5 2.6 3.8 3.8l3.9 3.6 4.3 3.2 2.1 1.6c0.7 0.6 1.5 1 2.3 1.5l4.6 2.9c1.5 0.9 3.2 1.6 4.8 2.5 3.2 1.7 6.6 2.9 10 4.3 3.9 1.4 8.8 2.7 14.4 3.3 2.8 0.4 5.7 0.3 8.6 0.4 3 0.1 6-0.4 8.9-0.7 1.8-0.1 4.2-0.9 6.9-1.9 1.4-0.5 2.8-0.9 4.1-1.5 1.4-0.7 2.8-1.3 4.1-1.9 2.6-1.2 4.9-2.6 6.7-3.4 1.7-0.8 3-1.2 3.4-0.7 2.2 2.5 1.6 4.6 0.1 6.3-1.5 1.7-3.9 3-4.9 3.8-2.2 1.5-4.7 2.9-7 4.1q-0.9 0.5-1.8 0.9l-1.8 0.6q-1.7 0.6-3.1 0.9c-3.9 1-7.8 1.3-11.8 1.6q-1.5 0.1-3 0.1l-3-0.1-3-0.1-1.5-0.1-1.5-0.2c-4-0.6-8-1.1-11.9-2.3l-2.9-0.8q-1.5-0.4-2.9-0.9l-5.8-2.3c-7.6-3.5-15.1-7.7-22-13.6-6.8-5.8-13.4-12.7-18.8-21.2-6-9-11.3-20.9-13.5-33.7-2.4-12.9-1.6-26.5 1.7-37.9 0.2-0.5 0.3-1.3 0.6-2.2l1.1-3.2c0.8-2.3 1.6-5 2.8-7.4l1.7-3.5q0.6-1.5 1.5-2.9c1.1-1.6 1.9-2.7 2.1-2.7 0.3 0 0 0.7-0.4 1.8-0.4 1.1-1.2 2.5-1.7 4-1.2 3-2.6 6.1-2.6 6.3q-4.3 9.8-6 20.4-1.7 10.6-0.7 21.3c1.3 14.1 6.4 28.4 16 41.8l2.1 2.7c0.7 1 1.5 1.8 2.3 2.6 1.5 1.7 2.9 3.2 3.9 4.2 1.1 0.9 1.8 1.3 1.7 1.1-0.1-0.3-1-1.3-2.6-3.5-7.6-9.1-13.8-19.9-17.6-30.8-0.9-2.8-1.8-5.5-2.5-8.2l-1.6-7.9q-0.4-3.9-0.7-7.6-0.2-1.7-0.1-3.5l0.2-3.4 0.1-3.2 0.3-3.1c0.2-2.1 0.3-4.2 0.6-6.2 0.8-4 1.4-8 3.3-11.6 0.5-1.1 1.4-2.4 2.3-3.5 0.8-1.1 1.9-2.1 2.2-2.9 1.3-2.7 2.3-5.7 3.8-8.7 0.7-1.5 1.4-3.1 2.1-4.6l2.5-4.6 1.4-2.3c0.4-0.7 1-1.4 1.5-2.1q1.5-2.1 3.1-4c2.2-2.5 4.8-4.5 7.2-6.1 1.7-1 0.9 1.7 3.9-0.2 2.4-1.4 4.5-3.1 6.8-4.5q1.6-1.1 3.3-2.2c0.5-0.4 1-0.8 1.6-1.1l1.7-1 3.3-2c1.1-0.7 2.2-1.4 3.4-1.9 2.3-1.1 4.6-2.2 7-3q11.5-3.6 23.6-4.3zm43.3 11.4c0.2 0.7 3.1 1 3 0.4-0.2-0.7-3.1-0.9-3-0.4zm-4.3-2c0.1 0.6 3.5 0.7 3.5 0.7-0.6-2.2-3.6-0.8-3.5-0.7zm-3.9-1.4c0.2 0.5 2.4 0.4 2.3-0.1-0.2-0.5-2.5-0.4-2.3 0.1zm-3.6-2.1c-0.5 0.1-1 0.3-0.9 0.6 0.2 0.4 2.4 0.3 2.2-0.2-0.1-0.3-0.7-0.4-1.3-0.4zm-20.3-4.2c-6.2 0 2.9 1.2 2.1 0.1-0.2-0.3-1.8-0.1-2.1-0.1zm-15.1 0.8c0.2 0.2 1.6-0.7 1.2-1-0.2-0.3-1.6 0.7-1.2 1zm-33.6 10.2c-8.3 3.3-16.3 10.2-22.5 18.1-2.1 1-4.1 3.7-4.7 5.4-0.6 1.6-0.3 1.8 2.2-1.9 1-1.4 1.5-2.2 2.5-3.5 6.7-6.2 14-12.3 22.5-18.1zm-29.1 25q0 0 0 0 0 0 0 0zm0 0c-1.3 0.2-1.9 1.7-2.2 3.2q-0.2 1.4-0.1 2.9c0.8-0.2 0.9-1.7 1.2-3.2 0.3-1.4 0.5-2.8 1.1-2.9zm-5.7 9.3c-1.4 4.2-0.7 3.4 0 1.6 0.8-1.8 2-4.4 1.3-4.3-0.4 0.1-1.1 2.3-1.3 2.7zm-2.7 7.5c0.7-0.3 0.7-3.2 0.1-3-0.7 0.2-0.7 3.2-0.1 3zm-3.2 5.2c-1.3 6.5 1.8-2.8 0.5-2.2-0.2 0.1-0.5 1.9-0.5 2.2zm-2.6 8.5c-0.9 9 1.8-3.7 0.5-2.9-0.4 0.2-0.4 2.5-0.5 2.9zm-1.7 10.4c0 2.2 0.3 3.1 0.3 3.2 0.1 0.1 0.2-0.7 0.2-1.7 0.2-2 0.3-5-0.3-4.5-0.4 0.2-0.2 2.5-0.2 3zm28.3 72.7c0-0.6-2.3-1.5-2.3-0.9 0 0.6 2.3 1.5 2.3 0.9zm3.1 2.3c0-0.3-1.8-0.8-1.8-0.2 0.1 0.3 1.9 0.8 1.8 0.2z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp10)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp11)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp12)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m70.8 12.3c0.6 0.5-4.8 2-10.2 4.4-0.7 0.3-1.4 0.6-2.1 0.9q-1 0.5-1.9 1l-3.6 1.9q-1.4 0.7-2.7 1.6l-1.4 0.9q-1.9 1.3-3.6 2.8c-1 1-1.7 1.8-2.4 2.3-1.3 1-2.4 1.4-3.4 1.9-0.9 0.5-1.7 1.2-2.3 2.7 0.2-0.5 4.8-1.7 0.4 2.2-0.1 0.1-3.2 0.8-2.8 1.9-0.7-1.9 0.8-3.9 2.7-5.8q0.7-0.7 1.4-1.4l1.7-1.1c1-0.8 2-1.4 2.7-1.9 0.7-0.6 1.4-1.2 2.1-1.7l2.4-1.5c1.6-1 3.1-2.1 4.7-2.8q2.4-1.2 4.4-2.3c0.7-0.3 1.3-0.6 1.9-0.9l1.7-0.7c0.8-0.3 2.9-1.7 5.1-3 2.2-1 4.4-1.9 5.2-1.4z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp13)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp14)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp15)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m22 64.1c1.3-0.4-2.1 10.1-0.6 2.5 0.1-0.4 0.2-2.3 0.6-2.5z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp16)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp17)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp18)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m19.7 70.1c-1 0.6 1.3 5.2 0 5.9q-0.6-1.2-0.8-2.5c-0.3-1.3-0.3-2.8 0.8-3.4z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp19)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp20)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp21)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m20.6 55c0.3-1.4 0.9-2.7 0-2.7 1.9-2.7 1-4 3-6.2 0.1-0.1 0.9 1.7 0.1 1.7 2 0.1 2-1.2 2.2-3 0.1-0.8 0.2-1.8 0.7-2.7q0.4-0.8 1.1-1.3 0.7-0.6 1.5-0.7-0.9 0.9-1.5 2-0.4 0.7-0.7 1.5c-0.3 0.8-0.2 1.2 0 1.2 0.3 0.1 0.7-0.3 1.2-1.1 0.4-0.8 0.7-2.1 1-3.6l2.4-3.3c1.6-2.3 2.4-2.9 2.5-2.7 0.1 0.2-0.4 1.1-0.9 2.3-0.5 1.3-1.2 2.7-1.6 3.3-1.1 1.7-3.7 5.7-6 9.5-1.2 2.1-2.4 4-3.3 5.5-0.8 1.6-1.5 2.6-1.8 2.7-0.7 0.3-0.3-1.1 0.1-2.4zm11.2-15.6c-0.5 1-0.4 0.9-0.2 0.3q0.2-0.1 0.2-0.3zm-9.2 10.8c-2.3 5.7 2.2-2.1 0.8-1.8-0.2 0-0.7 1.6-0.8 1.8z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp22)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp23)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp24)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m168.2 47.6c0 0-2.8-2.1-2.6-2.6 0-0.1 3.4 0.5 2.6 2.6z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp25)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp26)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp27)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m164.9 42.1c-0.1 0.2-0.5 0.1-0.9-0.1-0.4-0.2-0.7-0.4-0.7-0.6 0.2-0.5 1.7 0.3 1.6 0.7z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp28)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp29)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp30)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m152.2 28.7q1.9 0.5 3.2 1.9c0.6 0.6 0.8 1 0.7 1.2-0.1 0.2-0.6 0.1-1.2-0.4-0.7-0.5-1.5-1.4-2.7-2.7z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp31)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp32)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp33)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m112.5 155.7c2.2-1.5-1.1-2 3.1-2.1 0.7 0-1.4 1.5-3 2.5q-0.8 0.5-1.8 0.8c-0.1-0.1 0.3-0.3 1.7-1.2z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp34)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp35)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp36)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m105.8 159.3c2.6-3.4 6-0.4 0 0z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp37)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp38)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp39)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m115.9 156.3c1.2-4.1-0.8 2.9 0 0z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp40)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp41)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp42)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m17.4 58.5c1.2-1.8 0.9-6.1 3.2-6.2-1.2 1.3-1.4 4.4-1.8 6.3-0.3 1.8-0.6 2.6-1.4-0.1z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp43)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp44)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp45)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m105.8 159.3c-1.4 1.7-3 1.5-3.3 1.1-0.4-0.4 0.3-1.1 3.3-1.1z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp46)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp47)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp48)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m112.2 164q-2.3 1.1-4.8 2.2-1.2 0.6-2.5 0.9l-2.5 0.8c-3.5 1.1-7.1 1.6-10.8 2-7.3 0.5-15.1 0.1-22.6-2l-2.8-0.8-2.8-1c-1.8-0.7-3.6-1.3-5.4-2.1-3.6-1.7-7.1-3.4-10.4-5.6-3.4-2-6.4-4.6-9.6-7-1.4-1.3-2.9-2.7-4.3-4-0.7-0.7-1.5-1.4-2.1-2.1l-2-2.2c-5.4-5.8-9.7-12.8-13.1-20.1l-2.4-5.6c-0.6-1.9-1.2-3.8-1.7-5.7l-0.9-2.9-0.5-3c-0.4-1.9-0.8-3.8-1-5.8-0.2-3.9-0.7-7.7-0.4-11.5 0.1-1.9 0.1-3.8 0.4-5.6l0.8-5.4c0.2-1.8 0.8-3.5 1.2-5.2 0.5-1.7 0.9-3.4 1.5-5l1.8-4.6c0.3-0.7 0.6-1.5 1-2.2l1.1-2-1 2.3-0.8 2.4-1.7 4.8c-0.4 1.7-0.7 3.4-1.2 5.1l-0.5 2.5c-0.2 0.9-0.3 1.8-0.4 2.7l-0.7 5.3c-0.1 1.8-0.2 3.6-0.2 5.4l-0.1 2.7c0 0.9 0.1 1.9 0.1 2.8l0.4 5.5 1 5.5 0.5 2.8 0.7 2.8 1.6 5.4 2.2 5.4 1.1 2.7 1.4 2.5c0.9 1.7 1.8 3.4 2.8 5.1 2.2 3.2 4.2 6.6 6.9 9.4l1.9 2.3 1 1.1 1 1 4.3 4.1c1.5 1.3 3.1 2.4 4.7 3.6l2.3 1.8c0.8 0.5 1.7 1 2.5 1.5 6.5 4.4 13.9 7.3 21.3 9.4l5.7 1.3c1.8 0.3 3.7 0.5 5.6 0.7 1 0.1 1.9 0.3 2.9 0.3l2.8 0.1c1.9 0 3.7 0.1 5.6-0.1 3.7-0.4 7.4-0.6 10.9-1.6 1.7-0.4 3.5-0.7 5.2-1.3 1.7-0.6 3.3-1.2 5-1.8z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp49)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp50)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp51)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m41.5 144.7c0-0.6 2 0.1 2.1 0.6-0.1 0.6-2.2 0-2.1-0.6z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp52)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp53)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp54)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m94.1 162.4c-0.5-0.5 2.1-0.8 4.1-0.9 2-0.3 3.5-0.2 1 0.6 0.1 0.1-4.6 1-5.1 0.3z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp55)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp56)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp57)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m109.2 160.2c-0.4-0.3 1.2-1.6 1.6-1.3 0.5 0.4-1.2 1.7-1.6 1.3z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp58)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp59)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp60)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m110.8 2.4c0.3 0.5-0.7 0.6-2.3 0.5-1.5-0.1-3.6-0.6-5.4-0.7-3.6-0.3-6.1-0.9-1-0.8 0.1 0 0.6 0 1.4-0.1q0.6 0 1.4 0 0.7 0.1 1.5 0.2c2.1 0.2 4.2 0.5 4.4 0.9z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp61)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp62)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp63)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m56.6 155.4q0 0 0.6 0.2l1.7 0.7 2.5 1c0.9 0.3 1.9 0.6 2.9 0.9 1.1 0.3 2.1 0.6 3.1 0.9l1.4 0.4 1.3 0.3c1.8 0.3 3 0.6 3.5 0.7q1.6 0.4 3.2 0.5c1.6 0.1 3.6 0.2 5.6 0.4 1 0.2 2 0.1 2.9 0.1 0.9 0.1 1.8 0.1 2.6 0.2 1.5 0.2 2.6 0.5 3 0.9 0 0.1-1.7 0.2-3.7 0.3-2 0.1-4.2 0.2-4.8 0.1-1.6-0.3-3.1-0.5-4.5-0.7q-1-0.1-2-0.3-1-0.2-2.1-0.5l-4.3-1.1c-1.5-0.3-3.1-1-5-1.7-2.4-0.6-7.7-2.3-7.9-3.3z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp64)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp65)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp66)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m94.9 0.3c0.6 0.7-3.6 1-6.9 1.1-3.4 0.4-5.9 0.3-1.9-0.6 0.2-0.3 8.2-1.1 8.8-0.5z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp67)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp68)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp69)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m78 1.3c-1-0.7-5 3.3-6.3 2.4q1.1-1 2.4-1.8c1.2-0.8 2.8-1.4 3.9-0.6z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp70)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp71)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp72)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m63.6 4.7c0.4 0.3-0.8 1.5-1.1 1.4-0.5-0.3 0.8-1.5 1.1-1.4z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp73)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp74)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp75)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m59.5 6.5c0.5 0.3-1.6 2.4-2.3 2.1-0.5-0.2 1.6-2.4 2.3-2.1z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp76)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp77)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp78)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m53.6 9.5c0.1 0.1-3.5 2-7.4 4.3l-5.4 3.6-1.1 0.8q-0.5 0.4-0.9 0.8l-1.3 1c-6.2 5.2 3.6-3.7 5.7-4.7 0.3-0.2 1-0.8 1.8-1.5l1.3-1.1q0.7-0.6 1.5-1.1c2.2-1.4 4.5-2.6 5.8-2.1z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp79)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp80)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp81)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m37.5 21.2c0.6 0.1-0.1 1.7-0.4 1.6-0.6-0.1 0.1-1.7 0.4-1.6z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp82)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp83)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp84)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m112.2 164c0.7-1.6 1.9-1.6 2.4-1.4 0.5 0.3 0.2 1.3-2.4 1.4z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp85)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp86)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp87)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m33 21.8c1.1-0.1-6.3 7.9-2 2.2 0.1-0.2 0.5-0.8 0.9-1.3 0.4-0.5 0.9-0.9 1.1-0.9z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp88)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp89)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp90)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m24.9 29.7c1.2 0-5.4 8.5-1.8 2.5 0.2-0.4 1.4-2.4 1.8-2.5z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g id="Clip-Path" clip-path="url(#cp91)">
+		<g>
+			<g id="Clip-Path" clip-path="url(#cp92)">
+				<g>
+					<g id="Clip-Path" clip-path="url(#cp93)">
+						<g>
+							<path fill-rule="evenodd" class="s0" d="m19.4 36.1c0 0-0.6 3.6-1.2 3.7q-0.1-0.3-0.1-0.5-0.2-0.6-0.2-1.2c0.1-0.9 0.4-1.9 1.5-2z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g>
+		<g>
+			<g>
+				<path class="s0" d="m76.3 79.7q-2.7-2.8-6.2-4.5-3.5-1.8-6.4-1.8-2 0-4 0.5-2 0.5-3.4 1.8-1.4 1.4-1.4 3.9 0.1 3.5 3.2 5 3.1 1.4 7.7 2.6 4 1.1 7.8 2.7 3.8 1.6 6.3 4.7 2.4 3 2.4 8.6 0 4.8-2.6 8.2-2.7 3.4-7 5.2-4.2 1.8-8.9 1.8-5.5 0-11-2-5.4-2-9.2-6.9l6.9-5.8q2.6 3 6 4.7 3.3 1.7 8.2 1.7 1.8 0 3.7-0.6 1.8-0.7 3.2-2.1 1.3-1.4 1.3-3.8 0-2.4-1.4-3.7-1.4-1.3-3.8-2.1-2.3-0.9-5.2-1.5-4.1-1.2-8.2-2.9-4-1.7-6.7-4.9-2.7-3.2-2.7-8.6 0-4.6 2.6-7.9 2.6-3.2 6.7-5 4.2-1.9 9-1.9 4.6 0 10 2 5.3 2 8.8 6.2z"/>
+			</g>
+		</g>
+	</g>
+	<g>
+		<g>
+			<g>
+				<path class="s0" d="m120.2 65.3q6.8 0 12.2 3.4 5.4 3.4 8.5 9.3 3.2 6 3.2 13.8 0 7.7-3.2 13.7-3.1 6-8.5 9.4-5.3 3.4-11.9 3.4-5.5 0-9.9-2.3-4.5-2.4-7-5.4v28.3h-10.2v-72.8h10.2v7.5q2.2-3.2 6.7-5.7 4.5-2.6 9.9-2.6zm-1.4 9.3q-4.6 0-8.2 2.3-3.5 2.2-5.5 6.1-2 3.8-2 8.8 0 4.8 2 8.8 2 3.8 5.5 6.1 3.6 2.3 8.2 2.3 4.6 0 8.1-2.3 3.5-2.3 5.5-6.1 2-4 2-8.8 0-5-2-8.8-2-3.9-5.5-6.1-3.5-2.3-8.1-2.3z"/>
+			</g>
+		</g>
+	</g>
+	<g>
+		<g>
+			<g>
+				<path class="s0" d="m198.9 110.7h-0.1q-3.1 3-8.5 5.4-5.5 2.3-11.4 2.3-8 0-14.1-3.4-6.1-3.3-9.5-9.2-3.4-5.9-3.4-13.5 0-8.5 3.5-14.6 3.7-6.1 9.6-9.4 6-3.2 13-3.2 6.4 0 11.7 3.1 5.2 3.2 8.4 8.8 3.1 5.5 3.1 12.9l-0.1 4.3h-39.2q0.9 6.9 5.7 11 4.8 4 12.2 4 5.4 0 8.7-2 3.3-2 5.5-3.8zm-21-36.4q-5.8 0-10.1 2.7-4.2 2.7-5.6 9.2h28.7v-0.7q-0.3-3.3-2.2-5.8-1.9-2.6-4.8-4-2.8-1.4-6-1.4z"/>
+			</g>
+		</g>
+	</g>
+	<g>
+		<g>
+			<g>
+				<path class="s0" d="m256.1 110.7h-0.1q-3.1 3-8.6 5.4-5.5 2.3-11.4 2.3-8 0-14.1-3.4-6.1-3.3-9.5-9.2-3.4-5.9-3.4-13.5 0-8.5 3.6-14.6 3.6-6.1 9.5-9.4 6-3.2 13-3.2 6.4 0 11.7 3.1 5.3 3.2 8.4 8.8 3.1 5.5 3.1 12.9l-0.1 4.3h-39.2q0.9 6.9 5.7 11 4.8 4 12.3 4 5.3 0 8.6-2 3.4-2 5.5-3.8zm-21-36.4q-5.7 0-10 2.7-4.3 2.7-5.7 9.2h28.7v-0.7q-0.3-3.3-2.2-5.8-1.9-2.6-4.7-4-2.9-1.4-6.1-1.4z"/>
+			</g>
+		</g>
+	</g>
+	<g>
+		<g>
+			<g>
+				<path class="s0" d="m275.9 55.1q-3.4 0-5-1.7-1.7-1.8-1.7-4.6 0-2.5 1.7-4.4 1.6-2 5-2 3.5 0 5.1 1.8 1.7 1.7 1.7 4.6 0 2.4-1.7 4.4-1.6 1.9-5.1 1.9zm5.2 62.3h-10v-51.2h10z"/>
+			</g>
+		</g>
+	</g>
+	<g>
+		<g>
+			<g>
+				<path class="s0" d="m325 77.1q-1-0.5-2.4-0.9-1.4-0.3-3-0.3-3.1 0-6.1 1.6-3 1.6-5 4.6-2 2.9-2 7v28.3h-10.2v-51.2h10.2v9.7q2.1-4.7 6.5-7.7 4.3-3.1 9.1-3.1 3.6 0 5.5 1z"/>
+			</g>
+		</g>
+	</g>
+	<g>
+		<g>
+			<g>
+			</g>
+		</g>
+	</g>
+</svg>
