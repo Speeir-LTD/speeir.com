@@ -17,8 +17,8 @@ const Features = () => {
 
         <div className="container relative z-10">
           <SectionTitle
-            title="Main Features"
-            paragraph="Discover powerful features designed to elevate your experience."
+            title="Key Services"
+            paragraph="Our Affordable, High-Impact Solutions"
             center
           />
 
