@@ -65,19 +65,14 @@ const Header = () => {
                   sticky ? "py-5 lg:py-3" : "py-8"
                 }`}
               >
-                <Image
-                  src="/images/logo/logo-2.svg"
-                  alt="logo"
-                  width={160}
-                  height={40}
-                  className="w-full dark:hidden hover:opacity-90"
-                />
+          
                 <Image
                   src="/images/logo/logo.svg"
                   alt="logo"
                   width={160}
                   height={40}
                   className="hidden w-full dark:block hover:opacity-90"
+                  style={{ width: 100, height: 60 }} 
                 />
               </Link>
             </div>
