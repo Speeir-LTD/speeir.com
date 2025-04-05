@@ -8,7 +8,7 @@ const Footer = () => {
 
 
   return (
-    <footer 
+    <footer
       // ref={footerRef}
       className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50/50 pt-20 dark:from-gray-900 dark:to-gray-900/90"
     >
@@ -25,13 +25,6 @@ const Footer = () => {
             <div className="mb-8 max-w-sm">
               <Link href="/" className="inline-block">
                 <Image
-                  src="/images/logo/logo-2.svg"
-                  alt="logo"
-                  className="w-full dark:hidden"
-                  width={160}
-                  height={40}
-                />
-                <Image
                   src="/images/logo/logo.svg"
                   alt="logo"
                   className="hidden w-full dark:block"
@@ -40,7 +33,7 @@ const Footer = () => {
                 />
               </Link>
               <p className="mt-6 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
-                Building the future with innovative solutions that transform businesses and empower users.
+              Your Success. Our Code.
               </p>
             </div>
 
@@ -74,7 +67,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href="/about"
+                  href="#"
                   className="text-gray-600 transition-colors duration-300 hover:text-primary dark:text-gray-300 dark:hover:text-primary"
                 >
                   About Us
@@ -82,7 +75,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/careers"
+                  href="#"
                   className="text-gray-600 transition-colors duration-300 hover:text-primary dark:text-gray-300 dark:hover:text-primary"
                 >
                   Careers
@@ -90,20 +83,13 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/blog"
+                  href="#"
                   className="text-gray-600 transition-colors duration-300 hover:text-primary dark:text-gray-300 dark:hover:text-primary"
                 >
                   Blog
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/press"
-                  className="text-gray-600 transition-colors duration-300 hover:text-primary dark:text-gray-300 dark:hover:text-primary"
-                >
-                  Press
-                </Link>
-              </li>
+
             </ul>
           </div>
         </div>

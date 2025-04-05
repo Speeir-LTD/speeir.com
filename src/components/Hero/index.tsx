@@ -51,13 +51,13 @@ const Hero = () => {
                 >
                   <span className="relative inline-block">
                     <span className="relative z-10">
-                    Speeir
+                    Speeir LTD
                     </span>
                     <span className="absolute -bottom-1 left-0 h-2 w-full animate-[underline_3s_ease-in-out_infinite] bg-gradient-to-r from-blue-500 to-purple-600 opacity-80"></span>
                   </span>
                   <br />
                   <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    for Startup & SaaS
+                  Web & Mobile Solutions for Modern Businesses
                   </span>
                 </h1>
 
@@ -66,10 +66,11 @@ const Hero = () => {
                   // ref={subtitleRef}
                   className="mb-12 text-base !leading-relaxed text-gray-600 dark:text-gray-300 sm:text-lg md:text-xl"
                 >
-                  Startup is a premium Next.js template for startups and SaaS
-                  businesses. Comes with all essential pages, components, and
-                  sections you need to launch a complete business website, built
-                  with Next.js 13+ and Tailwind CSS.
+                  We craft fast, beautiful websites and powerful mobile apps that put your customers first. 
+                  Whether you need a startup launchpad or enterprise-grade SaaS, 
+                  we build digital experiences that convert and grow.  
+                  <br />
+                  
                 </p>
 
                 {/* Animated CTA Buttons */}
