@@ -74,7 +74,7 @@ const Hero = () => {
                   className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
                 >
                   <Link
-                    href="#"
+                    href="/contact"
                     className="group relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20"
                   >
                     <span className="relative z-10">Lets Chat 👋</span>
