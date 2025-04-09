@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Check if the path exists in the application
-  const existingPaths = ["/", "/about", "/contact"]; // Add all your valid routes here
+  const existingPaths = ["/", "/contact",  "/blog", "/blog-details"]; // Add all your valid routes here
   if (existingPaths.includes(pathname)) {
     return NextResponse.next();
   }
