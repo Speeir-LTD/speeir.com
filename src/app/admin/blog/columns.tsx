@@ -51,14 +51,24 @@ export const BlogColumns: ColumnDef<BlogPost>[] = [
     header: 'Actions',
     cell: ({ row, table }) => {
       const post = row.original;
+      const onEdit = table.options.meta?.onEdit; // Access onEdit from meta
       const onDelete = table.options.meta?.onDelete; // Access onDelete from meta
+
       return (
-        <button
-          onClick={() => onDelete && onDelete(post._id)}
-          className="text-red-600 hover:underline"
-        >
-          Delete
-        </button>
+        <div className="flex space-x-2">
+          <button
+            onClick={() => onEdit && onEdit(post)} // Trigger the edit handler
+            className="text-blue-600 hover:underline"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => onDelete && onDelete(post._id)} // Trigger the delete handler
+            className="text-red-600 hover:underline"
+          >
+            Delete
+          </button>
+        </div>
       );
     },
   },

@@ -113,48 +113,42 @@ export async function PUT(request: Request): Promise<NextResponse<ApiResponse<Bl
     const db = await getDb();
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
-    const body: BlogPostUpdateDTO = await request.json();
-    
+    const body: Partial<BlogPostUpdateDTO> = await request.json(); // Allow partial updates
+
     if (!id || !ObjectId.isValid(id)) {
       return errorResponse('Valid post ID is required', 400);
     }
-    
-    // Validate input
-    const validation = validateBlogPost(body, true);
-    if (!validation.success) {
-      return errorResponse(validation.error?.message ?? 'Validation failed', 400);
+
+    // Exclude the `_id` field if it exists in the body
+    const updateData = { ...body };
+    if ('_id' in updateData) {
+      delete updateData._id;
     }
-    
-    const updateData = {
-      ...body,
-      updatedAt: new Date()
-    };
-    
+
     const result = await db.collection<BlogPost>('posts').updateOne(
       { _id: new ObjectId(id) as any },
-      { $set: updateData }
+      { $set: { ...updateData, updatedAt: new Date() } } // Add updatedAt field
     );
-    
+
     if (result.matchedCount === 0) {
       return errorResponse('Post not found', 404);
     }
-    
+
     const updatedPost = await db.collection<BlogPost>('posts').findOne({
-      _id: new ObjectId(id) as any
+      _id: new ObjectId(id) as any,
     });
-    
+
     if (!updatedPost) {
       return errorResponse('Failed to retrieve updated post', 500);
     }
-    
+
     return NextResponse.json({
       success: true,
       data: {
         ...updatedPost,
-        _id: updatedPost._id.toString()
-      }
+        _id: updatedPost._id.toString(),
+      },
     });
-    
   } catch (error) {
     console.error('PUT Error:', error);
     return errorResponse('Failed to update post', 500);

@@ -4,13 +4,15 @@ import { useState, useEffect } from 'react';
 import { DataTable } from '@/components/Admin/data-table';
 import { BlogColumns } from '@/app/admin/blog/columns';
 import { PlusIcon, RefreshCwIcon } from 'lucide-react';
-import { BlogCreateModal } from '@/app/admin/blog/BlogCreateModal';
+import { BlogModal } from './BlogModal'; // Ensure named import
 import { toast } from 'sonner';
 
 export default function BlogAdminPage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false); // State for edit modal
+  const [editingPost, setEditingPost] = useState(null); // Post being edited
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
 
@@ -38,6 +40,37 @@ export default function BlogAdminPage() {
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'An error occurred');
     }
+  };
+
+  const toggleStatus = async (post: any) => {
+    try {
+      const newStatus = post.status === 'published' ? 'draft' : 'published';
+      const response = await fetch(`/api/blog?id=${post._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Failed to update status');
+      setPosts((prev) =>
+        prev.map((p) => (p._id === post._id ? { ...p, status: newStatus } : p))
+      );
+      toast.success(`Post ${newStatus === 'published' ? 'published' : 'unpublished'} successfully`);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'An error occurred');
+    }
+  };
+
+  const editPost = (post: any) => {
+    setEditingPost(post); // Set the post to be edited
+    setIsCreateOpen(true); // Open the BlogCreateModal in edit mode
+  };
+
+  const handleEditSuccess = (updatedPost: any) => {
+    setPosts((prev) =>
+      prev.map((p) => (p._id === updatedPost._id ? updatedPost : p))
+    );
+    toast.success('Post updated successfully');
   };
 
   useEffect(() => {
@@ -113,16 +146,36 @@ export default function BlogAdminPage() {
           columns={BlogColumns} 
           data={posts} 
           loading={loading}
-          meta={{ onDelete: deletePost }} // Pass delete handler through meta
+          meta={{
+            onDelete: deletePost, // Pass the delete handler
+            onEdit: editPost, // Pass the edit handler
+            onToggleStatus: toggleStatus,
+          }}
         />
       </div>
 
-      <BlogCreateModal 
+      <BlogModal 
         open={isCreateOpen}
-        onClose={() => setIsCreateOpen(false)}
-        onSuccess={(newPost) => {
-          setPosts([newPost, ...posts]);
-          toast.success('Post created successfully');
+        mode={editingPost ? 'edit' : 'create'} // Determine mode based on editingPost
+        post={editingPost} // Pass the post to be edited
+        onClose={() => {
+          setIsCreateOpen(false);
+          setEditingPost(null); // Reset editingPost after closing
+        }}
+        onSuccess={(updatedPost) => {
+          if (editingPost) {
+            // Update the post in the list
+            setPosts((prev) =>
+              prev.map((p) => (p._id === updatedPost._id ? updatedPost : p))
+            );
+            toast.success('Post updated successfully');
+          } else {
+            // Add the new post to the list
+            setPosts([updatedPost, ...posts]);
+            toast.success('Post created successfully');
+          }
+          setIsCreateOpen(false);
+          setEditingPost(null); // Reset editingPost after success
         }}
       />
     </div>
