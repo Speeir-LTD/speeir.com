@@ -76,6 +76,7 @@ export function BlogModal({
       ); // Success toast
       if (onSuccess) onSuccess(updatedPost); // Notify parent component of success
       onClose();
+      window.location.reload(); // Refresh the page after success
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'An error occurred'); // Error toast
     } finally {
