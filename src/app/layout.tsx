@@ -13,20 +13,29 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+  const pathname = usePathname();
+  const isAdminRoute = pathname?.startsWith('/admin');
+
   return (
     <html suppressHydrationWarning lang="en">
       <head />
 
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
         <Providers>
-          <Header />
+        {!isAdminRoute && <Header />}
           {children}
-          <Footer />
-          <ScrollToTop />
+          {!isAdminRoute && (
+            <>
+              <Footer />
+              <ScrollToTop />
+            </>
+          )}
         </Providers>
       </body>
     </html>
   );
 }
 
-import { Providers } from "./providers";
+import { Providers } from "./providers";import { usePathname } from "next/navigation";
+

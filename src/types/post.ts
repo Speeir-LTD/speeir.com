@@ -5,6 +5,7 @@ export interface BlogPostBase {
     author: string;
     tags: string[];
     views: number;
+    status: 'published' | 'draft' | 'archived'; // Add the status property
   }
   
   export interface BlogPost extends BlogPostBase {
