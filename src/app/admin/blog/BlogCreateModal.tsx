@@ -22,13 +22,29 @@ export function BlogCreateModal({
   });
   const [loading, setLoading] = useState(false);
   const [tagInput, setTagInput] = useState('');
+  const [errors, setErrors] = useState<{ content?: string }>({}); // Add error state
+
+  const validateForm = () => {
+    const newErrors: { content?: string } = {};
+    if (formData.content.length < 10) {
+      newErrors.content = 'Content must be at least 10 characters long.';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return; // Prevent submission if validation fails
+    }
+
     setLoading(true);
 
+    console.log('Submitting formData:', formData); // Debugging log
+
     try {
-      const response = await fetch('/api/admin/blog', {
+      const response = await fetch('/api/blog', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,6 +55,7 @@ export function BlogCreateModal({
       const data = await response.json();
 
       if (!response.ok) {
+        console.error('Server Error:', data); // Log server error
         throw new Error(data.error || 'Failed to create post');
       }
 
@@ -135,8 +152,15 @@ export function BlogCreateModal({
               rows={6}
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              className={`mt-1 block w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none focus:ring-blue-500 ${
+                errors.content
+                  ? 'border-red-500 focus:border-red-500'
+                  : 'border-gray-300 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white'
+              }`}
             />
+            {errors.content && (
+              <p className="mt-1 text-sm text-red-500">{errors.content}</p>
+            )}
           </div>
 
           <div>

@@ -15,13 +15,15 @@ export const BlogColumns: ColumnDef<BlogPost>[] = [
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => {
-      const status = row.original.status;
+      const status = row.original.status || 'unknown'; // Add fallback value
       return (
         <span
           className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
             status === 'published'
               ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100'
-              : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100'
+              : status === 'draft'
+              ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100'
+              : 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100' // Style for unknown status
           }`}
         >
           {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -42,6 +44,22 @@ export const BlogColumns: ColumnDef<BlogPost>[] = [
     header: 'Views',
     cell: ({ row }) => {
       return row.original.views.toLocaleString();
+    },
+  },
+  {
+    accessorKey: 'actions',
+    header: 'Actions',
+    cell: ({ row, table }) => {
+      const post = row.original;
+      const onDelete = table.options.meta?.onDelete; // Access onDelete from meta
+      return (
+        <button
+          onClick={() => onDelete && onDelete(post._id)}
+          className="text-red-600 hover:underline"
+        >
+          Delete
+        </button>
+      );
     },
   },
 ];

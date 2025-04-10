@@ -1,4 +1,3 @@
-// src/app/admin/blog/page.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -18,13 +17,26 @@ export default function BlogAdminPage() {
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/blog/ff`);
+      const response = await fetch(`/api/blog?limit=10&page=1`);
       const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Failed to fetch posts');
       setPosts(data.data);
     } catch (error) {
-      toast.error('Failed to fetch posts');
+      toast.error(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const deletePost = async (id: string) => {
+    try {
+      const response = await fetch(`/api/blog?id=${id}`, { method: 'DELETE' });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Failed to delete post');
+      setPosts((prev) => prev.filter((post) => post._id !== id));
+      toast.success('Post deleted successfully');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'An error occurred');
     }
   };
 
@@ -101,6 +113,7 @@ export default function BlogAdminPage() {
           columns={BlogColumns} 
           data={posts} 
           loading={loading}
+          meta={{ onDelete: deletePost }} // Pass delete handler through meta
         />
       </div>
 

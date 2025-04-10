@@ -64,10 +64,13 @@ export async function POST(request: Request): Promise<NextResponse<ApiResponse<B
   try {
     const db = await getDb();
     const body: BlogPostCreateDTO = await request.json();
-    
+
+    console.log('Incoming POST body:', body); // Debugging log
+
     // Validate input
     const validation = validateBlogPost(body);
     if (!validation.success) {
+      console.error('Validation Error:', validation.error); // Log validation error
       return errorResponse(validation.error?.message ?? 'Validation failed', 400);
     }
     

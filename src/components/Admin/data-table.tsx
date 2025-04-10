@@ -10,7 +10,7 @@ import {
 export interface ColumnDef<T> {
   accessorKey: string;
   header: string;
-  cell?: (info: { row: { original: T } }) => React.ReactNode;
+  cell?: (info: { row: { original: T }; table: { options: { meta?: Record<string, any> } } }) => React.ReactNode; // Add table property
 }
 
 interface DataTableProps<T> {
@@ -18,6 +18,7 @@ interface DataTableProps<T> {
   data: T[];
   loading?: boolean;
   onRowClick?: (data: T) => void;
+  meta?: Record<string, any>; // Add meta property to pass additional context
 }
 
 export function DataTable<T>({
@@ -25,6 +26,7 @@ export function DataTable<T>({
   data,
   loading = false,
   onRowClick,
+  meta, // Add meta to pass to the table
 }: DataTableProps<T>) {
   const [sortConfig, setSortConfig] = useState<{
     key: string;
@@ -107,7 +109,10 @@ export function DataTable<T>({
                     className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-300"
                   >
                     {column.cell
-                      ? column.cell({ row: { original: row } })
+                      ? column.cell({
+                          row: { original: row },
+                          table: { options: { meta } }, // Pass table with meta
+                        })
                       : // @ts-ignore
                         row[column.accessorKey]}
                   </td>
