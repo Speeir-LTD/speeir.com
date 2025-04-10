@@ -15,7 +15,7 @@ export async function GET(
   ) {
     try {
       const db = await getDb();
-      const { id } = params;
+      const { id } = await params; // Use params directly from the function argument
   
       // First try finding by string ID
       let post = await db.collection('posts').findOne({ _id: id as any });
