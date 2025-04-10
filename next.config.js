@@ -3,7 +3,7 @@ require('dotenv').config(); // Load environment variables from .env file
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["localhost"],
+    domains: ["localhost", "ui-avatars.com", "picsum.photos"], // Add required domains
     remotePatterns: [
       {
         protocol: "https",

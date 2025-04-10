@@ -9,14 +9,15 @@ export const metadata: Metadata = {
 };
 
 const Blog = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs`);
-  const blogData = await res.json();
+  const baseUrl = process.env.BASE_URL; 
+  const res = await fetch(`${baseUrl}/api/blog`); 
+  const { data: blogData } = await res.json();
 
   return (
     <>
       <Breadcrumb
-        pageName="Blog Grid"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
+        pageName="Blog Page"
+        description="Speeir Blogs"
       />
 
       <section className="pb-[120px] pt-[120px]">
@@ -27,7 +28,7 @@ const Blog = async () => {
                 key={blog._id}
                 className="w-full px-4 md:w-2/3 lg:w-1/2 xl:w-1/3"
               >
-                <SingleBlog blog={blog} />
+                <SingleBlog post={blog} />
               </div>
             ))}
           </div>
