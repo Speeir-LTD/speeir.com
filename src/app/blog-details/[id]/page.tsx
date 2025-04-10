@@ -79,11 +79,35 @@ const BlogDetailsPage = ({ params }: { params: { id: string } }) => {
     return (
         <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 pb-[120px] pt-[150px] dark:from-gray-900 dark:to-gray-800">
             {/* Floating background elements */}
-            <div className="absolute inset-0 overflow-hidden">
+            {/* <div className="absolute inset-0 overflow-hidden">
                 <div className="absolute left-[5%] top-[20%] h-32 w-32 animate-[float_8s_ease-in-out_infinite] rounded-full bg-gradient-to-br from-blue-500/10 to-purple-500/10 shadow-lg backdrop-blur-sm"></div>
                 <div className="absolute right-[5%] top-[40%] h-24 w-24 animate-[float_10s_ease-in-out_infinite_reverse] rounded-full bg-gradient-to-br from-pink-500/10 to-rose-500/10 shadow-lg backdrop-blur-sm"></div>
                 <div className="absolute left-[15%] bottom-[15%] h-20 w-20 animate-[float_12s_ease-in-out_infinite] rounded-full bg-gradient-to-br from-emerald-500/10 to-teal-500/10 shadow-lg backdrop-blur-sm"></div>
                 <div className="absolute right-[15%] bottom-[25%] h-28 w-28 animate-[float_9s_ease-in-out_infinite_reverse] rounded-full bg-gradient-to-br from-amber-500/10 to-yellow-500/10 shadow-lg backdrop-blur-sm"></div>
+            
+            </div> */}
+
+            
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute right-[5%] bottom-[15%] h-64 w-64 animate-[float_14s_ease-in-out_infinite_reverse] rounded-full bg-gradient-to-r from-green-50/50 to-teal-50/50 blur-[80px] dark:from-green-900/20 dark:to-teal-900/20"></div>
+            <div className="absolute left-[5%] top-[15%] h-60 w-60 animate-[float_12s_ease-in-out_infinite] rounded-full bg-gradient-to-r from-blue-50/50 to-purple-50/50 blur-[80px] dark:from-blue-900/20 dark:to-purple-900/20"></div>
+
+
+            {[...Array(12)].map((_, i) => (
+                    <div
+                        key={i}
+                        className="absolute rounded-full bg-gray-300/30 dark:bg-gray-600/30"
+                        style={{
+                            width: `${Math.random() * 12 + 4}px`,
+                            height: `${Math.random() * 12 + 4}px`,
+                            top: `${Math.random() * 100}%`,
+                            left: `${Math.random() * 100}%`,
+                            animation: `float ${Math.random() * 15 + 10}s ease-in-out infinite alternate`,
+                            animationDelay: `${i * 0.5}s`
+                        }}
+                    ></div>
+                ))}
+
             </div>
 
             <div className="container relative z-10">
