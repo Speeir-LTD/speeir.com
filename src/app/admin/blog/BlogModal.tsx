@@ -54,27 +54,30 @@ export function BlogModal({
     setLoading(true);
 
     try {
-      const response = await fetch(
-        mode === 'create' ? '/api/blog' : `/api/blog?id=${post._id}`,
-        {
-          method: mode === 'create' ? 'POST' : 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-
-      const data = await response.json();
+      const method = mode === 'edit' ? 'PUT' : 'POST';
+      const url =
+        mode === 'edit' && post?._id
+          ? `/api/blog?id=${post._id}` // Corrected endpoint for PUT
+          : '/api/blog'; // Default endpoint for POST
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData), // Ensure formData includes all necessary fields
+      });
 
       if (!response.ok) {
-        throw new Error(data.error || `Failed to ${mode} post`);
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to save post');
       }
 
-      if (onSuccess) onSuccess(data.data);
+      const updatedPost = await response.json();
+      toast.success(
+        mode === 'edit' ? 'Post updated successfully!' : 'Post created successfully!'
+      ); // Success toast
+      if (onSuccess) onSuccess(updatedPost); // Notify parent component of success
       onClose();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'An error occurred');
+      toast.error(error instanceof Error ? error.message : 'An error occurred'); // Error toast
     } finally {
       setLoading(false);
     }
@@ -95,6 +98,7 @@ export function BlogModal({
       ...formData,
       tags: formData.tags.filter((tag) => tag !== tagToRemove),
     });
+    toast.success('Tag removed successfully!'); // Success toast for tag removal
   };
 
   if (!open) return null;

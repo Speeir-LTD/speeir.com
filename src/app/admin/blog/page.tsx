@@ -8,7 +8,7 @@ import { BlogModal } from './BlogModal'; // Ensure named import
 import { toast } from 'sonner';
 
 export default function BlogAdminPage() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<{ _id: string; [key: string]: any }[]>([]);
   const [loading, setLoading] = useState(true);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false); // State for edit modal
@@ -32,6 +32,8 @@ export default function BlogAdminPage() {
 
   const deletePost = async (id: string) => {
     try {
+      const confirmed = window.confirm('Are you sure you want to delete this post?'); // Confirmation dialog
+      if (!confirmed) return;
       const response = await fetch(`/api/blog?id=${id}`, { method: 'DELETE' });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Failed to delete post');
@@ -64,13 +66,6 @@ export default function BlogAdminPage() {
   const editPost = (post: any) => {
     setEditingPost(post); // Set the post to be edited
     setIsCreateOpen(true); // Open the BlogCreateModal in edit mode
-  };
-
-  const handleEditSuccess = (updatedPost: any) => {
-    setPosts((prev) =>
-      prev.map((p) => (p._id === updatedPost._id ? updatedPost : p))
-    );
-    toast.success('Post updated successfully');
   };
 
   useEffect(() => {

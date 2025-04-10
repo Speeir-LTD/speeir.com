@@ -43,7 +43,7 @@ export const BlogColumns: ColumnDef<BlogPost>[] = [
     accessorKey: 'views',
     header: 'Views',
     cell: ({ row }) => {
-      return row.original.views.toLocaleString();
+      return row.original.views ? row.original.views.toLocaleString() : 'N/A'; // Add fallback for undefined values
     },
   },
   {
