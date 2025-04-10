@@ -6,7 +6,6 @@ import TagButton from "@/components/Blog/TagButton";
 import Image from "next/image";
 import { BlogPost } from "@/types/post";
 import ReactMarkdown from "react-markdown";
-// import { formatDate } from "@/utils/formatDate";
 
 const BlogDetailsPage = ({ params }: { params: { id: string } }) => {
     const { id } = params;
@@ -44,56 +43,62 @@ const BlogDetailsPage = ({ params }: { params: { id: string } }) => {
 
     if (isLoading) {
         return (
-            <div className="container py-20 text-center">
-                <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
-                <p className="mt-4">Loading blog post...</p>
+            <div className="container flex min-h-screen items-center justify-center py-20 text-center">
+                <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
+                <p className="mt-4 text-lg font-medium text-gray-600 dark:text-gray-400">Loading blog post...</p>
             </div>
         );
     }
 
     if (error) {
         return (
-            <div className="container py-20 text-center">
-                <p className="text-red-500">{error}</p>
-                <button
-                    onClick={() => window.location.reload()}
-                    className="mt-4 rounded bg-primary px-4 py-2 text-white"
-                >
-                    Try Again
-                </button>
+            <div className="container flex min-h-screen items-center justify-center py-20 text-center">
+                <div className="max-w-md rounded-xl bg-white p-8 shadow-lg dark:bg-gray-900">
+                    <p className="mb-4 text-lg font-medium text-red-500">{error}</p>
+                    <button
+                        onClick={() => window.location.reload()}
+                        className="rounded-lg bg-primary px-6 py-3 font-medium text-white transition-all hover:bg-primary/90"
+                    >
+                        Try Again
+                    </button>
+                </div>
             </div>
         );
     }
 
     if (!blogDetails) {
         return (
-            <div className="container py-20 text-center">
-                <p>No blog post data available</p>
+            <div className="container flex min-h-screen items-center justify-center py-20 text-center">
+                <div className="max-w-md rounded-xl bg-white p-8 shadow-lg dark:bg-gray-900">
+                    <p className="text-lg font-medium text-gray-600 dark:text-gray-400">No blog post data available</p>
+                </div>
             </div>
         );
     }
 
-    //   const formattedDate = new Date(createdAt).toLocaleDateString('en-US', {
-    //     year: 'numeric',
-    //     month: 'short',
-    //     day: 'numeric'
-    //   });
-
     return (
-        <section className="pb-[120px] pt-[150px]">
-            <div className="container">
+        <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 pb-[120px] pt-[150px] dark:from-gray-900 dark:to-gray-800">
+            {/* Floating background elements */}
+            <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute left-[5%] top-[20%] h-32 w-32 animate-[float_8s_ease-in-out_infinite] rounded-full bg-gradient-to-br from-blue-500/10 to-purple-500/10 shadow-lg backdrop-blur-sm"></div>
+                <div className="absolute right-[5%] top-[40%] h-24 w-24 animate-[float_10s_ease-in-out_infinite_reverse] rounded-full bg-gradient-to-br from-pink-500/10 to-rose-500/10 shadow-lg backdrop-blur-sm"></div>
+                <div className="absolute left-[15%] bottom-[15%] h-20 w-20 animate-[float_12s_ease-in-out_infinite] rounded-full bg-gradient-to-br from-emerald-500/10 to-teal-500/10 shadow-lg backdrop-blur-sm"></div>
+                <div className="absolute right-[15%] bottom-[25%] h-28 w-28 animate-[float_9s_ease-in-out_infinite_reverse] rounded-full bg-gradient-to-br from-amber-500/10 to-yellow-500/10 shadow-lg backdrop-blur-sm"></div>
+            </div>
+
+            <div className="container relative z-10">
                 <div className="-mx-4 flex flex-wrap justify-center">
-                    <div className="w-full px-4 lg:w-8/12">
-                        <div>
-                            <h1 className="mb-8 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight">
+                    <div className="w-full px-4 lg:w-10/12 xl:w-8/12">
+                        <div className="rounded-2xl bg-white/80 p-10 shadow-xl backdrop-blur-sm dark:bg-gray-900/90 dark:shadow-gray-800/10">
+                            <h1 className="mb-8 text-4xl font-bold leading-tight text-black dark:text-white sm:text-5xl sm:leading-tight">
                                 {blogDetails.title}
                             </h1>
 
-                            <div className="mb-10 flex flex-wrap items-center justify-between border-b border-body-color border-opacity-10 pb-4 dark:border-white dark:border-opacity-10">
+                            <div className="mb-10 flex flex-wrap items-center justify-between border-b border-gray-200 pb-6 dark:border-gray-700">
                                 <div className="flex flex-wrap items-center">
                                     <div className="mb-5 mr-10 flex items-center">
                                         <div className="mr-4">
-                                            <div className="relative h-10 w-10 overflow-hidden rounded-full">
+                                            <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-white shadow-md">
                                                 <Image
                                                     src="/images/blog/author-02.png"
                                                     alt={blogDetails.author}
@@ -103,17 +108,24 @@ const BlogDetailsPage = ({ params }: { params: { id: string } }) => {
                                             </div>
                                         </div>
                                         <div className="w-full">
-                                            <span className="mb-1 text-base font-medium text-body-color">
-                                                By <span className="text-primary">{blogDetails.author}</span>
+                                            <span className="text-base font-medium text-gray-600 dark:text-gray-300">
+                                                By <span className="font-semibold text-primary">{blogDetails.author}</span>
                                             </span>
                                         </div>
                                     </div>
 
-                                    <div className="mb-5 flex items-center">
-                                        <p className="mr-5 flex items-center text-base font-medium text-body-color">
+                                    <div className="mb-5 flex items-center space-x-4">
+                                        <p className="flex items-center text-base font-medium text-gray-500 dark:text-gray-400">
+                                            <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
                                             {/* {formatDate(blogDetails.createdAt)} */}
                                         </p>
-                                        <p className="mr-5 flex items-center text-base font-medium text-body-color">
+                                        <p className="flex items-center text-base font-medium text-gray-500 dark:text-gray-400">
+                                            <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            </svg>
                                             {blogDetails.views} Views
                                         </p>
                                     </div>
@@ -121,7 +133,7 @@ const BlogDetailsPage = ({ params }: { params: { id: string } }) => {
 
                                 <div className="mb-5">
                                     {blogDetails.tags?.length > 0 && (
-                                        <span className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white">
+                                        <span className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-primary to-primary/80 px-5 py-2 text-sm font-semibold text-white shadow-md">
                                             {blogDetails.tags[0]}
                                         </span>
                                     )}
@@ -132,66 +144,57 @@ const BlogDetailsPage = ({ params }: { params: { id: string } }) => {
                                 <div className="prose max-w-none dark:prose-invert">
                                     <ReactMarkdown
                                         components={{
-                                            // Paragraph styling
                                             p: ({ node, ...props }) => (
                                                 <p
                                                     {...props}
-                                                    className="mb-6 text-base leading-relaxed text-gray-700 dark:text-gray-300"
+                                                    className="mb-6 text-lg leading-relaxed text-gray-700 dark:text-gray-300"
                                                 />
                                             ),
-
-                                            // Headings styling
                                             h1: ({ node, ...props }) => (
                                                 <h1
                                                     {...props}
-                                                    className="mb-5 text-2xl font-bold text-gray-800 dark:text-gray-100 mt-8 pb-2 border-b border-gray-100 dark:border-gray-700"
+                                                    className="mb-6 text-3xl font-bold text-gray-900 dark:text-white"
                                                 />
                                             ),
                                             h2: ({ node, ...props }) => (
                                                 <h2
                                                     {...props}
-                                                    className="mb-5 text-2xl font-bold text-gray-800 dark:text-gray-100 mt-8 pb-2 border-b border-gray-100 dark:border-gray-700"
+                                                    className="mb-5 text-2xl font-bold text-gray-800 dark:text-gray-100 mt-10 pb-2 border-b border-gray-100 dark:border-gray-700"
                                                 />
                                             ),
                                             h3: ({ node, ...props }) => (
                                                 <h3
                                                     {...props}
-                                                    className="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-100 mt-6"
+                                                    className="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-100 mt-8"
                                                 />
                                             ),
-
-                                            // Lists styling
                                             ul: ({ node, ...props }) => (
                                                 <ul
                                                     {...props}
-                                                    className="mb-6 list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300"
+                                                    className="mb-6 list-disc pl-6 space-y-3 text-gray-700 dark:text-gray-300"
                                                 />
                                             ),
                                             ol: ({ node, ...props }) => (
                                                 <ol
                                                     {...props}
-                                                    className="mb-6 list-decimal pl-6 space-y-2 text-gray-700 dark:text-gray-300"
+                                                    className="mb-6 list-decimal pl-6 space-y-3 text-gray-700 dark:text-gray-300"
                                                 />
                                             ),
                                             li: ({ node, ...props }) => (
                                                 <li
                                                     {...props}
-                                                    className="text-base leading-relaxed"
+                                                    className="text-lg leading-relaxed"
                                                 />
                                             ),
-
-                                            // Links styling
                                             a: ({ node, ...props }) => (
                                                 <a
                                                     {...props}
-                                                    className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                                                    className="text-primary hover:underline font-medium"
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                 />
                                             ),
-
-                                            // Code blocks styling
-                                            code: ({ node, inline, ...props }: { node: any; inline?: boolean;[key: string]: any }) => (
+                                            code: ({ node, inline, ...props }: { node: any; inline?: boolean; [key: string]: any }) => (
                                                 <code
                                                     {...props}
                                                     className={`${inline
@@ -200,58 +203,48 @@ const BlogDetailsPage = ({ params }: { params: { id: string } }) => {
                                                         }`}
                                                 />
                                             ),
-
-                                            // Blockquotes styling
                                             blockquote: ({ node, ...props }) => (
                                                 <blockquote
                                                     {...props}
-                                                    className="border-l-4 border-gray-400 dark:border-gray-500 pl-4 italic my-6 text-gray-600 dark:text-gray-400"
+                                                    className="border-l-4 border-primary pl-4 my-6 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-r-lg"
                                                 />
                                             ),
-
-                                            // Horizontal rule styling
                                             hr: ({ node, ...props }) => (
                                                 <hr
                                                     {...props}
-                                                    className="my-8 border-t border-gray-300 dark:border-gray-700"
+                                                    className="my-10 border-t border-gray-200 dark:border-gray-700"
                                                 />
                                             ),
-
-                                            // Strong/bold text styling
                                             strong: ({ node, ...props }) => (
                                                 <strong
                                                     {...props}
                                                     className="font-bold text-gray-900 dark:text-white"
                                                 />
                                             ),
-
-                                            // Emphasis/italic text styling
                                             em: ({ node, ...props }) => (
                                                 <em
                                                     {...props}
                                                     className="italic"
                                                 />
                                             ),
-                                            // Table components
-            
                                             table: ({ node, ...props }) => (
-                                                <div className="overflow-x-auto my-6">
+                                                <div className="overflow-x-auto my-8 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
                                                     <table
                                                         {...props}
-                                                        className="w-full border-collapse border border-gray-200 dark:border-gray-600"
+                                                        className="w-full divide-y divide-gray-200 dark:divide-gray-700"
                                                     />
                                                 </div>
                                             ),
                                             th: ({ node, ...props }) => (
                                                 <th
                                                     {...props}
-                                                    className="px-4 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-600"
+                                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-gray-800"
                                                 />
                                             ),
                                             td: ({ node, ...props }) => (
                                                 <td
                                                     {...props}
-                                                    className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-100 dark:border-gray-700"
+                                                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300"
                                                 />
                                             ),
                                         }}
@@ -260,13 +253,13 @@ const BlogDetailsPage = ({ params }: { params: { id: string } }) => {
                                     </ReactMarkdown>
                                 </div>
 
-                                <div className="items-center justify-between sm:flex">
+                                <div className="mt-12 items-center justify-between sm:flex">
                                     {blogDetails.tags?.length > 0 && (
                                         <div className="mb-5">
-                                            <h4 className="mb-3 text-sm font-medium text-body-color">
+                                            <h4 className="mb-4 text-lg font-medium text-gray-700 dark:text-gray-300">
                                                 Tags:
                                             </h4>
-                                            <div className="flex flex-wrap gap-2">
+                                            <div className="flex flex-wrap gap-3">
                                                 {blogDetails.tags.map((tag) => (
                                                     <TagButton key={tag} text={tag} />
                                                 ))}
@@ -275,14 +268,11 @@ const BlogDetailsPage = ({ params }: { params: { id: string } }) => {
                                     )}
 
                                     <div className="mb-5">
-                                        <h5 className="mb-3 text-sm font-medium text-body-color sm:text-right">
+                                        <h5 className="mb-4 text-lg font-medium text-gray-700 dark:text-gray-300 sm:text-right">
                                             Share this post:
                                         </h5>
                                         <div className="flex items-center sm:justify-end">
-                                            <SharePost
-                                            // title={blogDetails}
-                                            // url={`/blog/${id}`} 
-                                            />
+                                            <SharePost />
                                         </div>
                                     </div>
                                 </div>
