@@ -9,7 +9,25 @@ export const metadata: Metadata = {
 
 const Blog = async () => {
   const baseUrl = process.env.BASE_URL; 
-  const res = await fetch(`${baseUrl}/api/blog`); 
+  const res = await fetch(`${baseUrl}/api/blog`);
+
+  if (!res.ok) {
+    console.error("Failed to fetch blog data:", res.statusText);
+    return (
+      <>
+        <Breadcrumb
+          pageName="Blog Page"
+          description="Speeir Blogs"
+        />
+        <section className="min-h-screen flex items-center justify-center">
+          <p className="text-center text-gray-500 dark:text-gray-400">
+            Failed to load blogs. Please try again later.
+          </p>
+        </section>
+      </>
+    );
+  }
+
   const { data: blogData } = await res.json();
 
   return (
