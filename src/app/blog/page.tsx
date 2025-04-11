@@ -8,10 +8,27 @@ export const metadata: Metadata = {
 };
 
 const Blog = async () => {
-  const baseUrl = process.env.BASE_URL; 
+  const baseUrl = process.env.BASE_URL || "https://speeir.com";
+  if (!baseUrl) {
+    console.error("BASE_URL is not defined.");
+    return (
+      <>
+        <Breadcrumb
+          pageName="Blog Page"
+          description="Speeir Blogs"
+        />
+        <section className="min-h-screen flex items-center justify-center">
+          <p className="text-center text-gray-500 dark:text-gray-400">
+            Configuration error: BASE_URL is not set.
+          </p>
+        </section>
+      </>
+    );
+  }
+
   const res = await fetch(`${baseUrl}/api/blog`);
 
-  if (!res.ok) {
+  if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) {
     console.error("Failed to fetch blog data:", res.statusText);
     return (
       <>
@@ -28,7 +45,26 @@ const Blog = async () => {
     );
   }
 
-  const { data: blogData } = await res.json();
+  let blogData;
+  try {
+    const json = await res.json();
+    blogData = json.data;
+  } catch (error) {
+    console.error("Error parsing JSON:", error);
+    return (
+      <>
+        <Breadcrumb
+          pageName="Blog Page"
+          description="Speeir Blogs"
+        />
+        <section className="min-h-screen flex items-center justify-center">
+          <p className="text-center text-gray-500 dark:text-gray-400">
+            Failed to load blogs. Please try again later.
+          </p>
+        </section>
+      </>
+    );
+  }
 
   return (
     <>
