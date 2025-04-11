@@ -36,7 +36,7 @@ const SingleBlog = ({ post }: { post: BlogPost | undefined }) => {
       )}
       
       {/* Image with overlay */}
-      <Link href={`/blog-details/${post._id}`} className="relative block aspect-video w-full">
+      <Link href={`/blog-details?id=${post._id}`} className="relative block aspect-video w-full">
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
         <Image 
           src={imageUrl} 
@@ -62,7 +62,7 @@ const SingleBlog = ({ post }: { post: BlogPost | undefined }) => {
         
         <h3 className="mb-3 text-2xl font-bold leading-tight text-gray-900 dark:text-white">
           <Link
-            href={`/blog-details/${post._id}`}
+            href={`/blog-details?id=${post._id}`}
             className="transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400"
           >
             {title}

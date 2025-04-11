@@ -10,7 +10,7 @@ const Contact = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState<null | 'success' | 'error'>(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

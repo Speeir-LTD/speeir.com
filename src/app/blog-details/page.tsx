@@ -6,18 +6,27 @@ import TagButton from "@/components/Blog/TagButton";
 import Image from "next/image";
 import { BlogPost } from "@/types/post";
 import ReactMarkdown from "react-markdown";
+import { useSearchParams } from "next/navigation"; // Updated import
 
-const BlogDetailsPage = ({ params }: { params: { id: string } }) => {
-    const { id } = params;
+const BlogDetailsPage = () => {
+    const searchParams = useSearchParams(); // Use useSearchParams
+    const id = searchParams?.get("id") || null; // Safely get the 'id' query parameter
     const [blogDetails, setBlogDetails] = useState<BlogPost | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    console.log("Fetching blog details for ID:", id);
+
     useEffect(() => {
         const fetchBlogDetails = async () => {
             try {
+
+                console.log("Fetching blog details for ID:", id);
                 setIsLoading(true);
-                const res = await fetch(`/api/blog/${id}`);
+                const res = await fetch(`/api/blog?id=${id}`);
+
+                console.log("Res:", res);
+                
 
                 if (!res.ok) {
                     if (res.status === 404) {

@@ -2,6 +2,7 @@ require('dotenv').config(); // Load environment variables from .env file
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // reactStrictMode: true,
   images: {
     domains: ["localhost", "ui-avatars.com", "picsum.photos"], // Add required domains
     remotePatterns: [
@@ -18,6 +19,7 @@ const nextConfig = {
     COMPANY_SMTP_HOST: process.env.COMPANY_SMTP_HOST,
     COMPANY_SMTP_PORT: process.env.COMPANY_SMTP_PORT,
   },
+  // output: 'standalone', // Ensure this is set if deploying to a custom server
 };
 
 module.exports = nextConfig;
