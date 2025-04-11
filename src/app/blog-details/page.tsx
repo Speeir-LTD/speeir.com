@@ -77,7 +77,10 @@ const ErrorFallback = ({ error }: { error: string }) => (
 );
 
 const BlogContent = ({ blogDetails }: { blogDetails: BlogPost }) => {
-    const authorImage = `https://ui-avatars.com/api/?name=${blogDetails.author.split(' ').join('+')}&background=random`;
+    const authorImage = blogDetails.author
+        ? `https://ui-avatars.com/api/?name=${blogDetails.author.split(' ').join('+')}&background=random`
+        : `https://ui-avatars.com/api/?name=Unknown&background=random`;
+
     return (
         <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 pb-[120px] pt-[150px] dark:from-gray-900 dark:to-gray-800">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -115,7 +118,7 @@ const BlogContent = ({ blogDetails }: { blogDetails: BlogPost }) => {
                                             <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-white shadow-md">
                                                 <Image
                                                     src={authorImage} 
-                                                    alt={blogDetails.author}
+                                                    alt={blogDetails.author || "Unknown Author"}
                                                     fill
                                                     className="object-cover"
                                                 />
