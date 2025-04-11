@@ -9,6 +9,8 @@ export const metadata: Metadata = {
 
 const Blog = async () => {
   const baseUrl = process.env.BASE_URL || "https://speeir.com";
+  console.log("Fetching blogs from:", `${baseUrl}/api/blog`); // Log the API URL
+
   if (!baseUrl) {
     console.error("BASE_URL is not defined.");
     return (
