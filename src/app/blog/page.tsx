@@ -24,7 +24,7 @@ const Blog = () => {
         setBlogData(json.data);
       } catch (err) {
         console.error("Error fetching blogs:", err);
-        setError("Failed to load blogs. Please try again later.");
+        setError("Failed to load blogs. Please try again later/Reload Page.");
       } finally {
         setIsLoading(false); // End loading
       }
