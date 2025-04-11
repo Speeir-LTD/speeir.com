@@ -18,16 +18,6 @@ export function AdminSidebar() {
       href: '/admin/blog',
       icon: <FileEdit className="h-5 w-5" />,
       label: 'Blog Posts'
-    },
-    {
-      href: '/admin/users',
-      icon: <Users className="h-5 w-5" />,
-      label: 'Users'
-    },
-    {
-      href: '/admin/settings',
-      icon: <Settings className="h-5 w-5" />,
-      label: 'Settings'
     }
   ];
 

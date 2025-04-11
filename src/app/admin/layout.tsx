@@ -1,6 +1,7 @@
-// src/app/admin/layout.tsx
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { AdminSidebar } from '@/components/Admin/Sidebar';
 import { AdminHeader } from '@/components/Admin/Header';
 import { MobileSidebar } from '@/components/Admin/MobileSidebar';
@@ -11,6 +12,22 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('isAuthenticated'); // Check for token in localStorage
+    if (!token) {
+      router.push('/login'); // Redirect to login if no token is found
+    } else {
+      setIsAuthenticated(true); // Set authentication state
+    }
+  }, [router]);
+
+  if (!isAuthenticated) {
+    return null; // Render nothing until authentication is verified
+  }
+
   return (
     <ThemeProvider attribute="class" defaultTheme="dark">
       <div className="relative flex h-screen bg-gray-50 dark:bg-gray-900">
