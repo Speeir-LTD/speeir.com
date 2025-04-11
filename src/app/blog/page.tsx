@@ -1,72 +1,34 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import SingleBlog from "@/components/Blog/SingleBlog";
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import { Metadata } from "next";
+// import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Blog Page | Speeir",
-  description: "We craft fast, beautiful websites and powerful mobile apps.",
-};
 
-const Blog = async () => {
-  const baseUrl = process.env.BASE_URL || "https://speeir.com";
-  console.log("Fetching blogs from:", `${baseUrl}/api/blog`); // Log the API URL
+const Blog = () => {
+  const [blogData, setBlogData] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!baseUrl) {
-    console.error("BASE_URL is not defined.");
-    return (
-      <>
-        <Breadcrumb
-          pageName="Blog Page"
-          description="Speeir Blogs"
-        />
-        <section className="min-h-screen flex items-center justify-center">
-          <p className="text-center text-gray-500 dark:text-gray-400">
-            Configuration error: BASE_URL is not set.
-          </p>
-        </section>
-      </>
-    );
-  }
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+    
+        const res = await fetch(`/api/blog`);
+        if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) {
+          throw new Error("Failed to fetch blog data");
+        }
 
-  const res = await fetch(`${baseUrl}/api/blog`);
+        const json = await res.json();
+        setBlogData(json.data);
+      } catch (err) {
+        console.error("Error fetching blogs:", err);
+        setError("Failed to load blogs. Please try again later.");
+      }
+    };
 
-  if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) {
-    console.error("Failed to fetch blog data:", res.statusText);
-    return (
-      <>
-        <Breadcrumb
-          pageName="Blog Page"
-          description="Speeir Blogs"
-        />
-        <section className="min-h-screen flex items-center justify-center">
-          <p className="text-center text-gray-500 dark:text-gray-400">
-            Failed to load blogs. Please try again later.
-          </p>
-        </section>
-      </>
-    );
-  }
-
-  let blogData;
-  try {
-    const json = await res.json();
-    blogData = json.data;
-  } catch (error) {
-    console.error("Error parsing JSON:", error);
-    return (
-      <>
-        <Breadcrumb
-          pageName="Blog Page"
-          description="Speeir Blogs"
-        />
-        <section className="min-h-screen flex items-center justify-center">
-          <p className="text-center text-gray-500 dark:text-gray-400">
-            Failed to load blogs. Please try again later.
-          </p>
-        </section>
-      </>
-    );
-  }
+    fetchBlogs();
+  }, []);
 
   return (
     <>
@@ -107,18 +69,24 @@ const Blog = async () => {
         </div>
 
         <div className="container relative z-10 py-12">
-          <div className="-mx-4 flex flex-wrap justify-center gap-8">
-            {blogData.map((blog: any) => (
-              <div
-                key={blog._id}
-                className="w-full px-4 md:w-2/3 lg:w-1/2 xl:w-1/3"
-              >
-                <div className="overflow-hidden rounded-xl border border-gray-200 bg-white/80 shadow-sm transition-all hover:shadow-md backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/80">
-                  <SingleBlog post={blog} />
+          {error ? (
+            <div className="min-h-screen flex items-center justify-center">
+              <p className="text-center text-gray-500 dark:text-gray-400">{error}</p>
+            </div>
+          ) : (
+            <div className="-mx-4 flex flex-wrap justify-center gap-8">
+              {blogData.map((blog) => (
+                <div
+                  key={blog._id}
+                  className="w-full px-4 md:w-2/3 lg:w-1/2 xl:w-1/3"
+                >
+                  <div className="overflow-hidden rounded-xl border border-gray-200 bg-white/80 shadow-sm transition-all hover:shadow-md backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/80">
+                    <SingleBlog post={blog} />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </>
