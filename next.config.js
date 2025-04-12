@@ -4,7 +4,7 @@ require('dotenv').config(); // Load environment variables from .env file
 const nextConfig = {
   // reactStrictMode: true,
   images: {
-    domains: ["localhost", "ui-avatars.com", "picsum.photos"], // Add required domains
+    domains: ["localhost", "speeir.com", "ui-avatars.com", "picsum.photos"], // Add required domains
     remotePatterns: [
       {
         protocol: "https",
