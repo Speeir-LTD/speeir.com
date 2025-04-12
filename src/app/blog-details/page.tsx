@@ -67,8 +67,27 @@ const BlogDetailsPage = () => {
     return (
         <Suspense fallback={<LoadingFallback />}>
             <SearchParamsWrapper fetchBlogDetails={fetchBlogDetails} />
-            {!isLoading && error && <ErrorFallback error={error} />}
-            {!isLoading && blogDetails && <BlogContent blogDetails={blogDetails} />}
+            {isLoading ? ( // Show loading animation while fetching
+                <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+                    <div
+                        className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                        role="status"
+                    >
+                        <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                            Loading...
+                        </span>
+                    </div>
+                    <div className="text-center">
+                        <p className="text-xl font-medium text-gray-600 dark:text-gray-300">Loading blogs</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Please wait while we fetch the latest content</p>
+                    </div>
+                </div>
+            ) : (
+                <>
+                    {!isLoading && error && <ErrorFallback error={error} />}
+                    {!isLoading && blogDetails && <BlogContent blogDetails={blogDetails} />}
+                </>
+            )}
         </Suspense>
     );
 };
@@ -146,7 +165,7 @@ const BlogContent = ({ blogDetails }: { blogDetails: BlogPost }) => {
                                         <div className="mr-4">
                                             <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-white shadow-md">
                                                 <Image
-                                                    src={authorImage} 
+                                                    src={authorImage}
                                                     alt={blogDetails.author}
                                                     fill
                                                     className="object-cover"
@@ -240,7 +259,7 @@ const BlogContent = ({ blogDetails }: { blogDetails: BlogPost }) => {
                                                     rel="noopener noreferrer"
                                                 />
                                             ),
-                                            code: ({ node, inline, ...props }: { node: any; inline?: boolean; [key: string]: any }) => (
+                                            code: ({ node, inline, ...props }: { node: any; inline?: boolean;[key: string]: any }) => (
                                                 <code
                                                     {...props}
                                                     className={`${inline
