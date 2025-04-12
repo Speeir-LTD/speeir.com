@@ -46,8 +46,16 @@ const BlogDetailsPage = () => {
                 throw new Error("No data received");
             }
 
-            console.log("Fetched blog details successfully:", json.data);
-            setBlogDetails(json.data);
+            // Normalize response to handle both object and array formats
+            const normalizedData = Array.isArray(json.data) ? json.data[0] : json.data;
+
+            if (!normalizedData) {
+                console.error("Normalized data is empty.");
+                throw new Error("Invalid data format received");
+            }
+
+            console.log("Fetched blog details successfully:", normalizedData);
+            setBlogDetails(normalizedData);
         } catch (err) {
             console.error("Error fetching blog details:", err);
             setError(err instanceof Error ? err.message : "An unexpected error occurred");
