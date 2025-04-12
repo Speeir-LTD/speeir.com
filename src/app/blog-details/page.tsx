@@ -300,7 +300,7 @@ const BlogContent = ({ blogDetails }: { blogDetails: BlogPost }) => {
                                 </div>
 
                                 <div className="mt-12 items-center justify-between sm:flex">
-                                    {blogDetails.tags?.length > 0 && (
+                                    {Array.isArray(blogDetails.tags) && blogDetails.tags.length > 0 && (
                                         <div className="mb-5">
                                             <h4 className="mb-4 text-lg font-medium text-gray-700 dark:text-gray-300">
                                                 Tags:
