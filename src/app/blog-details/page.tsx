@@ -31,6 +31,7 @@ const BlogDetailsPage = () => {
                     "Content-Type": "application/json",
                 },
             });
+            console.log("res response:", res);
 
             if (!res.ok) {
                 console.error(`Failed to fetch blog details. Status: ${res.status}`);
@@ -41,6 +42,7 @@ const BlogDetailsPage = () => {
             }
 
             const json = await res.json();
+            console.log("API response:", json);
             if (!json || !json.data) {
                 console.error("No data received from the API.");
                 throw new Error("No data received");
