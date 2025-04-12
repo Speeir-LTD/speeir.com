@@ -27,6 +27,7 @@ const BlogDetailsPage = () => {
                 throw new Error(`Failed to fetch: ${res.statusText}`);
             }
             const { data } = await res.json();
+            console.log("Fetched data:", data);
             if (!data) throw new Error("No data received");
             setBlogDetails(data);
         } catch (err) {
