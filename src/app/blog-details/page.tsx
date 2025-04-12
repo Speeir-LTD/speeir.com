@@ -14,25 +14,43 @@ const BlogDetailsPage = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchBlogDetails = async (id: string | null) => {
+        if (!id) {
+            console.warn("No blog ID provided. Skipping fetch.");
+            setError("Invalid blog ID");
+            setIsLoading(false);
+            return;
+        }
+
         try {
             console.log("Fetching blog details for ID:", id);
             setIsLoading(true);
             const timestamp = new Date().getTime(); // Cache-busting query parameter
-            const res = await fetch(`/api/blog?id=${id}&timestamp=${timestamp}`);
-            console.log("Response:", res);
+            const res = await fetch(`/api/blog?id=${id}&timestamp=${timestamp}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
             if (!res.ok) {
+                console.error(`Failed to fetch blog details. Status: ${res.status}`);
                 if (res.status === 404) {
                     throw new Error("Blog post not found");
                 }
                 throw new Error(`Failed to fetch: ${res.statusText}`);
             }
-            const { data } = await res.json();
-            console.log("Fetched data:", data);
-            if (!data) throw new Error("No data received");
-            setBlogDetails(data);
+
+            const json = await res.json();
+            if (!json || !json.data) {
+                console.error("No data received from the API.");
+                throw new Error("No data received");
+            }
+
+            console.log("Fetched blog details successfully:", json.data);
+            setBlogDetails(json.data);
         } catch (err) {
-            console.error("Fetch error:", err);
-            setError(err instanceof Error ? err.message : "An error occurred");
+            console.error("Error fetching blog details:", err);
+            setError(err instanceof Error ? err.message : "An unexpected error occurred");
         } finally {
             setIsLoading(false);
         }
