@@ -17,14 +17,13 @@ const Blog = () => {
         setIsLoading(true); // Start loading
         const timestamp = new Date().getTime(); // Cache-busting query parameter
         const res = await fetch(`/api/blog?timestamp=${timestamp}`);
-        console.log("Response:", res);
 
         if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) {
           throw new Error(`Failed to fetch blog data: ${res.status} ${res.statusText}`);
         }
 
         const json = await res.json();
-        console.log("Fetched data:", json);
+        // console.log("Fetched data:", json);
         setBlogData(json.data);
       } catch (err) {
         console.error("Error fetching blogs:", err);

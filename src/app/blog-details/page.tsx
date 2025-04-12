@@ -19,7 +19,6 @@ const BlogDetailsPage = () => {
             setIsLoading(true);
             const timestamp = new Date().getTime(); // Cache-busting query parameter
             const res = await fetch(`/api/blog?id=${id}&timestamp=${timestamp}`);
-            console.log("Response:", res);
 
             if (!res.ok) {
                 if (res.status === 404) {
