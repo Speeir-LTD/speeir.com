@@ -17,7 +17,10 @@ const BlogDetailsPage = () => {
         try {
             console.log("Fetching blog details for ID:", id);
             setIsLoading(true);
-            const res = await fetch(`/api/blog?id=${id}`);
+            const timestamp = new Date().getTime(); // Cache-busting query parameter
+            const res = await fetch(`/api/blog?id=${id}&timestamp=${timestamp}`);
+            console.log("Response:", res);
+
             if (!res.ok) {
                 if (res.status === 404) {
                     throw new Error("Blog post not found");
