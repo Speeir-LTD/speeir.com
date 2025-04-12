@@ -16,11 +16,14 @@ const Blog = () => {
       try {
         setIsLoading(true); // Start loading
         const res = await fetch(`/api/blog`);
+        console.log(res);
+
         if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) {
           throw new Error("Failed to fetch blog data");
         }
 
         const json = await res.json();
+        console.log("data",json);
         setBlogData(json.data);
       } catch (err) {
         console.error("Error fetching blogs:", err);

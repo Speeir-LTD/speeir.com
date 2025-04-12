@@ -21,6 +21,7 @@ export default function BlogAdminPage() {
       setLoading(true);
       const response = await fetch(`/api/blog?limit=10&page=1`);
       const data = await response.json();
+      console.log("data",data);
       if (!response.ok) throw new Error(data.error || 'Failed to fetch posts');
       setPosts(data.data);
     } catch (error) {
