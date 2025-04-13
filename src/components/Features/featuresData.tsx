@@ -103,8 +103,8 @@ const featuresData: Feature[] = [
         </defs>
       </svg>
     ),
-    title: "IT Consulting & Digital Strategy",
-    paragraph: "Get expert guidance on technology adoption, digital transformation, and IT roadmap planning to align your business goals with the right tech stack.",
+    title: "E-Commerce",
+    paragraph: "Launch high-performance online stores with seamless UX, secure payments, and scalable infrastructure. We specialize in building custom e-commerce solutions using platforms like Shopify, WooCommerce, and headless setups.",
   },
   {
     id: 6,
