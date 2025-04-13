@@ -65,8 +65,7 @@ export async function GET(request: Request): Promise<NextResponse<ApiResponse<Bl
     const query: any = {};
     if (author) query.author = author;
     if (tag) query.tags = tag;
-    if (timestamp) query.timestamp = timestamp; // Optional: Use timestamp as a filter if needed
-    
+   
     const [posts, total] = await Promise.all([
       db.collection<BlogPost>('posts')
         .find(query)
