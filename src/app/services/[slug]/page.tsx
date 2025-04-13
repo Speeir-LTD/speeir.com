@@ -91,7 +91,7 @@ const ServiceDetailPage = () => {
                       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
 
                       {/* Main card */}
-                      <div className="flex items-start bg-white/80 dark:bg-gray-800/70 rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-500 backdrop-blur-sm border border-white/30 dark:border-gray-700/50 relative z-10 h-full">
+                      <div className="flex items-center bg-white/80 dark:bg-gray-800/70 rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-500 backdrop-blur-sm border border-white/30 dark:border-gray-700/50 relative z-10 h-full">
                         {/* Animated icon container */}
                         <div className="flex-shrink-0 mr-4 relative">
                           <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-white shadow-lg group-hover:scale-110 transition-transform duration-500">
