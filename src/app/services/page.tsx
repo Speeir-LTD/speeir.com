@@ -30,16 +30,20 @@ const ServicesPage = () => {
                   {/* Subtle corner accent */}
                   <div className="absolute top-0 right-0 w-16 h-16 -mt-8 -mr-8 rounded-full bg-gradient-to-br from-blue-500/10 to-purple-500/10 blur-xl"></div>
                   
-                  <div className="mb-6 flex-grow">
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                      {service.title}
-                    </h3>
+                  {/* CHANGE HERE: Remove the mb-4 and flex-grow divs that were creating extra space */}
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                    {service.title}
+                  </h3>
+                  
+                  {/* CHANGE HERE: Make this a flex-grow div to push the button to the bottom */}
+                  <div className="flex-grow">
                     <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed">
                       {service.description}
                     </p>
                   </div>
                   
-                  <div className="mt-auto pt-5 flex justify-center">
+                  {/* CHANGE HERE: Simplified button container with just margin-top */}
+                  <div className="mt-6 flex justify-center">
                     <span className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-sm hover:from-blue-700 hover:to-purple-700 transition-all duration-300 group-hover:shadow-lg">
                       <span>Learn more</span>
                       <svg className="w-5 h-5 ml-2 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

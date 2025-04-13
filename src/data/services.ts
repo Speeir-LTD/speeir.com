@@ -4,7 +4,6 @@ export interface Service {
   id: string;
   title: string;
   description: string;
-  icon: React.ReactNode;
   slug: string;
   longDescription?: string;
   benefits?: string[];
@@ -16,7 +15,6 @@ export const services: Service[] = [
     id: "web-development",
     title: "Web Development",
     description: "Custom web applications built with modern technologies to meet your business needs.",
-    icon: featuresData[0].icon,
     slug: "web-development",
     longDescription: "Our web development services focus on creating custom, high-performance web applications that align with your business goals. We use the latest technologies and frameworks to ensure your web presence is modern, responsive, and scalable.",
     benefits: [
@@ -40,7 +38,6 @@ export const services: Service[] = [
     id: "mobile-development",
     title: "Mobile App Development",
     description: "Native and cross-platform mobile applications for iOS and Android.",
-    icon: featuresData[1].icon,
     slug: "mobile-development",
     longDescription: "We develop high-quality mobile applications for iOS and Android platforms. Whether you need a native app or a cross-platform solution, our team has the expertise to deliver a mobile experience that engages your users and meets your business objectives.",
     benefits: [
@@ -63,7 +60,6 @@ export const services: Service[] = [
     id: "custom-software",
     title: "Custom Software Development",
     description: "Tailor-made software solutions for your unique business needs.",
-    icon: featuresData[2].icon,
     slug: "custom-software",
     longDescription: "We design and develop tailor-made software solutions to meet your unique business needs. From enterprise applications to workflow automation tools, we build scalable and secure software that enhances efficiency.",
     benefits: [
@@ -86,7 +82,6 @@ export const services: Service[] = [
     id: "digital-marketing",
     title: "Digital Marketing",
     description: "Data-driven strategies to boost your online presence and drive growth.",
-    icon: featuresData[3].icon,
     slug: "digital-marketing",
     longDescription: "Boost your brand's online visibility, attract quality leads, and drive sales with our data-driven digital marketing strategies. We combine SEO, social media, PPC, and content marketing to create campaigns that deliver measurable results.",
     benefits: [
@@ -109,7 +104,6 @@ export const services: Service[] = [
     id: "e-commerce",
     title: "E-Commerce",
     description: "High-performance online stores with seamless user experience.",
-    icon: featuresData[4].icon,
     slug: "e-commerce",
     longDescription: "Launch high-performance online stores with seamless UX, secure payments, and scalable infrastructure. We specialize in building custom e-commerce solutions using platforms like Shopify, WooCommerce, and headless setups.",
     benefits: [
@@ -132,7 +126,6 @@ export const services: Service[] = [
     id: "maintenance-support",
     title: "Maintenance & Support",
     description: "Ongoing technical support and optimization for your digital products.",
-    icon: featuresData[5].icon,
     slug: "maintenance-support",
     longDescription: "Get 24/7 technical support, updates, and performance optimization to keep your software running smoothly post-launch. Our maintenance services ensure your applications remain secure, up-to-date, and performing at their best.",
     benefits: [
