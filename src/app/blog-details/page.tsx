@@ -25,7 +25,7 @@ const BlogDetailsPage = () => {
             console.log("Fetching blog details for ID:", id);
             setIsLoading(true);
             const timestamp = new Date().getTime(); // Cache-busting query parameter
-            const res = await fetch(`/api/blog?id=${id}&timestamp=${timestamp}`, {
+            const res = await fetch(`/api/blog/${id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -42,6 +42,7 @@ const BlogDetailsPage = () => {
             }
 
             const json = await res.json();
+
             console.log("API response:", json);
             if (!json || !json.data) {
                 console.error("No data received from the API.");

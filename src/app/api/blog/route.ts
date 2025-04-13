@@ -21,39 +21,6 @@ export async function GET(request: Request): Promise<NextResponse<ApiResponse<Bl
     const db = await getDb();
     const { searchParams } = new URL(request.url);
     
-    // Handle single post request
-    const id = searchParams.get('id');
-    if (id) {
-      if (!ObjectId.isValid(id)) {
-        return errorResponse('Invalid post ID', 400);
-      }
-      
-      const post = await db.collection<BlogPost>('posts').findOne({
-        _id: new ObjectId(id) as any
-      });
-
-       
-      
-      if (!post) {
-        return errorResponse('Post not found', 404);
-      }
-
-      // Increment views
-      await db.collection('posts').updateOne(
-        { _id: new ObjectId(post._id) },
-        { $inc: { views: 1 } }
-      );
-      
-      return NextResponse.json({
-        success: true,
-        data: {
-          ...post,
-          _id: post._id.toString()
-        }
-      });
-    }
-    
-    // Handle multiple posts request (original functionality)
     const limit = Math.min(parseInt(searchParams.get('limit') || '10'), 100);
     const page = parseInt(searchParams.get('page') || '1');
     
