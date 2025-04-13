@@ -2,32 +2,40 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { services } from "@/data/services";
 
 const Header = () => {
-  // Navbar toggle
   const [navbarOpen, setNavbarOpen] = useState(false);
+  const [sticky, setSticky] = useState(false);
+  const [openIndex, setOpenIndex] = useState(-1);
+  const navRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
+
   const navbarToggleHandler = () => {
     setNavbarOpen(!navbarOpen);
   };
 
-  // Sticky Navbar
-  const [sticky, setSticky] = useState(false);
-  const handleStickyNavbar = () => {
-    if (window.scrollY >= 80) {
-      setSticky(true);
-    } else {
-      setSticky(false);
-    }
-  };
+  // Close submenu when clicking outside
   useEffect(() => {
-    window.addEventListener("scroll", handleStickyNavbar);
-    return () => window.removeEventListener("scroll", handleStickyNavbar);
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setOpenIndex(-1);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
-  // Submenu handler
-  const [openIndex, setOpenIndex] = useState(-1);
+  // Close submenu when route changes
+  useEffect(() => {
+    setOpenIndex(-1);
+    setNavbarOpen(false);
+  }, [pathname]);
+
   const handleSubmenu = (index) => {
     if (openIndex === index) {
       setOpenIndex(-1);
@@ -36,9 +44,15 @@ const Header = () => {
     }
   };
 
-  const pathname = usePathname();
+  const handleStickyNavbar = () => {
+    window.scrollY >= 80 ? setSticky(true) : setSticky(false);
+  };
 
-  // Menu data with Home, Services dropdown, and Blog
+  useEffect(() => {
+    window.addEventListener("scroll", handleStickyNavbar);
+    return () => window.removeEventListener("scroll", handleStickyNavbar);
+  }, []);
+
   const menuData = [
     {
       title: "Home",
@@ -61,9 +75,10 @@ const Header = () => {
     <>
       <header
         className={`header left-0 top-0 z-50 flex w-full items-center ${sticky
-          ? "fixed bg-white/95 shadow-2xl backdrop-blur-xl transition-all duration-500 dark:bg-gray-900/95 dark:shadow-gray-800/30"
-          : "absolute bg-transparent"
+            ? "fixed bg-white/95 shadow-2xl backdrop-blur-xl dark:bg-gray-900/95"
+            : "absolute bg-transparent"
           }`}
+        ref={navRef}
       >
         {/* Animated background elements */}
         {!sticky && (
@@ -147,8 +162,8 @@ const Header = () => {
                                 href={submenuItem.path}
                                 key={idx}
                                 className={`block px-5 py-3 text-sm font-medium transition-all duration-300 transform hover:translate-x-1 ${pathname === submenuItem.path
-                                    ? "bg-gray-100 text-primary dark:bg-gray-800 dark:text-white"
-                                    : "text-gray-700 hover:bg-gray-100 hover:text-primary dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white"
+                                  ? "bg-gray-100 text-primary dark:bg-gray-800 dark:text-white"
+                                  : "text-gray-700 hover:bg-gray-100 hover:text-primary dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white"
                                   }`}
                               >
                                 {submenuItem.title}
