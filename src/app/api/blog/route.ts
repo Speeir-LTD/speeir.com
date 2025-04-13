@@ -60,10 +60,12 @@ export async function GET(request: Request): Promise<NextResponse<ApiResponse<Bl
     // Optional filters
     const author = searchParams.get('author');
     const tag = searchParams.get('tag');
+    const timestamp = searchParams.get('timestamp'); // Allow timestamp but do not validate it as an ID
     
     const query: any = {};
     if (author) query.author = author;
     if (tag) query.tags = tag;
+    if (timestamp) query.timestamp = timestamp; // Optional: Use timestamp as a filter if needed
     
     const [posts, total] = await Promise.all([
       db.collection<BlogPost>('posts')

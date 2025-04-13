@@ -1,4 +1,6 @@
 // src/types/blog.ts
+import { ObjectId } from 'mongodb';
+
 export interface BlogPostBase {
     title: string;
     content: string;
@@ -9,7 +11,7 @@ export interface BlogPostBase {
   }
   
   export interface BlogPost extends BlogPostBase {
-    _id: string;
+    _id: ObjectId | string;
     createdAt: Date;
     updatedAt: Date;
   }
