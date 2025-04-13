@@ -6,9 +6,11 @@ import { BlogColumns } from '@/app/admin/blog/columns';
 import { PlusIcon, RefreshCwIcon } from 'lucide-react';
 import { BlogModal } from './BlogModal'; // Ensure named import
 import { toast } from 'sonner';
+import {ObjectId} from 'mongodb';
+import { BlogPost } from '@/types/post';
 
 export default function BlogAdminPage() {
-  const [posts, setPosts] = useState<{ _id: string; [key: string]: any }[]>([]);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false); // State for edit modal
@@ -19,7 +21,7 @@ export default function BlogAdminPage() {
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/blog?limit=10&page=1`);
+      const response = await fetch(`/api/blog`);
       const data = await response.json();
       // console.log("data",data);
       if (!response.ok) throw new Error(data.error || 'Failed to fetch posts');
@@ -38,7 +40,7 @@ export default function BlogAdminPage() {
       const response = await fetch(`/api/blog?id=${id}`, { method: 'DELETE' });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Failed to delete post');
-      setPosts((prev) => prev.filter((post) => post._id !== id));
+      setPosts((prev) => prev.filter((post) => post._id.toString() !== id));
       toast.success('Post deleted successfully');
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'An error occurred');
