@@ -54,7 +54,10 @@ const ServiceDetailPage = () => {
           <div className="max-w-5xl mx-auto">
             {/* Service title */}
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              {service.title}
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">
+                {service.title}
+              </span>
+
             </h1>
 
             {/* Long description */}
