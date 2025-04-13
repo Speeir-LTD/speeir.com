@@ -16,7 +16,7 @@ export const services: Service[] = [
     title: "Web Development",
     description: "Custom web applications built with modern technologies to meet your business needs.",
     slug: "web-development",
-    longDescription: "Our web development services focus on creating custom, high-performance web applications that align with your business goals. We use the latest technologies and frameworks to ensure your web presence is modern, responsive, and scalable.",
+    longDescription: "At Speeir, we specialize in creating powerful, user-friendly, and scalable websites tailored to your business goals. Whether you're a startup looking to make your mark or an established company seeking a digital revamp, we deliver websites that not only look great but perform exceptionally.",
     benefits: [
       "Custom solutions tailored to your specific needs",
       "Responsive design that works on all devices",
