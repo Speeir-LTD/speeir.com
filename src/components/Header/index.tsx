@@ -69,6 +69,10 @@ const Header = () => {
       title: "Blog",
       path: "/blog",
     },
+    {
+      title: "About Us",
+      path: "/about",
+    },
   ];
 
   return (
