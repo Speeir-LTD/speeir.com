@@ -47,7 +47,7 @@ const Footer = () => {
                 ].map((social) => (
                 <a
                   key={social.name}
-                  href="#"
+                  href={social.url}
                   aria-label={social.name}
                   className="text-gray-600 transition-colors duration-300 hover:text-primary dark:text-gray-300 dark:hover:text-primary"
                 >
