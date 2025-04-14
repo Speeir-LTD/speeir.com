@@ -19,11 +19,11 @@ const ServicesPage = () => {
           <div className="absolute bottom-1/3 right-1/4 w-40 h-40 rounded-full bg-purple-400 animate-[float_10s_ease-in-out_infinite_reverse]"></div>
         </div>
 
-        <div className="container relative z-10 mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="container relative z-10 mx-auto px-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
             {services.map((service) => (
               <Link href={`/services/${service.slug}`} key={service.id} className="block group">
-                <div className="relative bg-white/70 dark:bg-gray-800/60 rounded-2xl shadow-[0_15px_35px_-5px_rgba(0,0,0,0.1)] dark:shadow-[0_15px_35px_-5px_rgba(0,0,0,0.3)] backdrop-blur-md p-8 transition-all duration-500 hover:shadow-[0_20px_40px_-5px_rgba(79,70,229,0.2)] dark:hover:shadow-[0_20px_40px_-5px_rgba(139,92,246,0.3)] hover:-translate-y-1 h-full flex flex-col overflow-hidden border border-gray-100/50 dark:border-gray-700/30">
+                <div className="relative bg-white/70 dark:bg-gray-800/60 rounded-2xl shadow-[0_15px_35px_-5px_rgba(0,0,0,0.1)] dark:shadow-[0_15px_35px_-5px_rgba(0,0,0,0.3)] backdrop-blur-md p-8 min-h-[280px]  transition-all duration-500 hover:shadow-[0_20px_40px_-5px_rgba(79,70,229,0.2)] dark:hover:shadow-[0_20px_40px_-5px_rgba(139,92,246,0.3)] hover:-translate-y-1 h-full flex flex-col overflow-hidden border border-gray-100/50 dark:border-gray-700/30">
                   {/* Premium accent border on top */}
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-purple-600 transform origin-left transition-transform duration-500 scale-x-0 group-hover:scale-x-100"></div>
                   
@@ -44,7 +44,7 @@ const ServicesPage = () => {
                   
                   {/* CHANGE HERE: Simplified button container with just margin-top */}
                   <div className="mt-6 flex justify-center">
-                    <span className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-sm hover:from-blue-700 hover:to-purple-700 transition-all duration-300 group-hover:shadow-lg">
+                    <span className="inline-flex items-center justify-center px-8 py-5 font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-sm hover:from-blue-700 hover:to-purple-700 transition-all duration-300 group-hover:shadow-lg">
                       <span>Learn more</span>
                       <svg className="w-5 h-5 ml-2 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
