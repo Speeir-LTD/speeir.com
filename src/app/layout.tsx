@@ -21,11 +21,25 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <head />
-
+      {/* Google tag (gtag.js) */}
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-YGS9HVSMKE"
+      ></script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-YGS9HVSMKE');
+        `,
+        }}
+      />
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
         <Providers>
-        <Toaster position="top-right" />
-        {!isAdminRoute && <Header />}
+          <Toaster position="top-right" />
+          {!isAdminRoute && <Header />}
           {children}
           {!isAdminRoute && (
             <>
@@ -39,5 +53,5 @@ export default function RootLayout({
   );
 }
 
-import { Providers } from "./providers";import { usePathname } from "next/navigation";
+import { Providers } from "./providers"; import { usePathname } from "next/navigation";
 
