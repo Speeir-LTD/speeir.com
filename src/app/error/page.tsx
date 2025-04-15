@@ -1,10 +1,4 @@
 import Link from "next/link";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Page Not Found | Speeir",
-  description: "The page you're looking for doesn't exist or has been moved.",
-};
 
 const ErrorPage = () => {
   return (

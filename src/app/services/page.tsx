@@ -1,8 +1,15 @@
-"use client";
 import React from "react";
 import Link from "next/link";
 import { services } from "@/data/services";
 import Breadcrumb from "@/components/Common/Breadcrumb";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Our Services | Speeir",
+  description: "Explore our range of software development and IT services designed to help your business thrive in the digital world.",
+  keywords: "services, software development, IT services, Ireland, Speeir",
+  robots: "index, follow",
+};
 
 const ServicesPage = () => {
   return (

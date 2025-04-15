@@ -30,6 +30,19 @@ export default function AdminLayout({
 
   return (
     <ThemeProvider attribute="class" defaultTheme="dark">
+      <head>
+        <link rel="canonical" href="https://www.speeir.com/admin" />
+        <meta name="robots" content="noindex, nofollow" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Admin Dashboard",
+            "url": "https://www.speeir.com/admin",
+            "description": "Admin dashboard for managing Speeir content and analytics."
+          })}
+        </script>
+      </head>
       <div className="relative flex h-screen bg-gray-50 dark:bg-gray-900">
         <AdminSidebar />
         <MobileSidebar />

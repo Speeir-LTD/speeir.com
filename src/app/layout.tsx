@@ -20,7 +20,23 @@ export default function RootLayout({
 
   return (
     <html suppressHydrationWarning lang="en">
-      <head />
+      <head >
+        <link rel="canonical" href="https://www.speeir.com" />
+        <meta name="robots" content="index, follow" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "url": "https://www.speeir.com",
+            "name": "Speeir",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://www.speeir.com/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          })}
+        </script>
+      </head>
       {/* Google tag (gtag.js) */}
       <script
         async

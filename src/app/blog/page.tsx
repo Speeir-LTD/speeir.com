@@ -3,8 +3,14 @@
 import { useEffect, useState } from "react";
 import SingleBlog from "@/components/Blog/SingleBlog";
 import Breadcrumb from "@/components/Common/Breadcrumb";
-// import { Metadata } from "next";
+import { Metadata } from "next";
 
+// export const metadata: Metadata = {
+//   title: "Blog | Speeir",
+//   description: "Stay updated with the latest insights, trends, and news from Speeir's blog.",
+//   keywords: "blog, articles, Ireland, Speeir, web development, application development, software solutions",
+//   robots: "index, follow",
+// };
 
 const Blog = () => {
   const [blogData, setBlogData] = useState<any[]>([]);

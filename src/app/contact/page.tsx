@@ -5,8 +5,9 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Contact Page | Speeir",
-  description: "We craft fast, beautiful websites and powerful mobile apps that put your customers first. Whether you need a startup launchpad or enterprise-grade SaaS, we build digital experiences that convert and grow.  ",
-  // other metadata
+  description: "Reach out to our team for inquiries, support, or collaborations.",
+  keywords: "contact, support, Ireland, Speeir, inquiries, collaborations, software solutions, web development, application development, ecommerce, mobile apps",
+  robots: "index, follow",
 };
 
 const ContactPage = () => {

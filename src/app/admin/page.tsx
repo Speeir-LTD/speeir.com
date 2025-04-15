@@ -4,6 +4,14 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiTrendingUp, FiUsers, FiBarChart2, FiFileText, FiRefreshCw } from 'react-icons/fi';
 import { toast } from 'sonner';
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Admin Dashboard | Speeir",
+  description: "Manage and monitor your content, users, and analytics from the Speeir Admin Dashboard.",
+  keywords: "Ireland, Speeir, Ireland, Speeir, website development, application development, software solutions",
+  robots: "noindex, nofollow",
+};
 
 export default function AdminDashboardPage() {
   const router = useRouter();

@@ -4,6 +4,14 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { services } from "@/data/services";
 import Breadcrumb from "@/components/Common/Breadcrumb";
+import { Metadata } from "next";
+
+// export const metadata: Metadata = {
+//   title: "Service Details | Speeir",
+//   description: "Discover detailed information about our services and how they can benefit your business.",
+//   keywords: "service details, IT solutions, Ireland, Speeir",
+//   robots: "index, follow",
+// };
 
 const ServiceDetailPage = () => {
   const params = useParams();
