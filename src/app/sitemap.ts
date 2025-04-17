@@ -66,13 +66,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const dynamicRoutes: MetadataRoute.Sitemap = [
       ...servicesData.map((service) => ({
         url: `${baseUrl}/services/${service.slug}`,
-        lastModified: new Date(service.updatedAt),
+        lastModified: new Date(service.updatedAt).toISOString(),
         changeFrequency: 'weekly' as const,
         priority: 0.8,
       })),
       ...blogsData.map((blog) => ({
         url: `${baseUrl}/blog-details?id=${blog._id}`,
-        lastModified: new Date(blog.updatedAt),
+        lastModified: new Date(blog.updatedAt).toISOString(),
         changeFrequency: 'weekly' as const,
         priority: 0.6,
       })),
