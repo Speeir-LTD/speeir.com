@@ -13,7 +13,6 @@ export const OrganizationSchema = () => {
     "url": "https://www.speeir.com/",
     "name": "Speeir",
     "legalName": "Speeir LTD",
-    "businessType": "Software Development, Web Development, Mobile App Development, custom software solutions, ecommerce solutions, wordpress development",
     "description": "Web & Mobile Solutions for Modern Businesses",
     "foundingDate": "2025", 
     "sameAs": [
@@ -34,8 +33,50 @@ export const OrganizationSchema = () => {
       "url": "https://www.speeir.com/contact",
       "email": "info@speeir.com",
       "telephone": "+353894917304"
+    },
+    "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Services",
+        "itemListElement": [
+          {
+            "@type": "OfferCatalog",
+            "name": "Software Development",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Custom Software Solutions"
+                }
+              }
+            ]
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Web Development",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Ecommerce Solutions"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "WordPress Development"
+                }
+              }
+            ]
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Mobile App Development"
+          }
+        ]
     }
-    
   };
 
   // Only render on the homepage
