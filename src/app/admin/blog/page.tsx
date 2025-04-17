@@ -8,12 +8,6 @@ import { BlogModal } from './BlogModal'; // Ensure named import
 import { toast } from 'sonner';
 import {ObjectId} from 'mongodb';
 import { BlogPost } from '@/types/post';
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Blog Management | Admin | Speeir",
-  description: "Manage blog posts, drafts, and published content from the Admin Blog Management page.",
-};
 
 export default function BlogAdminPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);

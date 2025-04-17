@@ -2,6 +2,7 @@ require('dotenv').config(); // Load environment variables from .env file
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ['framer-motion'],
   // reactStrictMode: true,
   images: {
     domains: ["localhost", "speeir.com", "ui-avatars.com", "picsum.photos"], // Add required domains
