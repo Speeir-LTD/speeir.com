@@ -58,12 +58,12 @@ const ServicesPage = () => {
                 key={service.id} 
                 className="block group transform transition-all duration-500 hover:scale-[1.02]"
               >
-                <div className="relative bg-white/80 dark:bg-gray-800/80 rounded-xl shadow-xl dark:shadow-gray-900/20 backdrop-blur-sm p-8 min-h-[360px] transition-all duration-500 hover:shadow-2xl h-full flex flex-col overflow-hidden border border-gray-200/50 dark:border-gray-700/50 hover:border-blue-400/30 dark:hover:border-purple-500/30">
-                  {/* Premium 3D effect border */}
-                  <div className="absolute inset-0 rounded-xl border-2 border-white/30 dark:border-gray-700/30 pointer-events-none"></div>
+                <div className="relative bg-white/70 dark:bg-gray-800/60 rounded-xl shadow-[0_15px_35px_-5px_rgba(0,0,0,0.1)] dark:shadow-[0_15px_35px_-5px_rgba(0,0,0,0.3)] backdrop-blur-md p-8 min-h-[360px] transition-all duration-500 hover:shadow-[0_20px_40px_-5px_rgba(79,70,229,0.2)] dark:hover:shadow-[0_20px_40px_-5px_rgba(139,92,246,0.3)] hover:-translate-y-1 h-full flex flex-col overflow-hidden border border-gray-100/50 dark:border-gray-700/30">
+                  {/* Premium accent border on top */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-purple-600 transform origin-left transition-transform duration-500 scale-x-0 group-hover:scale-x-100"></div>
                   
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-blue-50/50 dark:from-gray-900/50 dark:to-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  {/* Subtle corner accent */}
+                  <div className="absolute top-0 right-0 w-16 h-16 -mt-8 -mr-8 rounded-full bg-gradient-to-br from-blue-500/10 to-purple-500/10 blur-xl"></div>
                   
                   {/* Service icon/decoration */}
                   <div className="relative z-10 w-16 h-16 mb-6 mx-auto flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 shadow-inner">
@@ -105,7 +105,6 @@ const ServicesPage = () => {
           </div>
         </div>
 
-      
 
         {/* Floating elements */}
         <div className="absolute bottom-0 left-0 right-0 h-40">
