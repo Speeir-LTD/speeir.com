@@ -6,6 +6,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import { Inter } from "next/font/google";
 import "../styles/index.css";
 import { Toaster } from 'sonner';
+import { OrganizationSchema } from "@/components/Seo/OrganizationSchema";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -57,12 +58,14 @@ export default function RootLayout({
           <Toaster position="top-right" />
           {!isAdminRoute && <Header />}
           {children}
+          
           {!isAdminRoute && (
             <>
               <Footer />
               <ScrollToTop />
             </>
           )}
+          <OrganizationSchema />
         </Providers>
       </body>
     </html>
