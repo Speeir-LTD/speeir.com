@@ -16,6 +16,14 @@ const Header = () => {
     setNavbarOpen(!navbarOpen);
   };
 
+  const handleSubmenuHover = (index) => {
+    setOpenIndex(index);
+  };
+
+  const handleSubmenuLeave = () => {
+    setOpenIndex(-1);
+  };
+
   // Close submenu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -117,7 +125,12 @@ const Header = () => {
               <nav className="flex items-center justify-center">
                 <ul className="flex space-x-10">
                   {menuData.map((menuItem, index) => (
-                    <li key={index} className="group relative">
+                    <li
+                      key={index}
+                      className="group relative"
+                      onMouseEnter={() => menuItem.submenu && handleSubmenuHover(index)}
+                      onMouseLeave={() => menuItem.submenu && handleSubmenuLeave()}
+                    >
                       {menuItem.path ? (
                         <Link
                           href={menuItem.path}
@@ -134,7 +147,6 @@ const Header = () => {
                       ) : (
                         <div className="relative">
                           <button
-                            onClick={() => handleSubmenu(index)}
                             className="flex items-center py-6 text-lg font-medium text-gray-800 transition-all duration-300 hover:text-primary dark:text-gray-200 dark:hover:text-white"
                           >
                             {menuItem.title}
@@ -142,8 +154,7 @@ const Header = () => {
                               width="20"
                               height="20"
                               viewBox="0 0 20 20"
-                              className={`ml-1.5 transform transition-transform duration-300 ${openIndex === index ? "rotate-180" : ""
-                                }`}
+                              className={`ml-1.5 transform transition-transform duration-300 ${openIndex === index ? "rotate-180" : ""}`}
                             >
                               <path
                                 fill="currentColor"
@@ -186,7 +197,7 @@ const Header = () => {
             <div className="flex items-center space-x-6">
               {/* <ThemeToggler /> */}
               <Link
-                href="/contact"
+                href="https://tally.so/r/mVxeQg"
                 className="hidden rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3 text-sm font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-500 hover:from-blue-700 hover:to-purple-700 md:inline-flex items-center group"
               >
                 <span>Get Started</span>
