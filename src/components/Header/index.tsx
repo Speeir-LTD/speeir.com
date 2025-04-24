@@ -304,7 +304,7 @@ const Header = () => {
               ))}
               <li className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <Link
-                  href="/contact"
+                  href="https://tally.so/r/mVxeQg"
                   className="block w-full rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-center font-medium text-white"
                   onClick={() => setNavbarOpen(false)}
                 >
