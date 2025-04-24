@@ -5,7 +5,7 @@ import Hero from "@/components/Hero";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Speeir - Home",
+  title: "Home | Speeir",
   description: "We craft fast, beautiful websites and powerful mobile apps that put your customers first.",
   keywords: "home, software solutions, Ireland, Speeir",
   robots: "index, follow",
