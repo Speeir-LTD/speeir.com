@@ -13,7 +13,7 @@ export async function GET(
   request: Request, { params } ): Promise<NextResponse<ApiResponse<BlogPost>>> {
   try {
     const db = await getDb();
-    const { id } = params;
+    const { id } = await params;
 
     if (!ObjectId.isValid(id)) {
       return errorResponse('Invalid post ID', 400);

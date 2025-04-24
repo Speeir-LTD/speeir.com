@@ -9,5 +9,6 @@ export default function robots() {
         }
       ],
       sitemap: 'https://www.speeir.com/sitemap.xml',
+      host: 'https://www.speeir.com',  
     };
   }
