@@ -1,21 +1,17 @@
 import { Metadata } from "next";
 import BlogDetailsClient from "./BlogDetailsClient";
 
-interface PageProps {
-    searchParams?: Promise<{ id?: string }>;
-  }
-
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams: { id?: string };
+  searchParams: Promise<{ id?: string }>;
 }): Promise<Metadata> {
-  const id = await searchParams?.id;
+  const { id } = await searchParams;
 
   if (!id) {
     return {
       title: "Blog Not Found | Speeir",
-      robots: "noindex, nofollow"
+      robots: "noindex, nofollow",
     };
   }
 
@@ -39,13 +35,11 @@ export async function generateMetadata({
   } catch (error) {
     return {
       title: "Blog Error | Speeir",
-      robots: "noindex, nofollow"
+      robots: "noindex, nofollow",
     };
   }
 }
 
-export default async function BlogDetailsPage({
-    searchParams,
-  }: PageProps) {
+export default async function BlogDetailsPage() {
     return <BlogDetailsClient />;
   }
