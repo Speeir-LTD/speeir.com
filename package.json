@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^5.10.7",
     "@radix-ui/react-dropdown-menu": "^2.1.7",
     "@tanstack/react-table": "^8.21.2",
     "@tiptap/extension-placeholder": "^2.11.7",
@@ -37,6 +38,7 @@
     "@types/node": "^20.8.9",
     "@types/react": "19.0.8",
     "autoprefixer": "^10.4.17",
+    "netlify-cli": "^20.1.1",
     "postcss": "^8.4.35",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
