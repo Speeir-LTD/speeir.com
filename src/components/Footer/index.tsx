@@ -2,10 +2,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
-
 const Footer = () => {
-
-
+  const partners = [
+    {
+      name: "fortaxe",
+      logo: "/images/Partner/fortaxe.png",
+      url: "https://www.fortaxe.com/"
+    },
+    
+  ];
 
   return (
     <footer
@@ -21,7 +26,7 @@ const Footer = () => {
       <div className="container relative z-10">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Logo and description (left side) */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             <div className="mb-8 max-w-sm">
               <Link href="/" className="inline-block">
                 <Image
@@ -33,7 +38,7 @@ const Footer = () => {
                 />
               </Link>
               <p className="mt-6 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
-              Your Success. Our Code.
+                Your Success. Our Code.
               </p>
             </div>
 
@@ -91,6 +96,32 @@ const Footer = () => {
               </li>
 
             </ul>
+          </div>
+
+          {/* Our Partners section */}
+          <div>
+            <h3 className="mb-6 text-lg font-semibold text-black dark:text-white">
+              Our Partner
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+              {partners.map((partner) => (
+                <a
+                  key={partner.name}
+                  href={partner.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center rounded-lg bg-white p-3 transition-all hover:scale-105 hover:shadow-md dark:bg-white"
+                >
+                  <Image
+                    src={partner.logo}
+                    alt={partner.name}
+                    width={80}
+                    height={40}
+                    className="h-auto w-full object-contain opacity-80 transition-opacity hover:opacity-100"
+                  />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
