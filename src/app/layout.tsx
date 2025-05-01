@@ -24,17 +24,29 @@ export default function RootLayout({
       <head >
         <link rel="canonical" href="https://www.speeir.com" />
         <meta name="robots" content="index, follow" />
+        <title>Speeir | Software Development | Ireland</title>
+        <meta 
+          name="description" 
+          content="Speeir Limited - Professional web & mobile app development company based in Westmeath, Ireland. Established 2025." 
+        />
         {/* Open Graph */}
-        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Speeir | Web & Mobile Development" />
+        <meta property="og:description" content="Irish software development company since 2025" />
         <meta property="og:url" content="https://www.speeir.com" />
-        <meta property="og:title" content="Speeir" />
-        <meta property="og:description" content="Web & Mobile Solutions for Modern Businesses" />
+        <meta property="og:site_name" content="Speeir" />
+        <meta property="og:image" content="https://speeir.com/images/logo/logo.svg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Speeir - Web & Mobile Development" />
+        <meta property="og:locale" content="en_IE" />
+        <meta property="og:type" content="website" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebSite",
             "url": "https://www.speeir.com",
             "name": "Speeir",
+            "alternateName": ["software company ireland", "software agency", "speeir agency"],
             "potentialAction": {
               "@type": "SearchAction",
               "target": "https://www.speeir.com/search?q={search_term_string}",
