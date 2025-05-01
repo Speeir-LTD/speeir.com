@@ -2,6 +2,12 @@ import { services } from "@/data/services";
 import { Metadata } from "next";
 import React from "react";
 
+export async function generateStaticParams() {
+  return services.map((service) => ({
+    slug: service.slug,
+  }));
+}
+
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata>  {
   const service = services.find(async s => s.slug === (await params).slug);

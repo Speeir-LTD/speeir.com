@@ -24,6 +24,11 @@ export default function RootLayout({
       <head >
         <link rel="canonical" href="https://www.speeir.com" />
         <meta name="robots" content="index, follow" />
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.speeir.com" />
+        <meta property="og:title" content="Speeir" />
+        <meta property="og:description" content="Web & Mobile Solutions for Modern Businesses" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",

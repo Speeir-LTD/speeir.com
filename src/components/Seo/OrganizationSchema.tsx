@@ -12,7 +12,7 @@ export const OrganizationSchema = () => {
     "@id": "https://www.speeir.com/#organization",
     "url": "https://www.speeir.com/",
     "name": "Speeir",
-    "legalName": "Speeir LTD",
+    "legalName": "Speeir Limited",
     "description": "Web & Mobile Solutions for Modern Businesses",
     "foundingDate": "2025", 
     "sameAs": [
