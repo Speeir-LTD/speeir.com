@@ -11,30 +11,41 @@ export async function generateMetadata({
   if (!id) {
     return {
       title: "Blog Not Found | Speeir",
+      description: "We couldn't find the blog you're looking for.",
       robots: "noindex, nofollow",
     };
   }
 
   try {
-    const res = await fetch(`https://speeir.com/api/blog/${id}`);
+    const res = await fetch(`https://speeir.com/api/blog/${id}`, {
+      next: { revalidate: 60 }, // Optional: cache for 60s
+    });
     const blog = await res.json();
+    const { title, description, author, publishedAt, image } = blog.data;
+
+    const blogUrl = `https://speeir.com/blog-details?id=${id}`;
+
 
     return {
-      title: `${blog.data.title} | Speeir`,
-      description: blog.data.description,
-      openGraph: {
-        title: `${blog.data.title} | Speeir`,
-        description: blog.data.description,
-        url: `https://speeir.com/blog-details?id=${id}`,
-        type: "article",
-      },
+      title: `${title} | Speeir`,
+      description,
       alternates: {
-        canonical: `https://speeir.com/blog-details?id=${id}`,
+        canonical: blogUrl,
+      },
+      openGraph: {
+        type: "article",
+        title: `${title} | Speeir`,
+        description,
+        url: blogUrl,
+        images: [{ url: image }],
+        publishedTime: publishedAt,
+        authors: [author],
       },
     };
   } catch (error) {
     return {
       title: "Blog Error | Speeir",
+      description: "An error occurred while loading the blog.",
       robots: "noindex, nofollow",
     };
   }
