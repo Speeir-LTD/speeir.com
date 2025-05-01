@@ -8,6 +8,7 @@ export interface Service {
   longDescription?: string;
   benefits?: string[];
   process?: { title: string; description: string }[];
+  updatedAt: string;
 }
 
 export const services: Service[] = [
@@ -32,7 +33,8 @@ export const services: Service[] = [
       { title: "Testing", description: "Ensuring quality through comprehensive testing." },
       { title: "Deployment", description: "Launching your application to production." },
       { title: "Support", description: "Ongoing maintenance and support after launch." }
-    ]
+    ],
+    updatedAt: "2025-04-29T10:00:00.000Z"
   },
   {
     id: "mobile-development",
@@ -54,7 +56,8 @@ export const services: Service[] = [
       { title: "Testing", description: "Ensuring quality across devices and platforms." },
       { title: "Deployment", description: "Publishing your app to the app stores." },
       { title: "Maintenance", description: "Ongoing updates and support." }
-    ]
+    ],
+    updatedAt: "2025-04-29T10:00:00.000Z"
   },
   {
     id: "custom-software",
@@ -76,7 +79,8 @@ export const services: Service[] = [
       { title: "Quality Assurance", description: "Rigorous testing to ensure reliability." },
       { title: "Deployment", description: "Smooth implementation into your business." },
       { title: "Maintenance", description: "Ongoing support and enhancements." }
-    ]
+    ],
+    updatedAt: "2025-04-29T10:00:00.000Z"
   },
   {
     id: "digital-marketing",
@@ -98,7 +102,8 @@ export const services: Service[] = [
       { title: "Implementation", description: "Executing across relevant channels." },
       { title: "Monitoring", description: "Tracking performance in real-time." },
       { title: "Optimization", description: "Continuous improvement based on data." }
-    ]
+    ],
+    updatedAt: "2025-04-29T10:00:00.000Z"
   },
   {
     id: "e-commerce",
@@ -120,7 +125,8 @@ export const services: Service[] = [
       { title: "Development", description: "Building your store with all required functionality." },
       { title: "Testing", description: "Ensuring a smooth checkout process and user experience." },
       { title: "Launch", description: "Going live with marketing support." }
-    ]
+    ],
+    updatedAt: "2025-04-29T10:00:00.000Z"
   },
   {
     id: "maintenance-support",
@@ -142,6 +148,7 @@ export const services: Service[] = [
       { title: "Updates", description: "Regular software updates and security patches." },
       { title: "Support", description: "Responsive technical assistance." },
       { title: "Reporting", description: "Regular performance and status reports." }
-    ]
+    ],
+    updatedAt: "2025-04-29T10:00:00.000Z"
   }
 ];
