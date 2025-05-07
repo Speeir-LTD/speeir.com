@@ -27,16 +27,16 @@ export default function RootLayout({
         <title>Speeir | Software Development | Ireland</title>
         <meta 
           name="description" 
-          content="Speeir Limited - Professional web & mobile app development company based in Westmeath, Ireland. Established 2025." 
+          content="Speeir Limited - Your Success Our Code" 
         />
         {/* Open Graph */}
         <meta property="og:title" content="Speeir | Web & Mobile Development" />
-        <meta property="og:description" content="Irish software development company since 2025" />
+        <meta property="og:description" content="Speeir LTD Web & Mobile Solutions for Modern Businesses, We craft fast, beautiful websites and powerful mobile apps that put your customers first. Whether you need a startup launchpad or enterprise-grade SaaS, we build digital experiences that convert and grow." />
         <meta property="og:url" content="https://www.speeir.com" />
         <meta property="og:site_name" content="Speeir" />
         <meta property="og:image" content="https://speeir.com/images/logo/logo.svg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="300" />
         <meta property="og:image:alt" content="Speeir - Web & Mobile Development" />
         <meta property="og:locale" content="en_IE" />
         <meta property="og:type" content="website" />
