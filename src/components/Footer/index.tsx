@@ -94,6 +94,14 @@ const Footer = () => {
                   Blog
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-gray-600 transition-colors duration-300 hover:text-primary dark:text-gray-300 dark:hover:text-primary"
+                >
+                  Contact Us
+                </Link>
+              </li>
 
             </ul>
           </div>
@@ -134,7 +142,7 @@ const Footer = () => {
             © {new Date().getFullYear()} Speeir LTD. All rights reserved.
           </p>
           <div className="mt-4 flex space-x-6 md:mt-0">
-            <Link href="#" className="text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary">
+            <Link href="/privacy-policy" className="text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary">
               Privacy Policy
             </Link>
             <Link href="#" className="text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary">
