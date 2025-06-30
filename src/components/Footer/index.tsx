@@ -32,7 +32,7 @@ const Footer = () => {
                 <Image
                   src="/images/logo/logo.svg"
                   alt="logo"
-                  className="hidden w-full dark:block"
+                  className="w-full block"
                   width={160}
                   height={40}
                 />

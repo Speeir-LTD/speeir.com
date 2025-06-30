@@ -7,6 +7,8 @@ import { Inter } from "next/font/google";
 import "../styles/index.css";
 import { Toaster } from 'sonner';
 import { OrganizationSchema } from "@/components/Seo/OrganizationSchema";
+import { usePathname } from "next/navigation";
+import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +23,7 @@ export default function RootLayout({
 
   return (
     <html suppressHydrationWarning lang="en">
-      <head >
+      <head>
         <link rel="canonical" href="https://www.speeir.com" />
         <meta name="robots" content="index, follow" />
         <title>Speeir | Software Development | Ireland</title>
@@ -40,6 +42,8 @@ export default function RootLayout({
         <meta property="og:image:alt" content="Speeir - Web & Mobile Development" />
         <meta property="og:locale" content="en_IE" />
         <meta property="og:type" content="website" />
+        
+        {/* Schema.org JSON-LD */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -54,7 +58,8 @@ export default function RootLayout({
             }
           })}
         </script>
-          {/* <!-- Google Tag Manager --> */}
+
+        {/* Google Tag Manager */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){
@@ -69,28 +74,35 @@ export default function RootLayout({
             })(window,document,'script','dataLayer','GTM-53277NPC');`
           }}
         />
-        {/* <!-- End Google Tag Manager --> */}
+
+        {/* Google Analytics */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-YGS9HVSMKE"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-YGS9HVSMKE');
+            `,
+          }}
+        />
       </head>
-      {/* Google tag (gtag.js) */}
-      <script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-YGS9HVSMKE"
-      ></script>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-YGS9HVSMKE');
-        `,
-        }}
-      />
+      
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
-        {/* <!-- Google Tag Manager (noscript) --> */}
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53277NPC"
-        height="0" width="0" style={{display: "none", visibility: "hidden"}}></iframe></noscript>
-        {/* <!-- End Google Tag Manager (noscript) --> */}
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe 
+            src="https://www.googletagmanager.com/ns.html?id=GTM-53277NPC"
+            height="0" 
+            width="0" 
+            style={{display: "none", visibility: "hidden"}}
+          />
+        </noscript>
+        
         <Providers>
           <Toaster position="top-right" />
           {!isAdminRoute && <Header />}
@@ -109,5 +121,4 @@ export default function RootLayout({
   );
 }
 
-import { Providers } from "./providers"; import { usePathname } from "next/navigation";
 

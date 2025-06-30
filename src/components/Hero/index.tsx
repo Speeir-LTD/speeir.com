@@ -53,7 +53,7 @@ const Hero = () => {
                     <span className="absolute -bottom-1 left-0 h-2 w-full animate-[underline_3s_ease-in-out_infinite] bg-gradient-to-r from-blue-500 to-purple-600 opacity-80"></span>
                   </span>
                   <br />
-                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent text-lg sm:text-xl md:text-2xl lg:text-3xl">
                   Web & Mobile Solutions for Modern Businesses
                   </span>
                 </h1>
