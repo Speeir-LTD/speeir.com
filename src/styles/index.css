@@ -11,169 +11,74 @@
 }
 
 @layer components {
-  input[type="checkbox"]:checked ~ label span svg {
-    @apply inline-flex;
+  /* 3D Transform utilities */
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .transform-gpu {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  .translate-z-12 {
+    transform: translateZ(12px);
+  }
+  
+  .rotate-y-45 {
+    transform: rotateY(45deg);
   }
 
-  .sticky .header-logo {
-    @apply py-5 lg:py-2;
+  /* Enhanced animations */
+  @keyframes spin {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
   }
 
-  .sticky .menu-scroll.active {
-    @apply opacity-70;
-  }
-
-  input#togglePlan:checked ~ .dot {
-    @apply translate-x-full;
-  }
-
-  input#checkboxLabel:checked ~ .box span {
-    @apply opacity-100;
-  }
-
-  @keyframes borderLight {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-  }
-  @keyframes float1 {
-    0%, 100% { transform: translateY(0) translateX(0); }
-    50% { transform: translateY(-20px) translateX(10px); }
-  }
-  @keyframes float2 {
-    0%, 100% { transform: translateY(0) translateX(0); }
-    50% { transform: translateY(15px) translateX(-15px); }
-  }
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0) rotate(0deg);
-    }
-    50% {
-      transform: translateY(-20px) rotate(5deg);
-    }
-  }
-  @keyframes underline {
-    0%,
-    100% {
-      transform: scaleX(0);
-      transform-origin: left;
-    }
-    50% {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-    51% {
-      transform-origin: right;
-    }
-    100% {
-      transform: scaleX(0);
-      transform-origin: right;
-    }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(5deg); }
-  }
-  .animate-fadeInUp {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(30px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
-  .animate-fadeInUp {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
+
+  @keyframes float {
+    0%, 100% { 
+      transform: translateY(0) rotate(0deg); 
+      opacity: 0.6;
     }
-    to {
+    50% { 
+      transform: translateY(-20px) rotate(180deg); 
       opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(5deg); }
-  }
-
-  .animate-fadeInUp {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(5deg); }
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(2deg); }
-  }
-  @keyframes float-delay {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(20px) rotate(-2deg); }
-  }
-  .animate-float { animation: float 8s ease-in-out infinite; }
-  .animate-float-delay { animation: float-delay 10s ease-in-out infinite; }
-  .bg-grid-pattern {
-    background-image: 
-      linear-gradient(to right, #e5e7eb 1px, transparent 1px),
-      linear-gradient(to bottom, #e5e7eb 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
-  .bg-grid-pattern-dark {
-    background-image: 
-      linear-gradient(to right, #374151 1px, transparent 1px),
-      linear-gradient(to bottom, #374151 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-20px);
     }
   }
 
-  /* Add to your global CSS */
-@keyframes gradient-x {
-  0% { background-position: 0% 50% }
-  50% { background-position: 100% 50% }
-  100% { background-position: 0% 50% }
-}
+  @keyframes pulse {
+    0%, 100% { 
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    50% { 
+      transform: scale(1.05);
+      opacity: 0.8;
+    }
+  }
 
-.animate-gradient-x {
-  background-size: 200% 200%;
-  animation: gradient-x 6s ease infinite;
-}
+  /* Particle system */
+  .particle {
+    will-change: transform, opacity;
+  }
 
-@keyframes float {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(-40px) rotate(180deg); opacity: 0; }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
+  /* Custom cursor - Optional, remove if you want default cursor */
+  body {
+    cursor: none;
+  }
+  
+  a, button, input, textarea, select {
+    cursor: pointer;
+  }
 }
