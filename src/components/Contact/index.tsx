@@ -12,6 +12,30 @@ const Contact = () => {
   const [submitStatus, setSubmitStatus] = useState<null | 'success' | 'error'>(null);
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+
+  // ADD MOUSE TRACKING EFFECT HERE
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      setMousePosition({ x, y });
+    };
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,6 +109,35 @@ const Contact = () => {
             transform: `translateY(${scrollY * -0.015}px)`,
           }}
         ></div>
+      </div>
+      {/* ADD ULTRA PREMIUM ELEMENTS HERE */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Cursor-following spotlight */}
+        <div 
+          className="absolute w-96 h-96 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-3xl transition-all duration-300 ease-out"
+          style={{
+            left: `${mousePosition.x}%`,
+            top: `${mousePosition.y}%`,
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+        {/* Floating geometric shapes */}
+        <div className="absolute top-20 right-20 w-16 h-16 rotate-45 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 backdrop-blur-sm animate-[float_7s_ease-in-out_infinite]" />
+        <div className="absolute bottom-32 left-16 w-12 h-12 rounded-full bg-gradient-to-br from-pink-400/20 to-rose-500/20 backdrop-blur-sm animate-[float_9s_ease-in-out_infinite_reverse]" />
+        
+        {/* Animated particles */}
+        {[...Array(12)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-blue-400/40 rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${2 + Math.random() * 2}s`,
+            }}
+          />
+        ))}
       </div>
 
       {/* Subtle parallax background layer
