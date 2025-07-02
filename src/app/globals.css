@@ -1,0 +1,41 @@
+/* Optimized animations with will-change and transform3d */
+@keyframes float {
+  0%, 100% { 
+    transform: translate3d(0, 0, 0); 
+  }
+  50% { 
+    transform: translate3d(0, -10px, 0); 
+  }
+}
+
+@keyframes float1 {
+  0%, 100% { 
+    transform: translate3d(0, 0, 0) rotate(0deg); 
+  }
+  50% { 
+    transform: translate3d(0, -15px, 0) rotate(5deg); 
+  }
+}
+
+@keyframes float2 {
+  0%, 100% { 
+    transform: translate3d(0, 0, 0) rotate(0deg); 
+  }
+  50% { 
+    transform: translate3d(0, -20px, 0) rotate(-3deg); 
+  }
+}
+
+/* GPU-accelerated animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
