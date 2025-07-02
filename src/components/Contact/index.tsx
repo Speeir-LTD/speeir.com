@@ -35,12 +35,12 @@ const Contact = () => {
     };
   }, []);
 
-  
+
 
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
-      
+
       // Check if the contact section is in viewport
       const contactSection = document.getElementById('contact');
       if (contactSection) {
@@ -52,7 +52,7 @@ const Contact = () => {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Initial call
-    
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -89,7 +89,7 @@ const Contact = () => {
       setIsSubmitting(false);
     }
   };
-  
+
   return (
     <section
       id="contact"
@@ -97,13 +97,13 @@ const Contact = () => {
     >
       {/* Subtle background elements */}
       <div className="absolute inset-0 overflow-hidden opacity-5 dark:opacity-10">
-        <div 
+        <div
           className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-blue-400 animate-[float_8s_ease-in-out_infinite]"
           style={{
             transform: `translateY(${scrollY * 0.02}px)`,
           }}
         ></div>
-        <div 
+        <div
           className="absolute bottom-1/3 right-1/4 w-40 h-40 rounded-full bg-purple-400 animate-[float_10s_ease-in-out_infinite_reverse]"
           style={{
             transform: `translateY(${scrollY * -0.015}px)`,
@@ -113,7 +113,7 @@ const Contact = () => {
       {/* ADD ULTRA PREMIUM ELEMENTS HERE */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Cursor-following spotlight */}
-        <div 
+        <div
           className="absolute w-96 h-96 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-3xl transition-all duration-300 ease-out"
           style={{
             left: `${mousePosition.x}%`,
@@ -124,7 +124,7 @@ const Contact = () => {
         {/* Floating geometric shapes */}
         <div className="absolute top-20 right-20 w-16 h-16 rotate-45 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 backdrop-blur-sm animate-[float_7s_ease-in-out_infinite]" />
         <div className="absolute bottom-32 left-16 w-12 h-12 rounded-full bg-gradient-to-br from-pink-400/20 to-rose-500/20 backdrop-blur-sm animate-[float_9s_ease-in-out_infinite_reverse]" />
-        
+
         {/* Animated particles */}
         {[...Array(12)].map((_, i) => (
           <div
@@ -156,7 +156,7 @@ const Contact = () => {
       <div className="container relative z-10">
         <div className="flex justify-center">
           <div className="w-full max-w-3xl px-4">
-            <div 
+            <div
               className="mb-12 rounded-xl bg-white/80 px-8 py-11 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl dark:bg-gray-800/80 dark:hover:shadow-gray-900/50 sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px] text-center relative overflow-hidden group"
               style={{
                 transform: `translateY(${scrollY * 0.01}px)`,
@@ -165,12 +165,12 @@ const Contact = () => {
             >
               {/* Subtle accent border */}
               <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 transform origin-left transition-transform duration-500 scale-x-0 group-hover:scale-x-100"></div>
-              
+
               {/* Subtle corner accent */}
               <div className="absolute top-0 right-0 w-16 h-16 -mt-8 -mr-8 rounded-full bg-gradient-to-br from-blue-500/5 to-purple-500/5 blur-xl"></div>
 
               {/* Header with subtle parallax */}
-              <div 
+              <div
                 className="mx-auto max-w-2xl mb-12"
                 style={{
                   transform: `translateY(${scrollY * 0.005}px)`,
@@ -181,7 +181,7 @@ const Contact = () => {
                     Premium Services
                   </span>
                 </div>
-                
+
                 <h2 className="mb-3 text-2xl font-bold text-black dark:text-white sm:text-3xl lg:text-2xl xl:text-3xl">
                   <span className="relative inline-block">
                     <span className="relative z-10">Need Help?</span>
@@ -191,7 +191,7 @@ const Contact = () => {
                     Open a Ticket
                   </span>
                 </h2>
-                
+
                 <p className="mb-12 text-base font-medium text-body-color dark:text-gray-300">
                   Our support team will get back to you ASAP via email.
                 </p>
@@ -201,7 +201,7 @@ const Contact = () => {
               <form onSubmit={handleSubmit}>
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div 
+                    <div
                       className="group"
                       style={{
                         transform: `translateY(${scrollY * 0.003}px)`,
@@ -222,8 +222,8 @@ const Contact = () => {
                         className="w-full rounded-lg border-0 bg-white/90 px-6 py-3 text-base text-body-color shadow-sm outline-none transition-all duration-300 focus:ring-2 focus:ring-primary dark:bg-gray-700/90 dark:text-body-color-dark dark:focus:ring-purple-500 focus:shadow-lg hover:shadow-md"
                       />
                     </div>
-                    
-                    <div 
+
+                    <div
                       className="group"
                       style={{
                         transform: `translateY(${scrollY * 0.004}px)`,
@@ -247,7 +247,7 @@ const Contact = () => {
                     </div>
                   </div>
 
-                  <div 
+                  <div
                     className="group"
                     style={{
                       transform: `translateY(${scrollY * 0.005}px)`,
@@ -284,7 +284,7 @@ const Contact = () => {
                     )}
 
                     {/* Submit button with subtle effects */}
-                    <div 
+                    <div
                       className="flex justify-center"
                       style={{
                         transform: `translateY(${scrollY * 0.003}px)`,
@@ -318,13 +318,13 @@ const Contact = () => {
       {/* Subtle floating elements */}
       <div className="absolute bottom-0 left-0 right-0 hidden h-40 md:block">
         <div className="relative h-full w-full">
-          <div 
+          <div
             className="absolute left-[10%] bottom-0 h-24 w-24 animate-[float_6s_ease-in-out_infinite] rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 shadow-lg backdrop-blur-sm"
             style={{
               transform: `translateY(${scrollY * -0.05}px)`,
             }}
           ></div>
-          <div 
+          <div
             className="absolute right-[10%] bottom-10 h-16 w-16 animate-[float_8s_ease-in-out_infinite_reverse] rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 shadow-lg backdrop-blur-sm"
             style={{
               transform: `translateY(${scrollY * -0.03}px)`,
@@ -334,7 +334,7 @@ const Contact = () => {
       </div>
 
       {/* Subtle ambient lighting */}
-      <div 
+      <div
         className="absolute top-1/2 left-1/2 w-[600px] h-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-blue-500/3 via-purple-500/3 to-pink-500/3 blur-3xl pointer-events-none"
         style={{
           transform: `translate(-50%, -50%) scale(${1 + scrollY * 0.0002})`,
@@ -342,15 +342,15 @@ const Contact = () => {
       ></div>
 
       {/* Subtle mesh gradient overlay */}
-      <div 
+      <div
         className="absolute inset-0 opacity-10 dark:opacity-5 pointer-events-none"
-                style={{
+        style={{
           background: `radial-gradient(circle at ${50 + Math.sin(scrollY * 0.005) * 5}% ${50 + Math.cos(scrollY * 0.005) * 5}%, rgba(59, 130, 246, 0.05) 0%, transparent 50%), radial-gradient(circle at ${30 + Math.cos(scrollY * 0.004) * 8}% ${70 + Math.sin(scrollY * 0.004) * 8}%, rgba(147, 51, 234, 0.03) 0%, transparent 50%)`,
         }}
       ></div>
 
       {/* Subtle grid pattern */}
-      <div 
+      <div
         className="absolute inset-0 opacity-3 dark:opacity-5"
         style={{
           backgroundImage: `radial-gradient(circle at 1px 1px, rgba(59, 130, 246, 0.15) 1px, transparent 0)`,
@@ -360,7 +360,7 @@ const Contact = () => {
       ></div>
 
       {/* Subtle spotlight effect */}
-      <div 
+      <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background: `radial-gradient(400px circle at 50% ${Math.max(0, Math.min(100, (scrollY - 300) * 0.05))}%, rgba(59, 130, 246, 0.02), transparent 40%)`,
@@ -369,7 +369,7 @@ const Contact = () => {
 
       {/* Subtle glow effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div 
+        <div
           className="absolute w-24 h-24 rounded-full bg-blue-500/5 blur-2xl"
           style={{
             top: `${25 + Math.sin(scrollY * 0.003) * 5}%`,
@@ -377,7 +377,7 @@ const Contact = () => {
             transform: `scale(${1 + Math.sin(scrollY * 0.005) * 0.1})`,
           }}
         ></div>
-        <div 
+        <div
           className="absolute w-32 h-32 rounded-full bg-purple-500/4 blur-2xl"
           style={{
             top: `${65 + Math.cos(scrollY * 0.002) * 8}%`,
@@ -405,7 +405,7 @@ const Contact = () => {
       </div>
 
       {/* Subtle depth shadow */}
-      <div 
+      <div
         className="absolute inset-0 bg-gradient-radial from-transparent via-gray-900/1 to-transparent dark:via-gray-100/0.5 pointer-events-none"
         style={{
           transform: `scale(${1 + Math.sin(scrollY * 0.002) * 0.02})`,
