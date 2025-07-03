@@ -30,29 +30,35 @@ const Features = () => {
   }, []);
 
   // Optimized card animation - cards slide up from bottom with slight stagger
-const cardVariants = {
-  hidden: { 
-    y: 150,
-    opacity: 0, 
-    scale: 0.6,
-    rotateX: 30,
-    filter: "blur(10px) brightness(0.7)"
+// Fix the cardVariants structure
+const cardVariants: Variants = {
+  hidden: {
+    y: 120,
+    x: 0, // Remove function, handle in component
+    opacity: 0,
+    scale: 0.7,
+    rotateX: 15,
+    rotateZ: 0, // Remove function, handle in component
+    filter: "blur(4px)",
   },
-  visible: (index: number) => ({
+  visible: {
     y: 0,
+    x: 0,
     opacity: 1,
     scale: 1,
     rotateX: 0,
-    filter: "blur(0px) brightness(1)",
+    rotateZ: 0,
+    filter: "blur(0px)",
     transition: {
       type: "spring",
-      damping: 15,
-      stiffness: 130,
-      delay: index * 0.15,
-      duration: 1.2,
+      damping: 20,
+      stiffness: 100,
+      duration: 1.0,
     }
-  })
+  }
 };
+
+
 
   // Container animation
   const containerVariants = {
@@ -67,19 +73,22 @@ const cardVariants = {
   };
 
   // Header animation
-  const headerVariants = {
-    hidden: { y: -30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        damping: 20,
-        stiffness: 100,
-        duration: 0.6,
-      }
+  const headerVariants: Variants = {
+  hidden: { 
+    y: -30, 
+    opacity: 0 
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring" as const, // Add 'as const' to fix type issue
+      damping: 20,
+      stiffness: 100,
+      duration: 0.6,
     }
-  };
+  }
+};
 
   return (
     <>

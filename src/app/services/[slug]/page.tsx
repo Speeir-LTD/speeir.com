@@ -1,16 +1,41 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { services } from "@/data/services";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 
 const ServiceDetailPage = () => {
   const params = useParams();
-  const router = useRouter();
   const slug = params.slug as string;
+  
+  // Cursor tracking state
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   const service = services.find(s => s.slug === slug);
+
+  // Mouse tracking and window size effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    // Initial setup
+    handleResize();
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   if (!service) {
     return (
@@ -38,6 +63,203 @@ const ServiceDetailPage = () => {
 
   return (
     <>
+      {/* Hero-style Cursor - Interactive Cursor Trail */}
+      <div 
+        className="fixed w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full pointer-events-none z-50 opacity-60 transition-all duration-100 ease-out"
+        style={{ 
+          left: `${mousePosition.x}px`,
+          top: `${mousePosition.y}px`,
+          transform: 'translate(-50%, -50%)',
+        }}
+      />
+
+      {/* Features-style Cursor - Main cursor dot */}
+      <div 
+        className="fixed w-4 h-4 pointer-events-none z-50 transition-all duration-150 ease-out"
+        style={{
+          left: mousePosition.x - 8,
+          top: mousePosition.y - 8,
+          transform: `scale(${isHovering ? 1.5 : 1})`,
+        }}
+      >
+        <div className="w-full h-full rounded-full bg-gradient-to-r from-purple-500 to-blue-500"></div>
+      </div>
+
+      {/* Features-style Cursor - Cursor Follower */}
+      <div 
+        className="fixed w-8 h-8 pointer-events-none z-40 transition-all duration-300 ease-out"
+        style={{
+          left: mousePosition.x - 16,
+          top: mousePosition.y - 16,
+          transform: `scale(${isHovering ? 1.2 : 1})`,
+        }}
+      >
+        <div className="w-full h-full rounded-full border border-blue-500/50 dark:border-purple-400/50"></div>
+      </div>
+
+      {/* Ultra Premium Cursor-Following Spotlight System */}
+      {/* Primary Mega Spotlight */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-5 transition-all duration-700 ease-out"
+        style={{
+          background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(99, 102, 241, 0.15), rgba(147, 51, 234, 0.08) 40%, transparent 70%)`,
+        }}
+      ></div>
+
+      {/* Secondary Spotlight Layer */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-4 transition-all duration-1000 ease-out"
+        style={{
+          background: `radial-gradient(1200px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(147, 51, 234, 0.08), rgba(59, 130, 246, 0.05) 50%, transparent 80%)`,
+        }}
+      ></div>
+
+      {/* Tertiary Ambient Glow */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-3 transition-all duration-1500 ease-out opacity-60"
+        style={{
+          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(168, 85, 247, 0.12), transparent 60%)`,
+        }}
+      ></div>
+
+      {/* Premium Floating Orbs System */}
+      <div className="fixed inset-0 pointer-events-none z-10 overflow-hidden">
+        {/* Primary Luxury Orb */}
+        <div 
+          className="absolute w-40 h-40 rounded-full transition-all duration-1000 ease-out opacity-20"
+          style={{
+            left: mousePosition.x * 0.08 + 100,
+            top: mousePosition.y * 0.08 + 100,
+            background: 'radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, rgba(147, 51, 234, 0.2) 50%, transparent 100%)',
+            filter: 'blur(20px)',
+            transform: `scale(${1 + Math.sin(Date.now() * 0.001) * 0.3}) rotate(${mousePosition.x * 0.1}deg)`,
+          }}
+        ></div>
+
+        {/* Secondary Floating Orb */}
+        <div 
+          className="absolute w-60 h-60 rounded-full transition-all duration-1200 ease-out opacity-15"
+          style={{
+            right: (windowSize.width - mousePosition.x) * 0.06 + 80,
+            top: mousePosition.y * 0.12 + 150,
+            background: 'radial-gradient(circle, rgba(147, 51, 234, 0.3) 0%, rgba(168, 85, 247, 0.15) 60%, transparent 100%)',
+            filter: 'blur(25px)',
+            transform: `scale(${1 + Math.cos(Date.now() * 0.0008) * 0.4}) rotate(${mousePosition.y * -0.08}deg)`,
+          }}
+        ></div>
+
+        {/* Tertiary Accent Orb */}
+        <div 
+          className="absolute w-32 h-32 rounded-full transition-all duration-800 ease-out opacity-25"
+          style={{
+            left: mousePosition.x * 0.15 + 200,
+            bottom: (windowSize.height - mousePosition.y) * 0.1 + 120,
+            background: 'radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(99, 102, 241, 0.2) 40%, transparent 100%)',
+            filter: 'blur(15px)',
+            transform: `scale(${1 + Math.sin(Date.now() * 0.0012) * 0.25}) rotate(${mousePosition.x * 0.05}deg)`,
+          }}
+        ></div>
+
+        {/* Luxury Particle System */}
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-3 h-3 rounded-full transition-all duration-500 ease-out opacity-40"
+            style={{
+              left: mousePosition.x + Math.sin(Date.now() * 0.001 + i * 0.8) * (120 + i * 20),
+              top: mousePosition.y + Math.cos(Date.now() * 0.001 + i * 0.8) * (100 + i * 15),
+              background: `linear-gradient(45deg, ${i % 2 === 0 ? 'rgba(99, 102, 241, 0.6)' : 'rgba(147, 51, 234, 0.6)'}, transparent)`,
+              filter: 'blur(2px)',
+              transform: `scale(${0.5 + Math.sin(Date.now() * 0.002 + i) * 0.5})`,
+              animationDelay: `${i * 100}ms`,
+            }}
+          ></div>
+        ))}
+
+        {/* Premium Light Rays */}
+        <div 
+          className="absolute w-1 opacity-30 transition-all duration-1000 ease-out"
+          style={{
+            left: mousePosition.x,
+            top: 0,
+            height: mousePosition.y,
+            background: 'linear-gradient(to bottom, rgba(99, 102, 241, 0.4), rgba(147, 51, 234, 0.2), transparent)',
+            filter: 'blur(1px)',
+            transform: `rotate(${Math.sin(Date.now() * 0.001) * 5}deg)`,
+          }}
+        ></div>
+
+        <div 
+          className="absolute h-1 opacity-30 transition-all duration-1000 ease-out"
+          style={{
+            top: mousePosition.y,
+            left: 0,
+            width: mousePosition.x,
+            background: 'linear-gradient(to right, rgba(147, 51, 234, 0.4), rgba(168, 85, 247, 0.2), transparent)',
+            filter: 'blur(1px)',
+            transform: `rotate(${Math.cos(Date.now() * 0.001) * 3}deg)`,
+          }}
+        ></div>
+      </div>
+
+      {/* Interactive Mesh Gradient Overlay */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-2 transition-all duration-1000 ease-out opacity-40"
+        style={{
+          background: `
+            radial-gradient(circle at ${mousePosition.x * 0.1}% ${mousePosition.y * 0.1}%, rgba(99, 102, 241, 0.08) 0%, transparent 50%), 
+            radial-gradient(circle at ${80 - mousePosition.x * 0.08}% ${70 - mousePosition.y * 0.08}%, rgba(147, 51, 234, 0.06) 0%, transparent 50%),
+            radial-gradient(circle at ${mousePosition.x * 0.12}% ${90 - mousePosition.y * 0.1}%, rgba(168, 85, 247, 0.05) 0%, transparent 40%)
+          `,
+        }}
+      ></div>
+
+      {/* Dynamic Grid Pattern */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-1 transition-all duration-500 ease-out opacity-10"
+        style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(99, 102, 241, 0.4) 1px, transparent 0)`,
+          backgroundSize: `${25 + Math.sin(mousePosition.x * 0.01) * 8}px ${25 + Math.sin(mousePosition.y * 0.01) * 8}px`,
+          transform: `translateX(${mousePosition.x * 0.02}px) translateY(${mousePosition.y * 0.02}px) rotate(${mousePosition.x * 0.01}deg)`,
+        }}
+      ></div>
+
+      {/* Luxury Glow Effects */}
+      <div className="fixed inset-0 pointer-events-none z-8 overflow-hidden opacity-60">
+        <div 
+          className="absolute w-48 h-48 rounded-full transition-all duration-1500 ease-out"
+          style={{
+            top: `${15 + Math.sin(mousePosition.x * 0.005) * 20}%`,
+            left: `${10 + Math.cos(mousePosition.y * 0.003) * 15}%`,
+            background: 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)',
+            filter: 'blur(30px)',
+            transform: `scale(${1 + Math.sin(Date.now() * 0.001) * 0.4}) rotate(${mousePosition.x * 0.05}deg)`,
+          }}
+        ></div>
+        
+        <div 
+          className="absolute w-64 h-64 rounded-full transition-all duration-1800 ease-out"
+          style={{
+            top: `${60 + Math.cos(mousePosition.y * 0.004) * 25}%`,
+            right: `${12 + Math.sin(mousePosition.x * 0.006) * 18}%`,
+            background: 'radial-gradient(circle, rgba(147, 51, 234, 0.12) 0%, transparent 70%)',
+            filter: 'blur(35px)',
+            transform: `scale(${1 + Math.cos(Date.now() * 0.0008) * 0.3}) rotate(${mousePosition.y * -0.03}deg)`,
+          }}
+        ></div>
+
+        <div 
+          className="absolute w-40 h-40 rounded-full transition-all duration-1200 ease-out"
+          style={{
+            bottom: `${20 + Math.sin(mousePosition.x * 0.007) * 15}%`,
+            left: `${45 + Math.cos(mousePosition.y * 0.005) * 20}%`,
+            background: 'radial-gradient(circle, rgba(168, 85, 247, 0.18) 0%, transparent 70%)',
+            filter: 'blur(25px)',
+            transform: `scale(${1 + Math.sin(Date.now() * 0.0012) * 0.35}) rotate(${mousePosition.x * 0.08}deg)`,
+          }}
+        ></div>
+      </div>
+
       <Breadcrumb
         pageName="Service Details"
         description=""
@@ -287,6 +509,20 @@ const ServiceDetailPage = () => {
           </div>
         </div>
       </section>
+
+      <style jsx global>{`
+        * {
+          cursor: none !important;
+        }
+        
+        body {
+          cursor: none !important;
+        }
+        
+        *, *:before, *:after {
+          cursor: none !important;
+        }
+      `}</style>
     </>
   );
 };

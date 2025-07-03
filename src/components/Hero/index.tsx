@@ -38,13 +38,22 @@ const Hero = () => {
         {/* ULTRA PREMIUM 3D ORB SYSTEM */}
         <div className="absolute inset-0 pointer-events-none z-0">
           
-          {/* Main Central Orb - Ultra Premium Design */}
+          {/* Main Central Orb - Responsive positioning */}
+          <style jsx>{`
+            @media (min-width: 1024px) {
+              .orb-container {
+                left: 70% !important;
+                top: 45% !important;
+              }
+            }
+          `}</style>
+
           <div
             ref={floatingObjectRef}
-            className="absolute w-40 h-40 md:w-56 md:h-56 lg:w-72 lg:h-72"
+            className="orb-container absolute w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 xl:w-72 xl:h-72"
             style={{
-              left: '50%',
-              top: `${45 + scrollY * 0.05}%`,
+              left: '50%', // Centered on mobile
+              top: '25%', // Higher on mobile
               transform: `
                 translate(-50%, -50%)
                 perspective(1200px) 
@@ -57,6 +66,8 @@ const Hero = () => {
               `,
               transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
               opacity: Math.max(0.1, 1 - scrollY * 0.002),
+              // Responsive positioning
+              // Responsive positioning for large screens should be handled via Tailwind or CSS, not inline style
             }}
           >
             <div className="relative w-full h-full preserve-3d">
@@ -396,68 +407,60 @@ const Hero = () => {
         <div className="container flex items-center justify-center min-h-[calc(100vh-120px)] relative z-30">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
-              <div className="mx-auto max-w-[800px] text-center">
-                {/* Company Name */}
-                <div className="relative mb-8">
-                  {/* Company Name with Enhanced Effects */}
-                  <h1 className="relative z-10 py-12 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight lg:text-6xl lg:leading-tight">
-                    <span className="relative inline-block group">
-                      <span className="relative z-20 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
-                        Speeir LTD
-                      </span>
-                      <span className="absolute left-0 h-2 w-full bg-gradient-to-r from-blue-500 to-purple-600 opacity-80 transition-all duration-300 z-10"
-                        style={{
-                          bottom: '4px',
-                          transform: `translateX(${(mousePosition.x - 50) * 0.1}px) scaleX(${0.8 + (mousePosition.x / 100) * 0.4})`,
-                          transformOrigin: 'center'
-                        }}></span>
-                      
-                      {/* Hover glow effect */}
-                      <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/20 to-purple-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"></span>
-                    </span>
-                  </h1>
-                </div>
+              <div className="mx-auto max-w-[800px] text-left">
+                {/* Mobile/Desktop Layout Wrapper */}
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-12">
+                  
+                  {/* Text Content - Left side on desktop, full width on mobile */}
+                  <div className="flex-1 lg:max-w-lg order-2 lg:order-1">
+                    {/* NEW: Ultra Premium Title */}
+                    <div className="relative mb-6 lg:mb-8 -mt-8 lg:-mt-12">
+                      <h1 className="relative z-10 text-2xl font-bold leading-tight text-black dark:text-white sm:text-3xl sm:leading-tight md:text-4xl md:leading-tight lg:text-4xl lg:leading-tight xl:text-5xl xl:leading-tight animate-[fadeInUp_1s_ease-out_0.5s_both] text-center lg:text-left">
+                        <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                          Web & Mobile Solutions<br />for Modern Business
+                        </span>
+                      </h1>
+                    </div>
 
-                {/* Enhanced Tagline */}
-                <h2 className="mb-12 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent text-xl font-semibold sm:text-2xl md:text-3xl lg:text-4xl animate-[fadeInUp_1s_ease-out_0.5s_both]">
-                  Web & Mobile Solutions for Modern Businesses
-                </h2>
+                    {/* Description */}
+                    <p className="mb-6 lg:mb-8 text-base !leading-relaxed text-gray-600 dark:text-gray-300 sm:text-lg md:text-xl opacity-100 transform translate-y-0 text-center lg:text-left mt-4 lg:mt-12">
+                      We craft fast, beautiful websites and powerful mobile apps that put your customers first. 
+                      Whether you need a startup launchpad or enterprise-grade SaaS, 
+                      we build digital experiences that convert and grow.
+                    </p>
 
-                {/* Description */}
-                <p className="mb-12 text-base !leading-relaxed text-gray-600 dark:text-gray-300 sm:text-lg md:text-xl animate-[fadeInUp_1s_ease-out_0.7s_both]">
-                  We craft fast, beautiful websites and powerful mobile apps that put your customers first. 
-                  Whether you need a startup launchpad or enterprise-grade SaaS, 
-                  we build digital experiences that convert and grow.  
-                  <br />
-                </p>
-
-                {/* Enhanced CTA Buttons */}
-                <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 animate-[fadeInUp_1s_ease-out_0.9s_both]">
-                  <Link
-                    href="/contact"
-                    className="group relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105"
-                  >
-                    <span className="relative z-10 flex items-center">
-                      Lets Chat 👋
-                      <svg
-                                                className="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:translate-x-1"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
+                    {/* Enhanced CTA Buttons */}
+                    <div className="flex flex-col items-center lg:items-start justify-center lg:justify-start space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 opacity-100 transform translate-y-0">
+                      <Link
+                        href="/contact"
+                        className="group relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </span>
-                    <span className="absolute inset-0 bg-gradient-to-r from-blue-700 to-purple-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                    
-                    {/* Button glow effect */}
-                    <span className="absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-30 transition-opacity duration-300 blur-lg"></span>
-                  </Link>
+                        <span className="relative z-10 flex items-center">
+                          Lets Chat 👋
+                          <svg
+                            className="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:translate-x-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </span>
+                        <span className="absolute inset-0 bg-gradient-to-r from-blue-700 to-purple-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                        <span className="absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-30 transition-opacity duration-300 blur-lg"></span>
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Orb Space - Right side on desktop, top on mobile */}
+                  <div className="flex-shrink-0 lg:w-80 xl:w-96 order-1 lg:order-2 h-64 sm:h-80 lg:h-96 relative">
+                    {/* This div creates space for the orb on mobile and desktop */}
+                  </div>
                 </div>
               </div>
             </div>
