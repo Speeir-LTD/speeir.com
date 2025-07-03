@@ -16,7 +16,7 @@ const ServiceDetailPage = () => {
 
   const service = services.find(s => s.slug === slug);
 
-  // Mouse tracking and window size effect
+  // Mouse tracking and window size effects
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
