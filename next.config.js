@@ -13,6 +13,7 @@ const nextConfig = {
         port: "",
       },
     ],
+    dangerouslyAllowSVG: true, // Allow remote SVGs (use with caution)
   },
   env: {
     COMPANY_USER: process.env.COMPANY_USER,
