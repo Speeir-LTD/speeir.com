@@ -9,6 +9,7 @@ import { Toaster } from 'sonner';
 import { OrganizationSchema } from "@/components/Seo/OrganizationSchema";
 import { usePathname } from "next/navigation";
 import { Providers } from "./providers";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,7 +43,6 @@ export default function RootLayout({
         <meta property="og:image:alt" content="Speeir - Web & Mobile Development" />
         <meta property="og:locale" content="en_IE" />
         <meta property="og:type" content="website" />
-        
         {/* Schema.org JSON-LD */}
         <script type="application/ld+json">
           {JSON.stringify({
@@ -58,40 +58,7 @@ export default function RootLayout({
             }
           })}
         </script>
-
-        {/* Google Tag Manager */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){
-              w[l]=w[l]||[];
-              w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
-              var f = d.getElementsByTagName(s)[0],
-                  j = d.createElement(s),
-                  dl = l!='dataLayer'?'&l='+l:'';
-              j.async = true;
-              j.src = 'https://www.googletagmanager.com/gtm.js?id='+i+dl;
-              f.parentNode.insertBefore(j, f);
-            })(window,document,'script','dataLayer','GTM-53277NPC');`
-          }}
-        />
-
-        {/* Google Analytics */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-YGS9HVSMKE"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-YGS9HVSMKE');
-            `,
-          }}
-        />
       </head>
-      
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
         {/* Google Tag Manager (noscript) */}
         <noscript>
@@ -102,12 +69,35 @@ export default function RootLayout({
             style={{display: "none", visibility: "hidden"}}
           />
         </noscript>
-        
+        {/* Google Tag Manager and Analytics - defer for performance */}
+        <Script
+          id="gtm"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-53277NPC');`
+          }}
+        />
+        <Script
+          id="ga"
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-YGS9HVSMKE"
+        />
+        <Script
+          id="ga-config"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-YGS9HVSMKE');
+            `,
+          }}
+        />
         <Providers>
           <Toaster position="top-right" />
           {!isAdminRoute && <Header />}
           {children}
-          
           {!isAdminRoute && (
             <>
               <Footer />
