@@ -7,10 +7,8 @@
 @layer base {
   body {
     font-family: "Inter", sans-serif;
-    cursor: none !important; /* Make sure default cursor is hidden everywhere */
+    cursor: none !important;
   }
-  
-  /* Hide default cursor on ALL elements */
   * {
     cursor: none !important;
   }
@@ -21,16 +19,13 @@
   .preserve-3d {
     transform-style: preserve-3d;
   }
-  
   .transform-gpu {
     transform: translateZ(0);
     will-change: transform;
   }
-  
   .translate-z-12 {
     transform: translateZ(12px);
   }
-  
   .rotate-y-45 {
     transform: rotateY(45deg);
   }
@@ -40,38 +35,17 @@
     from { transform: rotateY(0deg); }
     to { transform: rotateY(360deg); }
   }
-
   @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-
   @keyframes float {
-    0%, 100% { 
-      transform: translateY(0) rotate(0deg); 
-      opacity: 0.6;
-    }
-    50% { 
-      transform: translateY(-20px) rotate(180deg); 
-      opacity: 1;
-    }
+    0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+    50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
   }
-
   @keyframes pulse {
-    0%, 100% { 
-      transform: scale(1);
-      opacity: 0.6;
-    }
-    50% { 
-      transform: scale(1.05);
-      opacity: 0.8;
-    }
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.05); opacity: 0.8; }
   }
 
   /* Particle system */
@@ -79,17 +53,8 @@
     will-change: transform, opacity;
   }
 
-
-  /* Custom cursor - -, remove if you want default cursor */
-  body {
-    cursor: none;
-  }
-  
-  a, button, input, textarea, select {
-    cursor: pointer;
-  }
-  /* Custom cursor dot */
-   .cursor-dot {
+  /* Custom cursor dot - optimized for performance, no transition on hover */
+  .cursor-dot {
     position: fixed;
     width: 12px;
     height: 12px;
@@ -97,17 +62,19 @@
     border-radius: 50%;
     pointer-events: none;
     z-index: 99999;
-    mix-blend-mode: normal; /* CHANGED from difference to normal */
-
-    transition: none; /* CHANGE: Remove transition for smoother cursor */
+    mix-blend-mode: normal;
     border: 2px solid rgba(255, 255, 255, 0.3);
-    display: block; /* Always show the custom cursor */
-    
-
-    /* ADD these 3 lines for GPU acceleration */
+    display: block;
     will-change: transform;
-
     transform: translateZ(0);
     backface-visibility: hidden;
+    /* Remove transition for instant hover effect */
+    transition: none !important;
+  }
+
+  /* Remove all transition delays on hover for interactive elements */
+  a, button, input, textarea, select, .group:hover, .hover\:transition-none:hover {
+    transition-delay: 0ms !important;
+    transition-duration: 120ms !important;
   }
 }
