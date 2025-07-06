@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { services } from "@/data/services";
@@ -359,4 +359,4 @@ const cardVariants: Variants = {
   );
 };
 
-export default Features;
+export default React.memo(Features);

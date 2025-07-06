@@ -25,6 +25,7 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <head>
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" as="style" />
         <link rel="canonical" href="https://www.speeir.com" />
         <meta name="robots" content="index, follow" />
         <title>Speeir | Software Development | Ireland</title>
