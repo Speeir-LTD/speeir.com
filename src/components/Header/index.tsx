@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { services } from "@/data/services";
+import ThemeToggle from "../Common/ThemeToggle";
 
 const Header = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -195,7 +196,7 @@ const Header = () => {
 
             {/* Right side - CTA and Theme Toggler */}
             <div className="flex items-center space-x-6">
-              {/* <ThemeToggler /> */}
+              <ThemeToggle />
               <Link
                 href="https://tally.so/r/mVxeQg"
                 className="hidden rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3 text-sm font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-500 hover:from-blue-700 hover:to-purple-700 md:inline-flex items-center group"
