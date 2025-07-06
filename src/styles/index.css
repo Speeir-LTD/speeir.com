@@ -7,6 +7,12 @@
 @layer base {
   body {
     font-family: "Inter", sans-serif;
+    cursor: none !important; /* Make sure default cursor is hidden everywhere */
+  }
+  
+  /* Hide default cursor on ALL elements */
+  * {
+    cursor: none !important;
   }
 }
 
@@ -80,5 +86,19 @@
   
   a, button, input, textarea, select {
     cursor: pointer;
+  }
+  /* Custom cursor dot */
+   .cursor-dot {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    mix-blend-mode: normal; /* CHANGED from difference to normal */
+    transition: all 0.1s ease-out;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    display: block; /* Always show the custom cursor */
   }
 }
