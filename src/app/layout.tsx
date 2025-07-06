@@ -25,7 +25,13 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <head>
-        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" as="style" />
+        {/* Preconnect for Google Fonts to improve FCP/LCP */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Preconnect for Google Tag Manager to improve LCP */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        {/* Remove redundant font stylesheet preload since next/font is used */}
+        {/* <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" as="style" /> */}
         <link rel="canonical" href="https://www.speeir.com" />
         <meta name="robots" content="index, follow" />
         <title>Speeir | Software Development | Ireland</title>
@@ -59,6 +65,12 @@ export default function RootLayout({
             }
           })}
         </script>
+        {/* Preload LCP image if hero image is above the fold */}
+        <link rel="preload" as="image" href="/images/hero/shape-01.webp" />
+        {/*
+          TODO: For even better FCP/LCP, self-host Inter font using next/font/local and remove Google Fonts links above.
+          See: https://nextjs.org/docs/app/building-your-application/optimizing/fonts#local-fonts
+        */}
       </head>
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
         {/* Google Tag Manager (noscript) */}
