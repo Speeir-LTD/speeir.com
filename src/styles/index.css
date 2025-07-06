@@ -79,7 +79,8 @@
     will-change: transform, opacity;
   }
 
-  /* Custom cursor - Optional, remove if you want default cursor */
+
+  /* Custom cursor - -, remove if you want default cursor */
   body {
     cursor: none;
   }
@@ -97,8 +98,16 @@
     pointer-events: none;
     z-index: 99999;
     mix-blend-mode: normal; /* CHANGED from difference to normal */
-    transition: all 0.1s ease-out;
+
+    transition: none; /* CHANGE: Remove transition for smoother cursor */
     border: 2px solid rgba(255, 255, 255, 0.3);
     display: block; /* Always show the custom cursor */
+    
+
+    /* ADD these 3 lines for GPU acceleration */
+    will-change: transform;
+
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 }

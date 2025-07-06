@@ -32,30 +32,8 @@ const Features = () => {
   // Optimized card animation - cards slide up from bottom with slight stagger
 // Fix the cardVariants structure
 const cardVariants: Variants = {
-  hidden: {
-    y: 120,
-    x: 0, // Remove function, handle in component
-    opacity: 0,
-    scale: 0.7,
-    rotateX: 15,
-    rotateZ: 0, // Remove function, handle in component
-    filter: "blur(4px)",
-  },
-  visible: {
-    y: 0,
-    x: 0,
-    opacity: 1,
-    scale: 1,
-    rotateX: 0,
-    rotateZ: 0,
-    filter: "blur(0px)",
-    transition: {
-      type: "spring",
-      damping: 20,
-      stiffness: 100,
-      duration: 1.0,
-    }
-  }
+  hidden: { y: 30, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.3 } }
 };
 
 
@@ -66,8 +44,8 @@ const cardVariants: Variants = {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.2,
+        staggerChildren: 0.06,
+        delayChildren: 0.15,
       }
     }
   };
@@ -142,7 +120,6 @@ const cardVariants: Variants = {
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
             style={{
-              transform: `translateY(${scrollY * 0.02}px)`,
               opacity: isVisible ? 1 : 0.7,
             }}
           >
@@ -189,32 +166,20 @@ const cardVariants: Variants = {
           </motion.div>
 
           {/* Enhanced cards grid with staggered parallax and animations */}
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            animate={isVisible ? "visible" : "hidden"}
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <motion.div
+              <div
                 key={service.id}
-                variants={cardVariants}
-                custom={index}
-                whileHover={{ 
-                  y: -8,
-                  scale: 1.02,
-                  transition: { type: "spring", damping: 20, stiffness: 300 }
-                }}
+                className="transform-gpu opacity-0 animate-[fadeInUp_0.6s_ease-out_forwards]"
                 style={{
-                  transform: `translateY(${scrollY * (0.02 + index * 0.005)}px)`,
-                  opacity: isVisible ? 1 : 0.8,
+                  animationDelay: `${index * 0.1}s`, // Simple stagger
                 }}
               >
                 <Link 
                   href={`/services/${service.slug}`} 
                   className="block group h-full"
                 >
-                  <div className="relative bg-white/70 dark:bg-gray-800/60 rounded-xl shadow-[0_15px_35px_-5px_rgba(0,0,0,0.1)] dark:shadow-[0_15px_35px_-5px_rgba(0,0,0,0.3)] backdrop-blur-md p-8 min-h-[360px] transition-all duration-700 hover:shadow-[0_25px_50px_-5px_rgba(79,70,229,0.25)] dark:hover:shadow-[0_25px_50px_-5px_rgba(139,92,246,0.35)] hover:-translate-y-2 h-full flex flex-col overflow-hidden border border-gray-100/50 dark:border-gray-700/30 group-hover:border-blue-200/50 dark:group-hover:border-purple-500/30">
+                  <div className="relative bg-white/70 dark:bg-gray-800/60 rounded-xl shadow-[0_15px_35px_-5px_rgba(0,0,0,0.1)] dark:shadow-[0_15px_35px_-5px_rgba(0,0,0,0.3)] backdrop-blur-md p-8 min-h-[360px] transition-all duration-300 hover:shadow-[0_25px_50px_-5px_rgba(79,70,229,0.25)] dark:hover:shadow-[0_25px_50px_-5px_rgba(139,92,246,0.35)] hover:-translate-y-2 h-full flex flex-col overflow-hidden border border-gray-100/50 dark:border-gray-700/30 group-hover:border-blue-200/50 dark:group-hover:border-purple-500/30 will-change-transform card-hover">
                     
                     {/* Enhanced premium accent border with animation */}
                     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 transform origin-left transition-all duration-700 scale-x-0 group-hover:scale-x-100"></div>
@@ -299,9 +264,9 @@ const cardVariants: Variants = {
                     </div>
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
 
         {/* Enhanced floating elements with complex parallax */}
@@ -310,7 +275,7 @@ const cardVariants: Variants = {
             <div 
               className="absolute left-[10%] bottom-0 h-24 w-24 animate-[float_6s_ease-in-out_infinite] rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 shadow-lg backdrop-blur-sm"
               style={{
-                transform: `translateY(${scrollY * -0.15}px) rotate(${scrollY * 0.1}deg)`,
+                transform: `translateY(0px)`, // Static position
               }}
             ></div>
             <div 
