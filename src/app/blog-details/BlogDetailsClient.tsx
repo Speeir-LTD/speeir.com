@@ -129,8 +129,8 @@ const ErrorFallback = ({ error }: { error: string }) => (
 
 const BlogContent = ({ blogDetails }: { blogDetails: BlogPost }) => {
     const authorImage = blogDetails.author
-        ? `https://ui-avatars.com/api/?name=${blogDetails.author.split(' ').join('+')}&background=random`
-        : `https://ui-avatars.com/api/?name=Unknown&background=random`;
+        ? "/images/avatars/blog-author.svg"
+        : "/images/avatars/blog-author.svg";
 
     return (
         <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 pb-[120px] pt-[150px] dark:from-gray-900 dark:to-gray-800">

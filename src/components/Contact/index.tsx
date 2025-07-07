@@ -1,13 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const Contact = () => {
-  // Add these new state variables to your existing ones
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [isHoveringInteractive, setIsHoveringInteractive] = useState(false);
-
-  // Your existing state variables remain the same...
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,92 +12,42 @@ const Contact = () => {
   const [submitStatus, setSubmitStatus] = useState<null | 'success' | 'error'>(null);
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
-  const [isHoveringForm, setIsHoveringForm] = useState(false);
 
-  // MODIFY your existing first useEffect to include cursor tracking:
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      setMousePosition({ x, y });
-      
-      // ADD form area detection
-      const formContainer = document.querySelector('#contact .rounded-xl');
-      const cursor = document.querySelector('.cursor-dot') as HTMLElement;
-      
-      if (cursor && formContainer) {
-        const formRect = formContainer.getBoundingClientRect();
-        const isOverForm = (
-          e.clientX >= formRect.left &&
-          e.clientX <= formRect.right &&
-          e.clientY >= formRect.top &&
-          e.clientY <= formRect.bottom
-        );
-        
-        if (isOverForm) {
-          // Show beautiful cursor over form
-          cursor.style.display = 'block';
-          cursor.style.left = e.clientX + 'px';
-          cursor.style.top = e.clientY + 'px';
-        } else {
-          // Hide cursor outside form
-          cursor.style.display = 'none';
-        }
-      }
-    };
-
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    // ADD THESE FUNCTIONS for interactive elements
-    const handleMouseEnter = () => setIsHoveringInteractive(true);
-    const handleMouseLeave = () => setIsHoveringInteractive(false);
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    // ADD THESE LINES for interactive element detection
-    const interactiveElements = document.querySelectorAll('a, button, input, textarea, select');
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', handleMouseEnter);
-      el.addEventListener('mouseleave', handleMouseLeave);
-    });
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
-      // ADD CLEANUP
-      interactiveElements.forEach(el => {
-        el.removeEventListener('mouseenter', handleMouseEnter);
-        el.removeEventListener('mouseleave', handleMouseLeave);
-      });
-    };
+  // Optimized scroll handler with throttling
+  const handleScroll = useCallback(() => {
+    setScrollY(window.scrollY);
+    
+    // Check if the contact section is in viewport
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      const rect = contactSection.getBoundingClientRect();
+      const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+      setIsVisible(isInView);
+    }
   }, []);
 
 
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-
-      // Check if the contact section is in viewport
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        const rect = contactSection.getBoundingClientRect();
-        const isInView = rect.top < window.innerHeight && rect.bottom > 0;
-        setIsVisible(isInView);
+    // Throttle scroll events for better performance
+    let timeoutId: NodeJS.Timeout;
+    const throttledScrollHandler = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
       }
+      timeoutId = setTimeout(handleScroll, 10);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', throttledScrollHandler, { passive: true });
     handleScroll(); // Initial call
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', throttledScrollHandler);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     };
-  }, []);
+  }, [handleScroll]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -174,17 +119,10 @@ const Contact = () => {
             }}
           ></div>
         </div>
-        {/* ADD ULTRA PREMIUM ELEMENTS HERE */}
+        {/* Optimized background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Cursor-following spotlight */}
-          <div
-            className="absolute w-96 h-96 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-3xl transition-all duration-300 ease-out"
-            style={{
-              left: `${mousePosition.x}%`,
-              top: `${mousePosition.y}%`,
-              transform: 'translate(-50%, -50%)',
-            }}
-          />
+          {/* Static gradient overlay for better performance */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-3xl animate-pulse" />
           {/* Floating geometric shapes */}
           <div className="absolute top-20 right-20 w-16 h-16 rotate-45 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 backdrop-blur-sm animate-[float_7s_ease-in-out_infinite]" />
           <div className="absolute bottom-32 left-16 w-12 h-12 rounded-full bg-gradient-to-br from-pink-400/20 to-rose-500/20 backdrop-blur-sm animate-[float_9s_ease-in-out_infinite_reverse]" />

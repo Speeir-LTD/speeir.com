@@ -1,33 +1,63 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import SingleBlog from "@/components/Blog/SingleBlog";
 import Breadcrumb from "@/components/Common/Breadcrumb";
+import { BlogPost } from "@/types/post";
+
+interface FloatingDot {
+  width: number;
+  height: number;
+  top: number;
+  left: number;
+  duration: number;
+  delay: number;
+}
 
 const Blog = () => {
-  const [blogData, setBlogData] = useState<any[]>([]);
+  const [blogData, setBlogData] = useState<BlogPost[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // Added loading state
+  const [isLoading, setIsLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false);
+
+  // Memoize floating dots to prevent regeneration on every render
+  const floatingDots = useMemo<FloatingDot[]>(() => {
+    return Array.from({ length: 12 }).map((_, i) => ({
+      width: Math.random() * 12 + 4,
+      height: Math.random() * 12 + 4,
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      duration: Math.random() * 15 + 10,
+      delay: i * 0.5,
+    }));
+  }, []);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        setIsLoading(true); // Start loading
-        const timestamp = new Date().getTime(); // Cache-busting query parameter
-        const res = await fetch(`/api/blog?timestamp=${timestamp}`);
+        setIsLoading(true);
+        // Remove cache busting - let HTTP caching work properly
+        const res = await fetch('/api/blog', {
+          headers: {
+            'Cache-Control': 'max-age=300' // 5 minutes cache
+          }
+        });
 
         if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) {
           throw new Error(`Failed to fetch blog data: ${res.status} ${res.statusText}`);
         }
 
         const json = await res.json();
-        console.log("Fetched data:", res);
-        setBlogData(json.data);
+        setBlogData(json.data || []);
       } catch (err) {
         console.error("Error fetching blogs:", err);
         setError("Failed to load blogs. Please try again later/Reload Page.");
       } finally {
-        setIsLoading(false); // End loading
+        setIsLoading(false);
       }
     };
 
@@ -56,17 +86,21 @@ const Blog = () => {
           <div className="absolute right-[20%] top-[30%] h-32 w-32 animate-[float_8s_ease-in-out_infinite_reverse] rounded-full bg-rose-50/40 blur-[50px] dark:bg-rose-900/15"></div>
 
           {/* Small floating dots */}
-          {[...Array(12)].map((_, i) => (
+          {isClient && floatingDots.map((dot, i) => (
             <div
               key={i}
               className="absolute rounded-full bg-gray-300/30 dark:bg-gray-600/30"
               style={{
-                width: `${Math.random() * 12 + 4}px`,
-                height: `${Math.random() * 12 + 4}px`,
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                animation: `float ${Math.random() * 15 + 10}s ease-in-out infinite alternate`,
-                animationDelay: `${i * 0.5}s`
+                width: `${dot.width}px`,
+                height: `${dot.height}px`,
+                top: `${dot.top}%`,
+                left: `${dot.left}%`,
+                animationName: "float",
+                animationDuration: `${dot.duration}s`,
+                animationTimingFunction: "ease-in-out",
+                animationIterationCount: "infinite",
+                animationDirection: "alternate",
+                animationDelay: `${dot.delay}s`,
               }}
             ></div>
           ))}
@@ -96,7 +130,7 @@ const Blog = () => {
             <div className="-mx-4 flex flex-wrap justify-center gap-8">
               {blogData.map((blog) => (
                 <div
-                  key={blog._id}
+                  key={blog._id.toString()}
                   className="w-full px-4 md:w-2/3 lg:w-1/2 xl:w-1/3"
                 >
                   <div className="overflow-hidden rounded-xl border border-gray-200 bg-white/80 shadow-sm transition-all hover:shadow-md backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/80">

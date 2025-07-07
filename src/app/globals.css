@@ -1,3 +1,11 @@
+/* CSS Reset for consistency and best practices */
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
 /* Optimized animations with will-change and transform3d */
 @keyframes float {
   0%, 100% { 
