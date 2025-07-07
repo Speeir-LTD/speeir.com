@@ -2,8 +2,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { services } from "@/data/services";
+import ThemeToggle from "../Common/ThemeToggle";
 
 const Header = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -12,22 +13,22 @@ const Header = () => {
   const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
 
-  const navbarToggleHandler = () => {
+  const navbarToggleHandler = useCallback(() => {
     setNavbarOpen(!navbarOpen);
-  };
+  }, [navbarOpen]);
 
-  const handleSubmenuHover = (index) => {
+  const handleSubmenuHover = useCallback((index: number) => {
     setOpenIndex(index);
-  };
+  }, []);
 
-  const handleSubmenuLeave = () => {
+  const handleSubmenuLeave = useCallback(() => {
     setOpenIndex(-1);
-  };
+  }, []);
 
   // Close submenu when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (navRef.current && !navRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
         setOpenIndex(-1);
       }
     };
@@ -44,22 +45,36 @@ const Header = () => {
     setNavbarOpen(false);
   }, [pathname]);
 
-  const handleSubmenu = (index) => {
+  const handleSubmenu = useCallback((index: number) => {
     if (openIndex === index) {
       setOpenIndex(-1);
     } else {
       setOpenIndex(index);
     }
-  };
+  }, [openIndex]);
 
-  const handleStickyNavbar = () => {
+  // Throttle scroll handler for better performance
+  const handleStickyNavbar = useCallback(() => {
     window.scrollY >= 80 ? setSticky(true) : setSticky(false);
-  };
+  }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleStickyNavbar);
-    return () => window.removeEventListener("scroll", handleStickyNavbar);
-  }, []);
+    let timeoutId: NodeJS.Timeout;
+    const throttledScrollHandler = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(handleStickyNavbar, 10);
+    };
+
+    window.addEventListener("scroll", throttledScrollHandler);
+    return () => {
+      window.removeEventListener("scroll", throttledScrollHandler);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [handleStickyNavbar]);
 
   const menuData = [
     {
@@ -112,10 +127,9 @@ const Header = () => {
                 <Image
                   src="/images/logo/logo.svg"
                   alt="logo"
-                  width={160}
-                  height={40}
-                  className="hidden w-full dark:block hover:opacity-90"
-                  style={{ width: 100, height: 60 }}
+                  width={100}
+                  height={60}
+                  className="w-full block hover:opacity-90"
                 />
               </Link>
             </div>
@@ -167,10 +181,6 @@ const Header = () => {
                               ? "visible opacity-100 translate-y-0"
                               : "invisible opacity-0 -translate-y-2"
                               }`}
-                            style={{
-                              transitionProperty: 'opacity, transform',
-                              transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-                            }}
                           >
                             {menuItem.submenu?.map((submenuItem, idx) => (
                               <Link
@@ -195,7 +205,7 @@ const Header = () => {
 
             {/* Right side - CTA and Theme Toggler */}
             <div className="flex items-center space-x-6">
-              {/* <ThemeToggler /> */}
+              <ThemeToggle />
               <Link
                 href="https://tally.so/r/mVxeQg"
                 className="hidden rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3 text-sm font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-500 hover:from-blue-700 hover:to-purple-700 md:inline-flex items-center group"

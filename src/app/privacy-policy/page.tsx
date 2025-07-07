@@ -185,38 +185,68 @@ If you have any questions about this Privacy Policy, You can contact us:
 const PrivacyPolicy = () => {
   return (
     <section
-  id="privacy-policy"
-  className="relative py-16 md:py-20 lg:py-28 bg-gradient-to-b from-white to-gray-50/20 dark:from-gray-900 dark:to-gray-900/70 overflow-hidden"
->
-  <div className="container relative z-10">
-    <div className="prose 
-        prose-lg 
-        prose-headings:font-semibold
-        prose-a:text-blue-600 hover:prose-a:text-blue-700 dark:prose-a:text-blue-400 dark:hover:prose-a:text-blue-300
-        prose-ul:list-disc prose-ol:list-decimal
-        prose-blockquote:border-l-4 prose-blockquote:border-gray-200 prose-blockquote:pl-4
-        prose-table:border-collapse prose-table:w-full
-        prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-        dark:prose-invert
-        max-w-4xl mx-auto"
+      id="privacy-policy"
+      className="relative py-16 md:py-20 lg:py-28 bg-gradient-to-br from-indigo-50/30 via-white to-blue-50/50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-900 overflow-hidden"
     >
-      <ReactMarkdown
-        components={{
-          h2: ({node, ...props}) => <h2 className="mt-10 mb-4 text-2xl font-bold" {...props} />,
-          h3: ({node, ...props}) => <h3 className="mt-8 mb-3 text-xl font-bold" {...props} />,
-          p: ({node, ...props}) => <p className="my-4 leading-relaxed" {...props} />,
-          ul: ({node, ...props}) => <ul className="my-4 pl-6 space-y-2" {...props} />,
-          ol: ({node, ...props}) => <ol className="my-4 pl-6 space-y-2" {...props} />,
-          table: ({node, ...props}) => <div className="overflow-x-auto"><table className="min-w-full my-6 border" {...props} /></div>,
-          th: ({node, ...props}) => <th className="px-4 py-2 text-left border-b bg-gray-50 dark:bg-gray-800" {...props} />,
-          td: ({node, ...props}) => <td className="px-4 py-2 border-b" {...props} />,
-        }}
-      >
-        {privacyPolicyMarkdown}
-      </ReactMarkdown>
-    </div>
-  </div>
-</section>
+      {/* Premium decorative elements */}
+      <div className="absolute top-20 -left-10 w-72 h-72 bg-indigo-100/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob dark:bg-indigo-900/20"></div>
+      <div className="absolute top-40 right-10 w-72 h-72 bg-blue-100/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000 dark:bg-blue-900/20"></div>
+      <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-purple-100/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000 dark:bg-purple-900/20"></div>
+      
+      <div className="container relative z-10 px-4 mx-auto">
+        <div className="max-w-4xl mx-auto">
+          {/* Premium header section */}
+          <div className="mb-16 text-center">
+            <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+              Privacy <span className="text-indigo-600 dark:text-indigo-400">Policy</span>
+            </h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto dark:text-gray-300">
+              Last updated: May 16, 2025
+            </p>
+          </div>
+          
+          {/* Premium content card */}
+          <div className="bg-white/90 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800/90 overflow-hidden">
+            <div className="prose 
+                prose-lg 
+                prose-headings:font-bold prose-headings:tracking-tight
+                prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
+                prose-a:text-indigo-600 hover:prose-a:text-indigo-800 dark:prose-a:text-indigo-400 dark:hover:prose-a:text-indigo-300 prose-a:transition-colors
+                prose-ul:list-disc prose-ol:list-decimal
+                prose-blockquote:border-l-4 prose-blockquote:border-indigo-200 prose-blockquote:pl-4 prose-blockquote:bg-indigo-50/50 prose-blockquote:py-1 dark:prose-blockquote:border-indigo-700 dark:prose-blockquote:bg-indigo-900/20
+                prose-table:border-collapse prose-table:w-full
+                prose-code:bg-gray-100 dark:prose-code:bg-gray-700 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:font-medium
+                prose-hr:border-gray-200
+                dark:prose-invert
+                max-w-none p-8 md:p-12"
+            >
+              <ReactMarkdown
+                components={{
+                  h2: ({node, ...props}) => <h2 className="mt-12 mb-6 pb-2 border-b border-gray-200 dark:border-gray-700" {...props} />,
+                  h3: ({node, ...props}) => <h3 className="mt-10 mb-4 text-indigo-600 dark:text-indigo-400" {...props} />,
+                  p: ({node, ...props}) => <p className="my-5 leading-relaxed text-gray-700 dark:text-gray-300" {...props} />,
+                  ul: ({node, ...props}) => <ul className="my-5 pl-6 space-y-3" {...props} />,
+                  ol: ({node, ...props}) => <ol className="my-5 pl-6 space-y-3" {...props} />,
+                  li: ({node, ...props}) => <li className="pl-2 marker:text-indigo-500 dark:marker:text-indigo-400" {...props} />,
+                  table: ({node, ...props}) => <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700 my-6"><table className="min-w-full" {...props} /></div>,
+                  th: ({node, ...props}) => <th className="px-5 py-3 text-left border-b bg-indigo-50/50 dark:bg-indigo-900/20 font-semibold" {...props} />,
+                  td: ({node, ...props}) => <td className="px-5 py-3 border-b" {...props} />,
+                  a: ({node, ...props}) => <a className="font-medium hover:underline underline-offset-4" {...props} />,
+                  strong: ({node, ...props}) => <strong className="font-semibold text-gray-900 dark:text-gray-200" {...props} />,
+                }}
+              >
+                {privacyPolicyMarkdown}
+              </ReactMarkdown>
+            </div>
+          </div>
+          
+          {/* Premium footer */}
+          <div className="mt-16 text-center text-gray-600 dark:text-gray-400">
+            <p>© 2025 Speeir Limited. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

@@ -1,16 +1,23 @@
 "use client";
-import React from "react";
+
+import React, { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { services } from "@/data/services";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 
 const ServiceDetailPage = () => {
   const params = useParams();
-  const router = useRouter();
   const slug = params.slug as string;
+  
+  const service = useMemo(() => services.find(s => s.slug === slug), [slug]);
 
-  const service = services.find(s => s.slug === slug);
+  // Simplified background animation with reduced complexity
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   if (!service) {
     return (

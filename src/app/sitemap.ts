@@ -14,7 +14,7 @@ interface BlogPost {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://www.speeir.com';
+  const baseUrl = 'https://speeir.com';
   const now = new Date().toISOString();
 
   const staticRoutes: MetadataRoute.Sitemap = [
