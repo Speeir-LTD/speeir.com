@@ -14,10 +14,8 @@ const CustomCursor = () => {
       const cursorInner = cursorInnerRef.current;
       
       cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-      // Delay the follower ring slightly for smooth trailing effect
-      setTimeout(() => {
-        cursorInner.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-      }, 100);
+      // Use CSS transition for smoother follower effect instead of setTimeout
+      cursorInner.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
     }
   }, []);
 
@@ -41,12 +39,15 @@ const CustomCursor = () => {
   }, []);
 
   useEffect(() => {
-    // Throttle mouse movement for better performance
+    // More aggressive throttling for better performance on complex pages
     let isThrottled = false;
+    let lastTime = 0;
     
     const throttledMoveCursor = (e: MouseEvent) => {
-      if (!isThrottled) {
+      const now = performance.now();
+      if (!isThrottled && (now - lastTime) > 16) { // ~60fps throttling
         moveCursor(e);
+        lastTime = now;
         isThrottled = true;
         requestRef.current = requestAnimationFrame(() => {
           isThrottled = false;
@@ -97,7 +98,7 @@ const CustomCursor = () => {
       {/* Cursor follower ring */}
       <div
         ref={cursorInnerRef}
-        className="custom-cursor-inner fixed pointer-events-none z-[9998] will-change-transform w-10 h-10 rounded-full border-2 transition-all duration-300 ease-out"
+        className="custom-cursor-inner fixed pointer-events-none z-[9998] will-change-transform w-10 h-10 rounded-full border-2"
         style={{
           borderColor: "rgba(59, 130, 246, 0.4)", // Blue color matching the gradient
           position: "fixed",
@@ -107,6 +108,7 @@ const CustomCursor = () => {
           zIndex: 9998,
           willChange: "transform",
           backgroundColor: "rgba(59, 130, 246, 0.05)", // Very subtle background
+          transition: "transform 0.15s ease-out", // Smooth trailing effect
         }}
       />
     </>

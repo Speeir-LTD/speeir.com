@@ -1,19 +1,20 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, useCallback } from "react";
 import SharePost from "@/components/Blog/SharePost";
 import TagButton from "@/components/Blog/TagButton";
 import Image from "next/image";
 import { BlogPost } from "@/types/post";
 import ReactMarkdown from "react-markdown";
 import { useSearchParams } from "next/navigation";
+import Head from "next/head";
 
 export default function BlogDetailsClient() {
     const [blogDetails, setBlogDetails] = useState<BlogPost | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    const fetchBlogDetails = async (id: string | null) => {
+    const fetchBlogDetails = useCallback(async (id: string | null) => {
         if (!id) {
             console.warn("No blog ID provided. Skipping fetch.");
             setError("Invalid blog ID");
@@ -24,14 +25,12 @@ export default function BlogDetailsClient() {
         try {
             console.log("Fetching blog details for ID:", id);
             setIsLoading(true);
-            const timestamp = new Date().getTime(); // Cache-busting query parameter
             const res = await fetch(`/api/blog/${id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
-            console.log("res response:", res);
 
             if (!res.ok) {
                 console.error(`Failed to fetch blog details. Status: ${res.status}`);
@@ -43,7 +42,6 @@ export default function BlogDetailsClient() {
 
             const json = await res.json();
 
-            console.log("API response:", json);
             if (!json || !json.data) {
                 console.error("No data received from the API.");
                 throw new Error("No data received");
@@ -57,7 +55,6 @@ export default function BlogDetailsClient() {
                 throw new Error("Invalid data format received");
             }
 
-            console.log("Fetched blog details successfully:", normalizedData);
             setBlogDetails(normalizedData);
         } catch (err) {
             console.error("Error fetching blog details:", err);
@@ -65,35 +62,21 @@ export default function BlogDetailsClient() {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, []);
 
     return (
         <Suspense fallback={<LoadingFallback />}>
             <SearchParamsWrapper fetchBlogDetails={fetchBlogDetails} />
-            {isLoading ? ( // Show loading animation while fetching
-                <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-                    <div
-                        className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                        role="status"
-                    >
-                        <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                            Loading...
-                        </span>
-                    </div>
-                    <div className="text-center">
-                        <p className="text-xl font-medium text-gray-600 dark:text-gray-300">Loading blogs</p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Please wait while we fetch the latest content</p>
-                    </div>
-                </div>
-            ) : (
-                <>
-                    {!isLoading && error && <ErrorFallback error={error} />}
-                    {!isLoading && blogDetails && <BlogContent blogDetails={blogDetails} />}
-                </>
-            )}
+            {isLoading ? (
+                <LoadingFallback />
+            ) : error ? (
+                <ErrorFallback error={error} />
+            ) : blogDetails ? (
+                <BlogContent blogDetails={blogDetails} />
+            ) : null}
         </Suspense>
     );
-};
+}
 
 const SearchParamsWrapper = ({ fetchBlogDetails }: { fetchBlogDetails: (id: string | null) => void }) => {
     const searchParams = useSearchParams();
@@ -101,25 +84,40 @@ const SearchParamsWrapper = ({ fetchBlogDetails }: { fetchBlogDetails: (id: stri
 
     useEffect(() => {
         if (id) fetchBlogDetails(id);
-    }, [id]);
+    }, [id, fetchBlogDetails]);
 
     return null;
 };
 
 const LoadingFallback = () => (
-    <div className="container flex min-h-screen items-center justify-center py-20 text-center">
-        <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
-        <p className="mt-4 text-lg font-medium text-gray-600 dark:text-gray-400">Loading blog post...</p>
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-900/90">
+        <div className="relative">
+            <div className="w-16 h-16 border-4 border-blue-200 dark:border-blue-800 rounded-full animate-spin">
+                <div className="absolute top-0 left-0 w-16 h-16 border-4 border-transparent border-t-blue-600 rounded-full animate-spin"></div>
+            </div>
+        </div>
+        <div className="text-center">
+            <p className="text-xl font-medium text-gray-600 dark:text-gray-300">Loading blog post...</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Please wait while we fetch the content</p>
+        </div>
     </div>
 );
 
 const ErrorFallback = ({ error }: { error: string }) => (
-    <div className="container flex min-h-screen items-center justify-center py-20 text-center">
-        <div className="max-w-md rounded-xl bg-white p-8 shadow-lg dark:bg-gray-900">
-            <p className="mb-4 text-lg font-medium text-red-500">{error}</p>
+    <div className="min-h-screen flex items-center justify-center py-20 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-900/90">
+        <div className="max-w-md mx-auto text-center p-8 rounded-2xl bg-white/80 shadow-xl backdrop-blur-sm dark:bg-gray-900/90">
+            <div className="mb-6">
+                <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 dark:bg-red-900/20">
+                    <svg className="h-8 w-8 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                </div>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Something went wrong</h2>
+            <p className="text-lg font-medium text-red-500 mb-6">{error}</p>
             <button
                 onClick={() => window.location.reload()}
-                className="rounded-lg bg-primary px-6 py-3 font-medium text-white transition-all hover:bg-primary/90"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
                 Try Again
             </button>
@@ -128,220 +126,181 @@ const ErrorFallback = ({ error }: { error: string }) => (
 );
 
 const BlogContent = ({ blogDetails }: { blogDetails: BlogPost }) => {
-    const authorImage = blogDetails.author
-        ? "/images/avatars/blog-author.svg"
-        : "/images/avatars/blog-author.svg";
+    const authorImage = `https://ui-avatars.com/api/?name=${encodeURIComponent(blogDetails.author || 'Author')}&background=6366f1&color=fff&size=128`;
+    
+    const formatDate = (date: Date | string) => {
+        return new Date(date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
 
     return (
-        <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 pb-[120px] pt-[150px] dark:from-gray-900 dark:to-gray-800">
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute right-[5%] bottom-[15%] h-64 w-64 animate-[float_14s_ease-in-out_infinite_reverse] rounded-full bg-gradient-to-r from-green-50/50 to-teal-50/50 blur-[80px] dark:from-green-900/20 dark:to-teal-900/20"></div>
-                <div className="absolute left-[5%] top-[15%] h-60 w-60 animate-[float_12s_ease-in-out_infinite] rounded-full bg-gradient-to-r from-blue-50/50 to-purple-50/50 blur-[80px] dark:from-blue-900/20 dark:to-purple-900/20"></div>
-
-                {[...Array(12)].map((_, i) => (
-                    <div
-                        key={i}
-                        className="absolute rounded-full bg-gray-300/30 dark:bg-gray-600/30"
-                        style={{
-                            width: `${Math.random() * 12 + 4}px`,
-                            height: `${Math.random() * 12 + 4}px`,
-                            top: `${Math.random() * 100}%`,
-                            left: `${Math.random() * 100}%`,
-                            animation: `float ${Math.random() * 15 + 10}s ease-in-out infinite alternate`,
-                            animationDelay: `${i * 0.5}s`
-                        }}
-                    ></div>
+        <>
+            <Head>
+                <title>{blogDetails.title} | Speeir Blog</title>
+                <meta name="description" content={blogDetails.content ? blogDetails.content.substring(0, 160).replace(/[#*`]/g, '').trim() + '...' : 'Read this insightful article from Speeir about software development and technology.'} />
+                <meta property="og:title" content={blogDetails.title} />
+                <meta property="og:description" content={blogDetails.content ? blogDetails.content.substring(0, 160).replace(/[#*`]/g, '').trim() + '...' : 'Read this insightful article from Speeir.'} />
+                <meta property="og:type" content="article" />
+                <meta property="article:author" content={blogDetails.author} />
+                <meta property="article:published_time" content={new Date(blogDetails.createdAt).toISOString()} />
+                {blogDetails.tags && blogDetails.tags.map((tag, index) => (
+                    <meta key={index} property="article:tag" content={tag} />
                 ))}
+            </Head>
+            <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-900/90 py-16 md:py-20 lg:py-28">
+            {/* Modern background elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-5 dark:opacity-10">
+                <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-gradient-to-r from-blue-400/30 to-purple-400/30 blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-gradient-to-r from-purple-400/30 to-indigo-400/30 blur-3xl animate-pulse animation-delay-1000"></div>
             </div>
 
-            <div className="container relative z-10">
-                <div className="-mx-4 flex flex-wrap justify-center">
-                    <div className="w-full px-4 lg:w-10/12 xl:w-8/12">
-                        <div className="rounded-2xl bg-white/80 p-10 shadow-xl backdrop-blur-sm dark:bg-gray-900/90 dark:shadow-gray-800/10">
-                            <h1 className="mb-8 text-4xl font-bold leading-tight text-black dark:text-white sm:text-5xl sm:leading-tight">
-                                {blogDetails.title}
-                            </h1>
+            {/* Floating grid pattern */}
+            <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]">
+                <div className="h-full w-full bg-[linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
+            </div>
 
-                            <div className="mb-10 flex flex-wrap items-center justify-between border-b border-gray-200 pb-6 dark:border-gray-700">
-                                <div className="flex flex-wrap items-center">
-                                    <div className="mb-5 mr-10 flex items-center">
-                                        <div className="mr-4">
-                                            <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-white shadow-md">
-                                                <Image
-                                                    src={authorImage}
-                                                    alt={blogDetails.author}
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="w-full">
-                                            <span className="text-base font-medium text-gray-600 dark:text-gray-300">
-                                                By <span className="font-semibold text-primary">{blogDetails.author}</span>
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div className="mb-5 flex items-center space-x-4">
-                                        <p className="flex items-center text-base font-medium text-gray-500 dark:text-gray-400">
-                                            <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                            {/* {formatDate(blogDetails.createdAt)} */}
-                                        </p>
-                                        <p className="flex items-center text-base font-medium text-gray-500 dark:text-gray-400">
-                                            <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                            </svg>
-                                            {blogDetails.views} Views
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="mb-5">
-                                    {blogDetails.tags?.length > 0 && (
-                                        <span className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-primary to-primary/80 px-5 py-2 text-sm font-semibold text-white shadow-md">
-                                            {blogDetails.tags[0]}
-                                        </span>
-                                    )}
-                                </div>
+            <div className="container relative z-10 max-w-5xl mx-auto px-4">
+                {/* Hero section */}
+                <div className="mb-12 text-center">
+                    <div className="mb-6">
+                        <span className="inline-flex items-center rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-medium text-white shadow-lg">
+                            📖 Blog Article
+                        </span>
+                    </div>
+                    <h1 className="mb-6 text-4xl font-bold leading-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
+                        <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                            {blogDetails.title}
+                        </span>
+                    </h1>
+                    
+                    {/* Author and meta info */}
+                    <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-8 sm:space-y-0">
+                        <div className="flex items-center space-x-3">
+                            <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-white shadow-lg">
+                                <Image
+                                    src={authorImage}
+                                    alt={blogDetails.author}
+                                    fill
+                                    className="object-cover"
+                                />
                             </div>
+                            <div className="text-left">
+                                <p className="font-semibold text-gray-900 dark:text-white">{blogDetails.author}</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">Author</p>
+                            </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-6 text-sm text-gray-600 dark:text-gray-400">
+                            <div className="flex items-center space-x-2">
+                                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>{formatDate(blogDetails.createdAt)}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                <span>{blogDetails.views || 0} views</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {/* Tags */}
+                    {blogDetails.tags?.length > 0 && (
+                        <div className="mt-6 flex flex-wrap justify-center gap-2">
+                            {blogDetails.tags.map((tag, index) => (
+                                <span
+                                    key={index}
+                                    className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                                >
+                                    #{tag}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                </div>
 
-                            <div>
-                                <div className="prose max-w-none dark:prose-invert">
-                                    <ReactMarkdown
-                                        components={{
-                                            p: ({ node, ...props }) => (
-                                                <p
-                                                    {...props}
-                                                    className="mb-6 text-lg leading-relaxed text-gray-700 dark:text-gray-300"
-                                                />
-                                            ),
-                                            h1: ({ node, ...props }) => (
-                                                <h1
-                                                    {...props}
-                                                    className="mb-6 text-3xl font-bold text-gray-900 dark:text-white"
-                                                />
-                                            ),
-                                            h2: ({ node, ...props }) => (
-                                                <h2
-                                                    {...props}
-                                                    className="mb-5 text-2xl font-bold text-gray-800 dark:text-gray-100 mt-10 pb-2 border-b border-gray-100 dark:border-gray-700"
-                                                />
-                                            ),
-                                            h3: ({ node, ...props }) => (
-                                                <h3
-                                                    {...props}
-                                                    className="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-100 mt-8"
-                                                />
-                                            ),
-                                            ul: ({ node, ...props }) => (
-                                                <ul
-                                                    {...props}
-                                                    className="mb-6 list-disc pl-6 space-y-3 text-gray-700 dark:text-gray-300"
-                                                />
-                                            ),
-                                            ol: ({ node, ...props }) => (
-                                                <ol
-                                                    {...props}
-                                                    className="mb-6 list-decimal pl-6 space-y-3 text-gray-700 dark:text-gray-300"
-                                                />
-                                            ),
-                                            li: ({ node, ...props }) => (
-                                                <li
-                                                    {...props}
-                                                    className="text-lg leading-relaxed"
-                                                />
-                                            ),
-                                            a: ({ node, ...props }) => (
-                                                <a
-                                                    {...props}
-                                                    className="text-primary hover:underline font-medium"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                />
-                                            ),
-                                            code: ({ node, inline, ...props }: { node: any; inline?: boolean;[key: string]: any }) => (
-                                                <code
-                                                    {...props}
-                                                    className={`${inline
-                                                        ? "px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-sm"
-                                                        : "block p-4 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm my-4 overflow-x-auto"
-                                                        }`}
-                                                />
-                                            ),
-                                            blockquote: ({ node, ...props }) => (
-                                                <blockquote
-                                                    {...props}
-                                                    className="border-l-4 border-primary pl-4 my-6 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-r-lg"
-                                                />
-                                            ),
-                                            hr: ({ node, ...props }) => (
-                                                <hr
-                                                    {...props}
-                                                    className="my-10 border-t border-gray-200 dark:border-gray-700"
-                                                />
-                                            ),
-                                            strong: ({ node, ...props }) => (
-                                                <strong
-                                                    {...props}
-                                                    className="font-bold text-gray-900 dark:text-white"
-                                                />
-                                            ),
-                                            em: ({ node, ...props }) => (
-                                                <em
-                                                    {...props}
-                                                    className="italic"
-                                                />
-                                            ),
-                                            table: ({ node, ...props }) => (
-                                                <div className="overflow-x-auto my-8 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
-                                                    <table
-                                                        {...props}
-                                                        className="w-full divide-y divide-gray-200 dark:divide-gray-700"
-                                                    />
-                                                </div>
-                                            ),
-                                            th: ({ node, ...props }) => (
-                                                <th
-                                                    {...props}
-                                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-gray-800"
-                                                />
-                                            ),
-                                            td: ({ node, ...props }) => (
-                                                <td
-                                                    {...props}
-                                                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300"
-                                                />
-                                            ),
-                                        }}
-                                    >
-                                        {blogDetails.content}
-                                    </ReactMarkdown>
-                                </div>
+                {/* Content */}
+                <div className="mx-auto max-w-4xl">
+                    <div className="rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm dark:bg-gray-900/90 lg:p-12">
+                        <div className="prose prose-lg max-w-none dark:prose-invert prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 dark:prose-strong:text-white prose-code:rounded prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:text-sm dark:prose-code:bg-gray-800">
+                            <ReactMarkdown
+                                components={{
+                                    p: ({ node, ...props }) => (
+                                        <p {...props} className="mb-6 text-lg leading-relaxed text-gray-700 dark:text-gray-300" />
+                                    ),
+                                    h1: ({ node, ...props }) => (
+                                        <h1 {...props} className="mb-6 text-3xl font-bold text-gray-900 dark:text-white" />
+                                    ),
+                                    h2: ({ node, ...props }) => (
+                                        <h2 {...props} className="mb-5 text-2xl font-bold text-gray-800 dark:text-gray-100 mt-10 pb-2 border-b border-gray-100 dark:border-gray-700" />
+                                    ),
+                                    h3: ({ node, ...props }) => (
+                                        <h3 {...props} className="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-100 mt-8" />
+                                    ),
+                                    ul: ({ node, ...props }) => (
+                                        <ul {...props} className="mb-6 list-disc pl-6 space-y-3 text-gray-700 dark:text-gray-300" />
+                                    ),
+                                    ol: ({ node, ...props }) => (
+                                        <ol {...props} className="mb-6 list-decimal pl-6 space-y-3 text-gray-700 dark:text-gray-300" />
+                                    ),
+                                    li: ({ node, ...props }) => (
+                                        <li {...props} className="text-lg leading-relaxed" />
+                                    ),
+                                    a: ({ node, ...props }) => (
+                                        <a {...props} className="text-blue-600 hover:underline font-medium" target="_blank" rel="noopener noreferrer" />
+                                    ),
+                                    code: ({ node, inline, ...props }: { node: any; inline?: boolean; [key: string]: any }) => (
+                                        <code
+                                            {...props}
+                                            className={inline ? "px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-sm" : "block p-4 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm my-4 overflow-x-auto"}
+                                        />
+                                    ),
+                                    blockquote: ({ node, ...props }) => (
+                                        <blockquote {...props} className="border-l-4 border-blue-600 pl-4 my-6 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-r-lg" />
+                                    ),
+                                    hr: ({ node, ...props }) => (
+                                        <hr {...props} className="my-10 border-t border-gray-200 dark:border-gray-700" />
+                                    ),
+                                    strong: ({ node, ...props }) => (
+                                        <strong {...props} className="font-bold text-gray-900 dark:text-white" />
+                                    ),
+                                    em: ({ node, ...props }) => (
+                                        <em {...props} className="italic" />
+                                    ),
+                                }}
+                            >
+                                {blogDetails.content}
+                            </ReactMarkdown>
+                        </div>
 
-                                <div className="mt-12 items-center justify-between sm:flex">
-                                    {Array.isArray(blogDetails.tags) && blogDetails.tags.length > 0 && (
-                                        <div className="mb-5">
-                                            <h4 className="mb-4 text-lg font-medium text-gray-700 dark:text-gray-300">
-                                                Tags:
-                                            </h4>
-                                            <div className="flex flex-wrap gap-3">
-                                                {blogDetails.tags.map((tag) => (
-                                                    <TagButton key={tag} text={tag} />
-                                                ))}
-                                            </div>
+                        {/* Footer with tags and share */}
+                        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                                {Array.isArray(blogDetails.tags) && blogDetails.tags.length > 0 && (
+                                    <div>
+                                        <h4 className="mb-4 text-lg font-medium text-gray-700 dark:text-gray-300">
+                                            Tags:
+                                        </h4>
+                                        <div className="flex flex-wrap gap-3">
+                                            {blogDetails.tags.map((tag) => (
+                                                <TagButton key={tag} text={tag} />
+                                            ))}
                                         </div>
-                                    )}
+                                    </div>
+                                )}
 
-                                    <div className="mb-5">
-                                        <h5 className="mb-4 text-lg font-medium text-gray-700 dark:text-gray-300 sm:text-right">
-                                            Share this post:
-                                        </h5>
-                                        <div className="flex items-center sm:justify-end">
-                                            <SharePost />
-                                        </div>
+                                <div>
+                                    <h5 className="mb-4 text-lg font-medium text-gray-700 dark:text-gray-300 sm:text-right">
+                                        Share this post:
+                                    </h5>
+                                    <div className="flex items-center sm:justify-end">
+                                        <SharePost />
                                     </div>
                                 </div>
                             </div>
@@ -350,5 +309,6 @@ const BlogContent = ({ blogDetails }: { blogDetails: BlogPost }) => {
                 </div>
             </div>
         </section>
+        </>
     );
 };
