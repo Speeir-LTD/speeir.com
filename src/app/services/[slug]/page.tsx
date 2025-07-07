@@ -1,15 +1,10 @@
 "use client";
 
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { services } from "@/data/services";
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import { Metadata } from "next";
-
-interface ServiceDetailPageProps {
-  params: { slug: string };
-}
 
 const ServiceDetailPage = () => {
   const params = useParams();

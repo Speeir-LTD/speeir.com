@@ -6,7 +6,6 @@ const nextConfig = {
   reactStrictMode: true, // Enable for better development experience
   
   // Performance optimizations
-  swcMinify: true,
   compress: true,
   poweredByHeader: false,
   
@@ -71,7 +70,6 @@ const nextConfig = {
   // Bundle analyzer (useful for debugging)
   experimental: {
     optimizeCss: true,
-    legacyBrowsers: false,
   },
 };
 
