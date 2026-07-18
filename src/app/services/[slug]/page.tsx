@@ -11,7 +11,7 @@ type ParticleSpec = { left: number; top: number };
 const ServiceDetailPage = () => {
   const params = useParams();
   const slug = params.slug as string;
-
+  
   const service = useMemo(() => services.find(s => s.slug === slug), [slug]);
 
   // Simplified background animation with reduced complexity
