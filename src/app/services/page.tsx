@@ -1,7 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import { services } from "@/data/services";
+import { icons } from "@/data/icons";
 import Breadcrumb from "@/components/Common/Breadcrumb";
+import IconTile from "@/components/Common/IconTile";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -36,7 +38,7 @@ const ServicesPage = () => {
                     <div className="mb-16 text-center">
                         <div className="mb-6">
                             <span className="inline-flex items-center rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-medium text-white shadow-lg">
-                                🚀 Our Services
+                                Our Services
                             </span>
                         </div>
                         <h1 className="mb-6 text-4xl font-bold leading-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
@@ -54,10 +56,10 @@ const ServicesPage = () => {
                     {/* Statistics section */}
                     {/* <div className="mb-16 grid grid-cols-2 md:grid-cols-4 gap-8">
                         {[
-                            { number: "100+", label: "Projects Completed", icon: "📊" },
-                            { number: "50+", label: "Happy Clients", icon: "😊" },
-                            { number: "24/7", label: "Support Available", icon: "🔧" },
-                            { number: "5★", label: "Average Rating", icon: "⭐" }
+                            { number: "100+", label: "Projects Completed", icon: icons.checkBadge },
+                            { number: "50+", label: "Happy Clients", icon: icons.users },
+                            { number: "24/7", label: "Support Available", icon: icons.wrenchScrewdriver },
+                            { number: "5.0", label: "Average Rating", icon: icons.checkBadge }
                         ].map((stat, index) => (
                             <div key={index} className="text-center p-6 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-300">
                                 <div className="text-3xl mb-2">{stat.icon}</div>
@@ -70,17 +72,6 @@ const ServicesPage = () => {
                     {/* Services Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {services.map((service, index) => {
-                            const serviceIcons = [
-                                { icon: "🌐", gradient: "from-blue-500 to-cyan-500" },
-                                { icon: "📱", gradient: "from-purple-500 to-pink-500" },
-                                { icon: "⚙️", gradient: "from-orange-500 to-red-500" },
-                                { icon: "📈", gradient: "from-green-500 to-teal-500" },
-                                { icon: "🛒", gradient: "from-indigo-500 to-purple-500" },
-                                { icon: "🔧", gradient: "from-gray-500 to-slate-500" }
-                            ];
-
-                            const serviceIcon = serviceIcons[index % serviceIcons.length];
-
                             return (
                                 <Link
                                     href={`/services/${service.slug}`}
@@ -92,11 +83,7 @@ const ServicesPage = () => {
                                     <div className="relative z-10 p-8 h-full flex flex-col">
                                         {/* Service Icon */}
                                         <div className="mb-6 flex justify-center">
-                                            <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${serviceIcon.gradient} p-0.5 shadow-lg`}>
-                                                <div className="w-full h-full rounded-2xl bg-white dark:bg-gray-800 flex items-center justify-center">
-                                                    <span className="text-2xl">{serviceIcon.icon}</span>
-                                                </div>
-                                            </div>
+                                            <IconTile path={service.icon} accentIndex={index} />
                                         </div>
 
                                         {/* Content */}
@@ -151,38 +138,40 @@ const ServicesPage = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {[
                                 {
-                                    icon: "🎯",
+                                    icon: icons.checkBadge,
                                     title: "Results-Driven",
                                     description: "Every project is focused on delivering measurable business outcomes and ROI."
                                 },
                                 {
-                                    icon: "⚡",
+                                    icon: icons.bolt,
                                     title: "Fast Delivery",
                                     description: "Agile development process ensures quick turnaround without compromising quality."
                                 },
                                 {
-                                    icon: "🔒",
+                                    icon: icons.lockClosed,
                                     title: "Secure & Reliable",
                                     description: "Built with security best practices and industry-standard protocols."
                                 },
                                 {
-                                    icon: "🚀",
+                                    icon: icons.rocketLaunch,
                                     title: "Scalable Solutions",
                                     description: "Architecture designed to grow with your business and handle increasing demands."
                                 },
                                 {
-                                    icon: "👥",
+                                    icon: icons.users,
                                     title: "Expert Team",
                                     description: "Skilled professionals with years of experience in cutting-edge technologies."
                                 },
                                 {
-                                    icon: "💬",
+                                    icon: icons.chatBubble,
                                     title: "24/7 Support",
                                     description: "Continuous support and maintenance to ensure your systems run smoothly."
                                 }
                             ].map((feature, index) => (
                                 <div key={index} className="text-center p-6 rounded-2xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/30 dark:border-gray-700/30 hover:shadow-lg transition-all duration-300">
-                                    <div className="text-4xl mb-4">{feature.icon}</div>
+                                    <div className="mx-auto mb-4 flex justify-center">
+                                        <IconTile path={feature.icon} accentIndex={index} size="sm" />
+                                    </div>
                                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{feature.title}</h3>
                                     <p className="text-gray-600 dark:text-gray-400 text-sm">{feature.description}</p>
                                 </div>

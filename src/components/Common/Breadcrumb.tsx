@@ -1,4 +1,15 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+type DotSpec = {
+  width: number;
+  height: number;
+  top: number;
+  left: number;
+  duration: number;
+};
 
 const Breadcrumb = ({
   pageName,
@@ -7,6 +18,22 @@ const Breadcrumb = ({
   pageName: string;
   description: string;
 }) => {
+  // Populated client-side only so SSR and the first client render both
+  // start empty and stay hydration-safe.
+  const [dots, setDots] = useState<DotSpec[]>([]);
+
+  useEffect(() => {
+    setDots(
+      Array.from({ length: 8 }, () => ({
+        width: Math.random() * 8 + 4,
+        height: Math.random() * 8 + 4,
+        top: Math.random() * 100,
+        left: Math.random() * 100,
+        duration: Math.random() * 8 + 8,
+      }))
+    );
+  }, []);
+
   return (
     <section className="relative z-10 overflow-hidden pt-28 lg:pt-32 bg-white dark:bg-gray-900">
       <div className="container px-5 mx-auto">
@@ -32,16 +59,16 @@ const Breadcrumb = ({
 
       {/* Subtle Background Elements */}
       <div className="absolute inset-0 -z-10 overflow-hidden opacity-10 dark:opacity-5">
-        {[...Array(8)].map((_, i) => (
-          <div 
+        {dots.map((dot, i) => (
+          <div
             key={i}
             className="absolute rounded-full bg-primary/10"
             style={{
-              width: `${Math.random() * 8 + 4}px`,
-              height: `${Math.random() * 8 + 4}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animation: `float ${Math.random() * 8 + 8}s ease-in-out infinite alternate`,
+              width: `${dot.width}px`,
+              height: `${dot.height}px`,
+              top: `${dot.top}%`,
+              left: `${dot.left}%`,
+              animation: `float ${dot.duration}s ease-in-out infinite alternate`,
               animationDelay: `${i * 0.3}s`
             }}
           ></div>

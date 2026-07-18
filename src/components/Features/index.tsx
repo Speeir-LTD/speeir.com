@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { services } from "@/data/services";
+import IconTile from "@/components/Common/IconTile";
 import { Variants } from "framer-motion";
-
 
 const Features = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -208,21 +208,17 @@ const cardVariants: Variants = {
                     </div>
                     
                     {/* Service icon */}
-                    <motion.div 
-                      className="relative z-10 w-16 h-16 mb-6 mx-auto flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 shadow-inner transition-all duration-700 group-hover:scale-110 group-hover:rotate-6"
-                      whileHover={{ 
-                        scale: 1.15, 
+                    <motion.div
+                      className="relative z-10 mb-6 mx-auto w-fit transition-all duration-700 group-hover:scale-110 group-hover:rotate-6"
+                      whileHover={{
+                        scale: 1.15,
                         rotate: 12,
                         transition: { type: "spring", damping: 10 }
                       }}
                     >
-                      <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-white dark:bg-gray-800 shadow-sm transition-all duration-700 group-hover:shadow-lg">
-                        <svg className="w-6 h-6 text-blue-600 dark:text-blue-400 transition-all duration-700 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                      </div>
+                      <IconTile path={service.icon} accentIndex={index} />
                     </motion.div>
-                    
+
                     {/* Content with enhanced animations */}
                     <div className="relative z-10 flex flex-col h-full">
                       <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-500">
