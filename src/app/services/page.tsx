@@ -11,6 +11,31 @@ export const metadata: Metadata = {
     description: "Explore our range of software development and IT services designed to help your business thrive in the digital world.",
     keywords: "services, software development, IT services, Ireland, Speeir",
     robots: "index, follow",
+    openGraph: {
+      title: "Our Services | Speeir",
+      description: "Explore our range of software development and IT services designed to help your business thrive in the digital world.",
+      url: "https://speeir.com/services",
+      siteName: "Speeir",
+      images: [
+        {
+          url: "/images/services/og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Speeir Services - Web & Mobile Development",
+        },
+      ],
+      locale: "en_IE",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Our Services | Speeir",
+      description: "Explore our range of software development and IT services designed to help your business thrive in the digital world.",
+      images: ["/images/services/og-image.jpg"],
+    },
+    alternates: {
+      canonical: "https://speeir.com/services",
+    },
 };
 
 const ServicesPage = () => {
