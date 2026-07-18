@@ -6,18 +6,38 @@ import { useParams } from "next/navigation";
 import { services } from "@/data/services";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 
+type ParticleSpec = { left: number; top: number };
+
 const ServiceDetailPage = () => {
   const params = useParams();
   const slug = params.slug as string;
-  
+
   const service = useMemo(() => services.find(s => s.slug === slug), [slug]);
 
   // Simplified background animation with reduced complexity
   const [isClient, setIsClient] = useState(false);
+  // Populated client-side only (see effect below) so SSR and the first
+  // client render both start empty and stay hydration-safe.
+  const [benefitParticles, setBenefitParticles] = useState<ParticleSpec[][]>([]);
+  const [floatingParticles, setFloatingParticles] = useState<ParticleSpec[]>([]);
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+    setBenefitParticles(
+      Array.from({ length: service?.benefits?.length ?? 0 }, () =>
+        Array.from({ length: 3 }, () => ({
+          left: Math.random() * 80 + 10,
+          top: Math.random() * 80 + 10,
+        }))
+      )
+    );
+    setFloatingParticles(
+      Array.from({ length: 12 }, () => ({
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+      }))
+    );
+  }, [service]);
 
   if (!service) {
     return (
@@ -131,13 +151,13 @@ const ServiceDetailPage = () => {
 
                         {/* Floating particles effect */}
                         <div className="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                          {[...Array(3)].map((_, i) => (
+                          {(benefitParticles[index] ?? []).map((particle, i) => (
                             <div
                               key={i}
                               className="absolute w-2 h-2 rounded-full bg-blue-400/50 animate-float"
                               style={{
-                                left: `${Math.random() * 80 + 10}%`,
-                                top: `${Math.random() * 80 + 10}%`,
+                                left: `${particle.left}%`,
+                                top: `${particle.top}%`,
                                 animationDelay: `${i * 0.5}s`
                               }}
                             ></div>
@@ -270,13 +290,13 @@ const ServiceDetailPage = () => {
 
               {/* Floating particles */}
               <div className="absolute inset-0 overflow-hidden opacity-20 pointer-events-none">
-                {[...Array(12)].map((_, i) => (
+                {floatingParticles.map((particle, i) => (
                   <div
                     key={i}
                     className="absolute w-1.5 h-1.5 rounded-full bg-blue-400 animate-float"
                     style={{
-                      left: `${Math.random() * 100}%`,
-                      top: `${Math.random() * 100}%`,
+                      left: `${particle.left}%`,
+                      top: `${particle.top}%`,
                       animationDelay: `${i * 0.5}s`
                     }}
                   ></div>

@@ -10,10 +10,15 @@ const Features = () => {
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
+  // Batched to at most one state update (and one layout read) per animation
+  // frame — raw scroll events can fire far faster than the display
+  // refreshes, and each state update re-renders this whole tree.
   useEffect(() => {
-    const handleScroll = () => {
+    let raf: number | null = null;
+
+    const update = () => {
       setScrollY(window.scrollY);
-      
+
       // Check if the features section is in viewport
       const featuresSection = document.getElementById('features');
       if (featuresSection) {
@@ -21,12 +26,22 @@ const Features = () => {
         const isInView = rect.top < window.innerHeight * 0.8 && rect.bottom > 0;
         setIsVisible(isInView);
       }
+      raf = null;
+    };
+
+    const handleScroll = () => {
+      if (raf === null) {
+        raf = requestAnimationFrame(update);
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial call
-    
-    return () => window.removeEventListener('scroll', handleScroll);
+    update(); // Initial call
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (raf !== null) cancelAnimationFrame(raf);
+    };
   }, []);
 
   // Optimized card animation - cards slide up from bottom with slight stagger
