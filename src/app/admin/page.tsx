@@ -13,7 +13,11 @@ export default function AdminDashboardPage() {
     posts: 142,
     views: 58400,
     authors: 18,
-    engagement: 78
+    engagement: 78,
+    postsChange: 8,
+    viewsChange: 15,
+    authorsChange: 0,
+    engagementChange: 2,
   });
 
   useEffect(() => {
@@ -37,7 +41,11 @@ export default function AdminDashboardPage() {
         posts: 142 + Math.floor(Math.random() * 10),
         views: 58400 + Math.floor(Math.random() * 1000),
         authors: 18 + Math.floor(Math.random() * 2),
-        engagement: 78 + Math.floor(Math.random() * 3)
+        engagement: 78 + Math.floor(Math.random() * 3),
+        postsChange: Math.floor(Math.random() * 5) + 8,
+        viewsChange: Math.floor(Math.random() * 10) + 15,
+        authorsChange: Math.floor(Math.random() * 2),
+        engagementChange: Math.floor(Math.random() * 3) + 2,
       });
       setIsLoading(false);
       toast.success('Stats refreshed with dummy data');
@@ -78,31 +86,31 @@ export default function AdminDashboardPage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard 
-          title="Total Posts" 
-          value={stats.posts.toLocaleString()} 
-          change={`+${Math.floor(Math.random() * 5) + 8}%`}
+        <StatCard
+          title="Total Posts"
+          value={stats.posts.toLocaleString()}
+          change={`+${stats.postsChange}%`}
           icon={<FiFileText className="text-blue-500" size={20} />}
           color="bg-blue-100 dark:bg-blue-900/30"
         />
-        <StatCard 
-          title="Total Views" 
-          value={`${(stats.views / 1000).toFixed(1)}K`} 
-          change={`+${Math.floor(Math.random() * 10) + 15}%`}
+        <StatCard
+          title="Total Views"
+          value={`${(stats.views / 1000).toFixed(1)}K`}
+          change={`+${stats.viewsChange}%`}
           icon={<FiBarChart2 className="text-purple-500" size={20} />}
           color="bg-purple-100 dark:bg-purple-900/30"
         />
-        <StatCard 
-          title="Active Authors" 
-          value={stats.authors.toString()} 
-          change={`+${Math.floor(Math.random() * 2)}`}
+        <StatCard
+          title="Active Authors"
+          value={stats.authors.toString()}
+          change={`+${stats.authorsChange}`}
           icon={<FiUsers className="text-emerald-500" size={20} />}
           color="bg-emerald-100 dark:bg-emerald-900/30"
         />
-        <StatCard 
-          title="Engagement Rate" 
-          value={`${stats.engagement}%`} 
-          change={`+${Math.floor(Math.random() * 3) + 2}%`}
+        <StatCard
+          title="Engagement Rate"
+          value={`${stats.engagement}%`}
+          change={`+${stats.engagementChange}%`}
           icon={<FiTrendingUp className="text-amber-500" size={20} />}
           color="bg-amber-100 dark:bg-amber-900/30"
         />

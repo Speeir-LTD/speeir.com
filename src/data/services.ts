@@ -1,4 +1,5 @@
 import featuresData from "@/components/Features/featuresData";
+import { icons } from "@/data/icons";
 
 export interface Service {
   id: string;
@@ -9,11 +10,13 @@ export interface Service {
   benefits?: string[];
   process?: { title: string; description: string }[];
   updatedAt: string;
+  icon: string;
 }
 
 export const services: Service[] = [
   {
     id: "web-development",
+    icon: icons.codeBracket,
     title: "Web Development",
     description: "Custom web applications built with modern technologies to meet your business needs.",
     slug: "web-development",
@@ -38,6 +41,7 @@ export const services: Service[] = [
   },
   {
     id: "mobile-development",
+    icon: icons.devicePhoneMobile,
     title: "Mobile App Development",
     description: "Native and cross-platform mobile applications for iOS and Android.",
     slug: "mobile-development",
@@ -61,6 +65,7 @@ export const services: Service[] = [
   },
   {
     id: "custom-software",
+    icon: icons.cube,
     title: "Custom Software Development",
     description: "Tailor-made software solutions for your unique business needs.",
     slug: "custom-software",
@@ -84,6 +89,7 @@ export const services: Service[] = [
   },
   {
     id: "digital-marketing",
+    icon: icons.trendingUp,
     title: "Digital Marketing",
     description: "Data-driven strategies to boost your online presence and drive growth.",
     slug: "digital-marketing",
@@ -107,6 +113,7 @@ export const services: Service[] = [
   },
   {
     id: "e-commerce",
+    icon: icons.shoppingCart,
     title: "E-Commerce",
     description: "High-performance online stores with seamless user experience.",
     slug: "e-commerce",
@@ -130,6 +137,7 @@ export const services: Service[] = [
   },
   {
     id: "maintenance-support",
+    icon: icons.wrenchScrewdriver,
     title: "Maintenance & Support",
     description: "Ongoing technical support and optimization for your digital products.",
     slug: "maintenance-support",

@@ -2,7 +2,20 @@
 
 import { useState, useEffect, useCallback } from "react";
 
+type ParticleSpec = {
+  left: number;
+  top: number;
+  animationDelay: number;
+  animationDuration: number;
+  driftFactor?: number;
+};
+
 const Contact = () => {
+  // Populated client-side only (see effect below) so SSR and the first
+  // client render both start empty and stay hydration-safe.
+  const [contactParticles, setContactParticles] = useState<ParticleSpec[]>([]);
+  const [floatingParticles, setFloatingParticles] = useState<ParticleSpec[]>([]);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -48,6 +61,27 @@ const Contact = () => {
       }
     };
   }, [handleScroll]);
+
+  useEffect(() => {
+    setContactParticles(
+      Array.from({ length: 12 }, () => ({
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        animationDelay: Math.random() * 3,
+        animationDuration: 2 + Math.random() * 2,
+      }))
+    );
+
+    setFloatingParticles(
+      Array.from({ length: 8 }, () => ({
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        animationDelay: Math.random() * 3,
+        animationDuration: 2 + Math.random() * 2,
+        driftFactor: 0.01 + Math.random() * 0.01,
+      }))
+    );
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -128,15 +162,15 @@ const Contact = () => {
           <div className="absolute bottom-32 left-16 w-12 h-12 rounded-full bg-gradient-to-br from-pink-400/20 to-rose-500/20 backdrop-blur-sm animate-[float_9s_ease-in-out_infinite_reverse]" />
 
           {/* Animated particles */}
-          {[...Array(12)].map((_, i) => (
+          {contactParticles.map((particle, i) => (
             <div
               key={i}
               className="absolute w-1 h-1 bg-blue-400/40 rounded-full animate-pulse"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${2 + Math.random() * 2}s`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
+                animationDelay: `${particle.animationDelay}s`,
+                animationDuration: `${particle.animationDuration}s`,
               }}
             />
           ))}
@@ -391,16 +425,16 @@ const Contact = () => {
 
         {/* Subtle floating particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(8)].map((_, i) => (
+          {floatingParticles.map((particle, i) => (
             <div
               key={i}
               className="absolute w-0.5 h-0.5 bg-blue-400/20 rounded-full animate-pulse"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${2 + Math.random() * 2}s`,
-                transform: `translateY(${scrollY * (0.01 + Math.random() * 0.01)}px)`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
+                animationDelay: `${particle.animationDelay}s`,
+                animationDuration: `${particle.animationDuration}s`,
+                transform: `translateY(${scrollY * (particle.driftFactor ?? 0.01)}px)`,
               }}
             ></div>
           ))}

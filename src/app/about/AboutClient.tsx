@@ -5,18 +5,72 @@ import Link from "next/link";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { icons } from "@/data/icons";
+import IconTile from "@/components/Common/IconTile";
+
+type EnhancedParticleSpec = {
+  width: number;
+  height: number;
+  left: number;
+  top: number;
+  yRange: number;
+  xRange: number;
+  duration: number;
+};
+
+type SubtleParticleSpec = {
+  left: number;
+  top: number;
+  animationDelay: number;
+  animationDuration: number;
+  driftFactor: number;
+};
 
 const AboutPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [scrollY, setScrollY] = useState(0);
+  // Populated client-side only (see effect below) so SSR and the first
+  // client render both start empty and stay hydration-safe.
+  const [enhancedParticles, setEnhancedParticles] = useState<EnhancedParticleSpec[]>([]);
+  const [subtleParticles, setSubtleParticles] = useState<SubtleParticleSpec[]>([]);
 
-  // SMOOTH MOUSE TRACKING - NO LAG
-useEffect(() => {
+  useEffect(() => {
+    setEnhancedParticles(
+      Array.from({ length: 12 }, () => ({
+        width: Math.random() * 6 + 3,
+        height: Math.random() * 6 + 3,
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        yRange: (Math.random() * 60) - 30,
+        xRange: (Math.random() * 40) - 20,
+        duration: Math.random() * 15 + 10,
+      }))
+    );
+
+    setSubtleParticles(
+      Array.from({ length: 8 }, () => ({
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        animationDelay: Math.random() * 3,
+        animationDuration: 2 + Math.random() * 2,
+        driftFactor: 0.01 + Math.random() * 0.01,
+      }))
+    );
+  }, []);
+
+  // Cursor dot/ring move via direct DOM writes (no React state) so they
+  // stay instant. mousePosition/scrollY drive the background effects and
+  // are batched to at most one state update per animation frame, since
+  // raw mousemove/scroll events fire far faster than the screen refreshes
+  // and each state update re-renders this whole tree.
+  useEffect(() => {
     let cursorDot: HTMLElement | null = null;
     let cursorRing: HTMLElement | null = null;
 
+    let pendingMouse: { x: number; y: number } | null = null;
+    let mouseRaf: number | null = null;
+
     const handleMouseMove = (e: MouseEvent) => {
-      // Direct DOM manipulation - NO React state updates
       if (!cursorDot || !cursorRing) {
         cursorDot = document.getElementById('cursor-dot');
         cursorRing = document.getElementById('cursor-ring');
@@ -25,7 +79,7 @@ useEffect(() => {
       if (cursorDot && cursorRing) {
         const x = e.clientX;
         const y = e.clientY;
-        
+
         // Direct style updates - INSTANT, NO LAG
         cursorDot.style.left = x + 'px';
         cursorDot.style.top = y + 'px';
@@ -33,14 +87,29 @@ useEffect(() => {
         cursorRing.style.top = y + 'px';
       }
 
-      // Only update scroll for background effects (less frequent)
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      setMousePosition({ x, y });
+      pendingMouse = {
+        x: (e.clientX / window.innerWidth) * 100,
+        y: (e.clientY / window.innerHeight) * 100,
+      };
+      if (mouseRaf === null) {
+        mouseRaf = requestAnimationFrame(() => {
+          if (pendingMouse) setMousePosition(pendingMouse);
+          mouseRaf = null;
+        });
+      }
     };
 
+    let pendingScroll: number | null = null;
+    let scrollRaf: number | null = null;
+
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      pendingScroll = window.scrollY;
+      if (scrollRaf === null) {
+        scrollRaf = requestAnimationFrame(() => {
+          if (pendingScroll !== null) setScrollY(pendingScroll);
+          scrollRaf = null;
+        });
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -49,29 +118,31 @@ useEffect(() => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
+      if (mouseRaf !== null) cancelAnimationFrame(mouseRaf);
+      if (scrollRaf !== null) cancelAnimationFrame(scrollRaf);
     };
   }, []);
-  
+
   const processItems = [
     {
       title: "Consultation & Planning",
       description: "We take time to understand your goals, challenges, and vision to design a roadmap that fits your business.",
-      icon: "📋"
+      icon: icons.clipboardList
     },
     {
       title: "Agile Development",
       description: "Our cross-border teams work in sprints to deliver fast, iterative progress with ongoing feedback and transparency.",
-      icon: "🔄"
+      icon: icons.arrowPath
     },
     {
       title: "Quality & Compliance",
       description: "Rigorous testing, security practices, and adherence to international standards are baked into everything we do.",
-      icon: "🔍"
+      icon: icons.checkBadge
     },
     {
       title: "Support & Scaling",
       description: "After launch, we remain your technology partner—offering maintenance, enhancements, and scaling support as your needs grow.",
-      icon: "🚀"
+      icon: icons.rocketLaunch
     }
   ];
 
@@ -166,24 +237,24 @@ useEffect(() => {
           />
 
           {/* Enhanced floating particles */}
-          {[...Array(12)].map((_, i) => (
+          {enhancedParticles.map((particle, i) => (
             <motion.div
               key={i}
               className="absolute rounded-full bg-gradient-to-r from-blue-400/20 to-purple-400/20"
               style={{
-                width: Math.random() * 6 + 3 + 'px',
-                height: Math.random() * 6 + 3 + 'px',
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                width: particle.width + 'px',
+                height: particle.height + 'px',
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
               }}
               animate={{
-                y: [0, (Math.random() * 60) - 30],
-                x: [0, (Math.random() * 40) - 20],
+                y: [0, particle.yRange],
+                x: [0, particle.xRange],
                 opacity: [0.2, 0.6, 0.2],
                 scale: [0.8, 1.2, 0.8],
               }}
               transition={{
-                duration: Math.random() * 15 + 10,
+                duration: particle.duration,
                 repeat: Infinity,
                 repeatType: "reverse",
                 ease: "easeInOut"
@@ -250,7 +321,7 @@ useEffect(() => {
                 }}
               >
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  ⚡ Our Methodology
+                  Our Methodology
                 </span>
               </motion.h2>
               
@@ -287,9 +358,7 @@ useEffect(() => {
                     <div className="absolute -right-5 -top-5 w-24 h-24 rounded-full bg-blue-500/10 group-hover:bg-purple-500/10 transition-all duration-500 blur-lg"></div>
                     <div className="flex items-start">
                       <div className="flex-shrink-0 mr-4">
-                        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-white text-xl">
-                          {item.icon}
-                        </div>
+                        <IconTile path={item.icon} accentIndex={index} size="sm" />
                       </div>
                       <div>
                         <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
@@ -473,16 +542,16 @@ useEffect(() => {
 
         {/* Subtle floating particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(8)].map((_, i) => (
+          {subtleParticles.map((particle, i) => (
             <div
               key={i}
               className="absolute w-0.5 h-0.5 bg-blue-400/30 rounded-full animate-pulse"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${2 + Math.random() * 2}s`,
-                transform: `translateY(${scrollY * (0.01 + Math.random() * 0.01)}px)`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
+                animationDelay: `${particle.animationDelay}s`,
+                animationDuration: `${particle.animationDuration}s`,
+                transform: `translateY(${scrollY * particle.driftFactor}px)`,
               }}
             />
           ))}

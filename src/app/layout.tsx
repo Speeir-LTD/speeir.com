@@ -62,9 +62,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://speeir.com',
   },
-  verification: {
-    google: 'your-google-verification-code', // Replace with actual verification code
-  },
 };
 
 export default function RootLayout({

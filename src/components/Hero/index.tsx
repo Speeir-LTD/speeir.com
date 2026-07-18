@@ -3,21 +3,68 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from 'react';
 
+type Particle = {
+  width: number;
+  height: number;
+  left: number;
+  top: number;
+  color: string;
+  opacity: number;
+  animationDelay: number;
+  animationDuration: number;
+};
+
+type MicroParticle = {
+  left: number;
+  top: number;
+};
+
 const Hero = () => {
   const floatingObjectRef = useRef(null);
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [scrollY, setScrollY] = useState(0);
+  // `mounted` and `now` stay at their SSR-safe defaults until after the
+  // client mounts, so the first client render matches the server render.
+  // Only then do we switch to real window/time/random values.
+  const [mounted, setMounted] = useState(false);
+  // Frozen at 0 intentionally: driving this from a timer forced a full
+  // re-render of this whole tree ~20x/sec forever, even at idle, which
+  // was the main source of jank. CSS keyframe animations already carry
+  // the continuous motion; this only needs to be a stable, SSR-safe value.
+  const now = 0;
+  const [particles, setParticles] = useState<Particle[]>([]);
+  const [microParticles, setMicroParticles] = useState<MicroParticle[]>([]);
 
-  // Mouse tracking
+  // Mouse/scroll tracking, batched to at most one state update per animation
+  // frame — raw mousemove/scroll events can fire far faster than the
+  // display refreshes, and each state update re-renders this whole tree.
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      setMousePosition({ x, y });
+    let pendingMouse: { x: number; y: number } | null = null;
+    let mouseRaf: number | null = null;
+    let pendingScroll: number | null = null;
+    let scrollRaf: number | null = null;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      pendingMouse = {
+        x: (e.clientX / window.innerWidth) * 100,
+        y: (e.clientY / window.innerHeight) * 100,
+      };
+      if (mouseRaf === null) {
+        mouseRaf = requestAnimationFrame(() => {
+          if (pendingMouse) setMousePosition(pendingMouse);
+          mouseRaf = null;
+        });
+      }
     };
 
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      pendingScroll = window.scrollY;
+      if (scrollRaf === null) {
+        scrollRaf = requestAnimationFrame(() => {
+          if (pendingScroll !== null) setScrollY(pendingScroll);
+          scrollRaf = null;
+        });
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -26,7 +73,33 @@ const Hero = () => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
+      if (mouseRaf !== null) cancelAnimationFrame(mouseRaf);
+      if (scrollRaf !== null) cancelAnimationFrame(scrollRaf);
     };
+  }, []);
+
+  useEffect(() => {
+    setMounted(true);
+
+    setParticles(
+      Array.from({ length: 20 }, () => ({
+        width: 2 + Math.random() * 4,
+        height: 2 + Math.random() * 4,
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        color: Math.random() > 0.5 ? "74, 108, 247" : "159, 122, 234",
+        opacity: 0.4 + Math.random() * 0.4,
+        animationDelay: Math.random() * 5,
+        animationDuration: 3 + Math.random() * 4,
+      }))
+    );
+
+    setMicroParticles(
+      Array.from({ length: 12 }, () => ({
+        left: 20 + Math.random() * 60,
+        top: 20 + Math.random() * 60,
+      }))
+    );
   }, []);
 
   return (
@@ -50,9 +123,9 @@ const Hero = () => {
                 perspective(1200px) 
                 rotateX(${(mousePosition.y - 50) * 0.4}deg) 
                 rotateY(${(mousePosition.x - 50) * 0.4}deg) 
-                rotateZ(${Math.sin(Date.now() * 0.0008) * 8}deg)
-                translateZ(${Math.sin(Date.now() * 0.001) * 30}px)
-                scale(${1 + Math.sin(Date.now() * 0.0005) * 0.05})
+                rotateZ(${Math.sin(now * 0.0008) * 8}deg)
+                translateZ(${Math.sin(now * 0.001) * 30}px)
+                scale(${1 + Math.sin(now * 0.0005) * 0.05})
               `,
               transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}
@@ -107,9 +180,9 @@ const Hero = () => {
                   key={i}
                   className="absolute w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full opacity-70 shadow-lg"
                   style={{
-                    left: `${50 + Math.cos((Date.now() * 0.0006) + (i * Math.PI / 8)) * (90 + i * 3)}%`,
-                    top: `${50 + Math.sin((Date.now() * 0.0006) + (i * Math.PI / 8)) * (90 + i * 3)}%`,
-                    transform: `translate(-50%, -50%) scale(${0.6 + Math.sin(Date.now() * 0.002 + i) * 0.4})`,
+                    left: `${50 + Math.cos((now * 0.0006) + (i * Math.PI / 8)) * (90 + i * 3)}%`,
+                    top: `${50 + Math.sin((now * 0.0006) + (i * Math.PI / 8)) * (90 + i * 3)}%`,
+                    transform: `translate(-50%, -50%) scale(${0.6 + Math.sin(now * 0.002 + i) * 0.4})`,
                     animation: `float ${2 + i * 0.2}s ease-in-out infinite`,
                     animationDelay: `${i * 0.1}s`,
                     boxShadow: `0 0 10px rgba(59, 130, 246, 0.6)`,
@@ -131,8 +204,8 @@ const Hero = () => {
                 perspective(800px) 
                 rotateX(${(mousePosition.y - 50) * -0.3}deg) 
                 rotateY(${(mousePosition.x - 50) * -0.3}deg)
-                rotateZ(${45 + Math.sin(Date.now() * 0.0012) * 15}deg)
-                translateZ(${Math.cos(Date.now() * 0.0015) * 20}px)
+                rotateZ(${45 + Math.sin(now * 0.0012) * 15}deg)
+                translateZ(${Math.cos(now * 0.0015) * 20}px)
               `,
               transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}
@@ -154,8 +227,8 @@ const Hero = () => {
                 perspective(600px) 
                 rotateX(${(mousePosition.y - 50) * 0.25}deg) 
                 rotateY(${(mousePosition.x - 50) * 0.35}deg)
-                rotateZ(${Math.cos(Date.now() * 0.001) * 20}deg)
-                translateZ(${Math.sin(Date.now() * 0.0018) * 15}px)
+                rotateZ(${Math.cos(now * 0.001) * 20}deg)
+                translateZ(${Math.sin(now * 0.0018) * 15}px)
               `,
               transition: 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}
@@ -181,8 +254,8 @@ const Hero = () => {
                 perspective(500px) 
                 rotateX(${(mousePosition.y - 50) * 0.2}deg) 
                 rotateY(${(mousePosition.x - 50) * 0.4}deg)
-                rotateZ(${Math.sin(Date.now() * 0.0014) * 25}deg)
-                translateZ(${Math.cos(Date.now() * 0.0016) * 12}px)
+                rotateZ(${Math.sin(now * 0.0014) * 25}deg)
+                translateZ(${Math.cos(now * 0.0016) * 12}px)
               `,
               transition: 'all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}
@@ -208,8 +281,8 @@ const Hero = () => {
                 perspective(400px)
                                 rotateX(${(mousePosition.y - 50) * 0.15}deg) 
                 rotateY(${(mousePosition.x - 50) * 0.25}deg)
-                rotateZ(${Math.cos(Date.now() * 0.0016) * 30}deg)
-                translateZ(${Math.sin(Date.now() * 0.002) * 10}px)
+                rotateZ(${Math.cos(now * 0.0016) * 30}deg)
+                translateZ(${Math.sin(now * 0.002) * 10}px)
               `,
               transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}
@@ -230,8 +303,8 @@ const Hero = () => {
                 perspective(600px) 
                 rotateX(${(mousePosition.y - 50) * 0.2}deg) 
                 rotateY(${(mousePosition.x - 50) * 0.3}deg)
-                rotateZ(${Math.sin(Date.now() * 0.0013) * 20}deg)
-                translateZ(${Math.cos(Date.now() * 0.0017) * 18}px)
+                rotateZ(${Math.sin(now * 0.0013) * 20}deg)
+                translateZ(${Math.cos(now * 0.0017) * 18}px)
               `,
               transition: 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}
@@ -253,8 +326,8 @@ const Hero = () => {
                 perspective(700px) 
                 rotateX(${(mousePosition.y - 50) * 0.18}deg) 
                 rotateY(${(mousePosition.x - 50) * 0.28}deg)
-                rotateZ(${Math.cos(Date.now() * 0.0011) * 35}deg)
-                translateZ(${Math.sin(Date.now() * 0.0019) * 22}px)
+                rotateZ(${Math.cos(now * 0.0011) * 35}deg)
+                translateZ(${Math.sin(now * 0.0019) * 22}px)
               `,
               transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}
@@ -271,19 +344,19 @@ const Hero = () => {
           </div>
 
           {/* Micro Floating Particles */}
-          {[...Array(12)].map((_, i) => (
+          {microParticles.map((particle, i) => (
             <div
               key={`micro-${i}`}
               className="absolute w-1 h-1 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full opacity-60"
               style={{
-                left: `${20 + Math.random() * 60}%`,
-                top: `${20 + Math.random() * 60}%`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
                 transform: `
                   translate(
                     ${(mousePosition.x - 50) * (0.05 + i * 0.01)}px,
                     ${(mousePosition.y - 50) * (0.05 + i * 0.01)}px
                   )
-                  translateZ(${Math.sin(Date.now() * 0.002 + i) * 5}px)
+                  translateZ(${Math.sin(now * 0.002 + i) * 5}px)
                 `,
                 animation: `float ${3 + i * 0.3}s ease-in-out infinite`,
                 animationDelay: `${i * 0.2}s`,
@@ -352,20 +425,18 @@ const Hero = () => {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-purple-500/10 dark:from-blue-900/20 dark:to-purple-900/20"></div>
           
           {/* Dynamic Floating Particles */}
-          {[...Array(20)].map((_, i) => (
+          {particles.map((particle, i) => (
             <div
               key={i}
               className="particle absolute rounded-full animate-float"
               style={{
-                width: `${2 + Math.random() * 4}px`,
-                height: `${2 + Math.random() * 4}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                backgroundColor: `rgba(${
-                  Math.random() > 0.5 ? "74, 108, 247" : "159, 122, 234"
-                }, ${0.4 + Math.random() * 0.4})`,
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${3 + Math.random() * 4}s`,
+                width: `${particle.width}px`,
+                height: `${particle.height}px`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
+                backgroundColor: `rgba(${particle.color}, ${particle.opacity})`,
+                animationDelay: `${particle.animationDelay}s`,
+                animationDuration: `${particle.animationDuration}s`,
               }}
             ></div>
           ))}
@@ -419,7 +490,7 @@ const Hero = () => {
                     className="group relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105"
                   >
                     <span className="relative z-10 flex items-center">
-                      Lets Chat 👋
+                      Lets Chat
                       <svg
                                                 className="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:translate-x-1"
                         fill="none"
@@ -469,24 +540,6 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Interactive Cursor Trail */}
-        <div 
-          className="fixed w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full pointer-events-none z-50 opacity-60 transition-all duration-100 ease-out"
-          style={{
-            left: `${mousePosition.x * (typeof window !== 'undefined' ? window.innerWidth : 1920) / 100}px`,
-            top: `${mousePosition.y * (typeof window !== 'undefined' ? window.innerHeight : 1080) / 100}px`,
-            transform: 'translate(-50%, -50%)',
-          }}
-        />
-        <div 
-          className="fixed w-8 h-8 border-2 border-blue-400/30 rounded-full pointer-events-none z-40 transition-all duration-200 ease-out"
-          style={{
-            left: `${mousePosition.x * (typeof window !== 'undefined' ? window.innerWidth : 1920) / 100}px`,
-            top: `${mousePosition.y * (typeof window !== 'undefined' ? window.innerHeight : 1080) / 100}px`,
-            transform: 'translate(-50%, -50%)',
-          }}
-        />
-
         {/* Energy Connections Between Elements */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30 z-5">
           <defs>
@@ -498,7 +551,7 @@ const Hero = () => {
           </defs>
           
           {/* Dynamic connecting lines that respond to cursor */}
-          {typeof window !== 'undefined' && (
+          {mounted && (
             <>
               <path
                 d={`M ${window.innerWidth * 0.5} ${window.innerHeight * 0.45} Q ${mousePosition.x * window.innerWidth / 100} ${mousePosition.y * window.innerHeight / 100} ${window.innerWidth * 0.85} ${window.innerHeight * 0.2}`}

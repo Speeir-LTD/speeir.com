@@ -67,7 +67,7 @@ const Blog = () => {
           <div className="mb-16 text-center">
             <div className="mb-6">
               <span className="inline-flex items-center rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-medium text-white shadow-lg">
-                📚 Our Blog
+                Our Blog
               </span>
             </div>
             <h1 className="mb-6 text-4xl font-bold leading-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
