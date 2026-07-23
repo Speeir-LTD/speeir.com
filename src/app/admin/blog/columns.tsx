@@ -1,11 +1,22 @@
 // src/app/admin/blog/columns.tsx
 import { ColumnDef } from '@tanstack/react-table';
+import { Pencil, Trash2 } from 'lucide-react';
 import { BlogPost } from '@/types/post';
 
 export const BlogColumns: ColumnDef<BlogPost>[] = [
   {
     accessorKey: 'title',
     header: 'Title',
+    cell: ({ row }) => (
+      <div className="max-w-xs">
+        <p className="truncate font-medium text-gray-900 dark:text-white">{row.original.title}</p>
+        {row.original.tags?.length > 0 && (
+          <p className="truncate text-xs text-gray-400 dark:text-gray-500">
+            {row.original.tags.join(', ')}
+          </p>
+        )}
+      </div>
+    ),
   },
   {
     accessorKey: 'author',
@@ -55,18 +66,22 @@ export const BlogColumns: ColumnDef<BlogPost>[] = [
       const onDelete = table.options.meta?.onDelete; // Access onDelete from meta
 
       return (
-        <div className="flex space-x-2">
+        <div className="flex items-center gap-1">
           <button
-            onClick={() => onEdit && onEdit(post)} // Trigger the edit handler
-            className="text-blue-600 hover:underline"
+            onClick={() => onEdit && onEdit(post)}
+            aria-label="Edit post"
+            title="Edit"
+            className="rounded-md p-1.5 text-gray-500 hover:bg-blue-50 hover:text-blue-600 dark:text-gray-400 dark:hover:bg-blue-900/30 dark:hover:text-blue-400"
           >
-            Edit
+            <Pencil className="h-4 w-4" />
           </button>
           <button
-            onClick={() => onDelete && onDelete(post._id.toString())} // Trigger the delete handler
-            className="text-red-600 hover:underline"
+            onClick={() => onDelete && onDelete(post._id.toString())}
+            aria-label="Delete post"
+            title="Delete"
+            className="rounded-md p-1.5 text-gray-500 hover:bg-red-50 hover:text-red-600 dark:text-gray-400 dark:hover:bg-red-900/30 dark:hover:text-red-400"
           >
-            Delete
+            <Trash2 className="h-4 w-4" />
           </button>
         </div>
       );

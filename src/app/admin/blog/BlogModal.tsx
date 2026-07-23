@@ -26,16 +26,34 @@ export function BlogModal({
   });
   const [loading, setLoading] = useState(false);
   const [tagInput, setTagInput] = useState('');
-  const [errors, setErrors] = useState<{ content?: string }>({});
+  const [errors, setErrors] = useState<{ title?: string; author?: string; content?: string }>({});
 
   useEffect(() => {
+    if (!open) return;
     if (post && mode === 'edit') {
       setFormData(post);
+    } else {
+      setFormData({ title: '', content: '', author: '', tags: [], status: 'draft' });
     }
-  }, [post, mode]);
+    setErrors({});
+  }, [open, post, mode]);
+
+  // Close on Escape, matching standard modal behavior elsewhere in the app.
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [open, onClose]);
 
   const validateForm = () => {
-    const newErrors: { content?: string } = {};
+    const newErrors: { title?: string; author?: string; content?: string } = {};
+    if (!formData.title.trim()) {
+      newErrors.title = 'Title is required.';
+    }
+    if (!formData.author.trim()) {
+      newErrors.author = 'Author is required.';
+    }
     if (formData.content.length < 10) {
       newErrors.content = 'Content must be at least 10 characters long.';
     }
@@ -69,13 +87,12 @@ export function BlogModal({
         throw new Error(errorData.error || 'Failed to save post');
       }
 
-      const updatedPost = await response.json();
+      const { data: updatedPost } = await response.json();
       toast.success(
         mode === 'edit' ? 'Post updated successfully!' : 'Post created successfully!'
       ); // Success toast
       if (onSuccess) onSuccess(updatedPost); // Notify parent component of success
       onClose();
-      window.location.reload(); // Refresh the page after success
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'An error occurred'); // Error toast
     } finally {
@@ -84,13 +101,14 @@ export function BlogModal({
   };
 
   const addTag = () => {
-    if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
+    const tag = tagInput.trim();
+    if (tag && !formData.tags.includes(tag)) {
       setFormData({
         ...formData,
-        tags: [...formData.tags, tagInput.trim()],
+        tags: [...formData.tags, tag],
       });
-      setTagInput('');
     }
+    setTagInput('');
   };
 
   const removeTag = (tagToRemove: string) => {
@@ -104,7 +122,10 @@ export function BlogModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+      onMouseDown={(e) => e.target === e.currentTarget && onClose()}
+    >
   <div className="w-full max-w-3xl rounded-xl bg-white shadow-xl dark:bg-gray-800 mx-4 max-h-[90vh] overflow-y-auto">
     {/* Header */}
     <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-gray-700 dark:bg-gray-800">
@@ -125,46 +146,68 @@ export function BlogModal({
       {/* Title Field */}
       <div className="space-y-2">
         <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Title
+          Title <span className="text-red-500">*</span>
         </label>
         <input
           id="title"
           type="text"
+          autoFocus
           value={formData.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-          className="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm transition-all focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+          aria-invalid={!!errors.title}
+          className={`block w-full rounded-lg border px-4 py-3 shadow-sm transition-all focus:ring-blue-500 dark:bg-gray-700 dark:text-white ${
+            errors.title
+              ? 'border-red-400 focus:border-red-500 dark:border-red-500'
+              : 'border-gray-300 focus:border-blue-500 dark:border-gray-600'
+          }`}
           placeholder="Enter post title"
         />
+        {errors.title && <p className="text-sm text-red-500">{errors.title}</p>}
       </div>
 
       {/* Author Field */}
       <div className="space-y-2">
         <label htmlFor="author" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Author
+          Author <span className="text-red-500">*</span>
         </label>
         <input
           id="author"
           type="text"
           value={formData.author}
           onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-          className="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm transition-all focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+          aria-invalid={!!errors.author}
+          className={`block w-full rounded-lg border px-4 py-3 shadow-sm transition-all focus:ring-blue-500 dark:bg-gray-700 dark:text-white ${
+            errors.author
+              ? 'border-red-400 focus:border-red-500 dark:border-red-500'
+              : 'border-gray-300 focus:border-blue-500 dark:border-gray-600'
+          }`}
           placeholder="Enter author name"
         />
+        {errors.author && <p className="text-sm text-red-500">{errors.author}</p>}
       </div>
 
       {/* Content Field */}
       <div className="space-y-2">
-        <label htmlFor="content" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Content
-        </label>
+        <div className="flex items-center justify-between">
+          <label htmlFor="content" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Content <span className="text-red-500">*</span>
+          </label>
+          <span className="text-xs text-gray-400 dark:text-gray-500">{formData.content.length} chars (min 10)</span>
+        </div>
         <textarea
           id="content"
           value={formData.content}
           onChange={(e) => setFormData({ ...formData, content: e.target.value })}
           rows={8}
-          className="block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm transition-all focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+          aria-invalid={!!errors.content}
+          className={`block w-full rounded-lg border px-4 py-3 shadow-sm transition-all focus:ring-blue-500 dark:bg-gray-700 dark:text-white ${
+            errors.content
+              ? 'border-red-400 focus:border-red-500 dark:border-red-500'
+              : 'border-gray-300 focus:border-blue-500 dark:border-gray-600'
+          }`}
           placeholder="Write your content here..."
         />
+        {errors.content && <p className="text-sm text-red-500">{errors.content}</p>}
       </div>
 
       {/* Tags Section */}
@@ -177,9 +220,9 @@ export function BlogModal({
             type="text"
             value={tagInput}
             onChange={(e) => setTagInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
+            onKeyDown={(e) => (e.key === 'Enter' || e.key === ',') && (e.preventDefault(), addTag())}
             className="flex-1 rounded-lg border border-gray-300 px-4 py-3 shadow-sm transition-all focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-            placeholder="Add tags..."
+            placeholder="Add tags (Enter or comma)..."
           />
           <button
             type="button"

@@ -30,11 +30,15 @@ export async function GET(request: Request): Promise<NextResponse<ApiResponse<Bl
     // Optional filters
     const author = searchParams.get('author');
     const tag = searchParams.get('tag');
+    const status = searchParams.get('status');
+    const search = searchParams.get('search');
     const timestamp = searchParams.get('timestamp'); // Allow timestamp but do not validate it as an ID
-    
+
     const query: any = {};
     if (author) query.author = author;
     if (tag) query.tags = tag;
+    if (status) query.status = status;
+    if (search) query.title = { $regex: search, $options: 'i' };
    
     const [posts, total] = await Promise.all([
       db.collection<BlogPost>('posts')

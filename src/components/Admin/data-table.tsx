@@ -10,6 +10,7 @@ import {
   useReactTable,
   type SortingState,
 } from '@tanstack/react-table';
+import { Inbox } from 'lucide-react';
 
 export type { ColumnDef };
 
@@ -26,6 +27,7 @@ interface DataTableProps<T> {
   loading?: boolean;
   onRowClick?: (data: T) => void;
   meta?: Record<string, any>;
+  emptyMessage?: string;
 }
 
 export function DataTable<T>({
@@ -34,6 +36,7 @@ export function DataTable<T>({
   loading = false,
   onRowClick,
   meta,
+  emptyMessage = 'No data available',
 }: DataTableProps<T>) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -73,15 +76,22 @@ export function DataTable<T>({
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
           {loading ? (
-            <tr>
-              <td colSpan={columns.length} className="px-6 py-4 text-center">
-                Loading...
-              </td>
-            </tr>
+            Array.from({ length: 5 }).map((_, i) => (
+              <tr key={i}>
+                {columns.map((_, j) => (
+                  <td key={j} className="px-6 py-4">
+                    <div className="h-4 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
+                  </td>
+                ))}
+              </tr>
+            ))
           ) : table.getRowModel().rows.length === 0 ? (
             <tr>
-              <td colSpan={columns.length} className="px-6 py-4 text-center">
-                No data available
+              <td colSpan={columns.length} className="px-6 py-16 text-center">
+                <div className="flex flex-col items-center gap-2 text-gray-400 dark:text-gray-500">
+                  <Inbox className="h-8 w-8" />
+                  <p className="text-sm font-medium">{emptyMessage}</p>
+                </div>
               </td>
             </tr>
           ) : (
