@@ -19,12 +19,10 @@ const Blog = () => {
     const fetchBlogs = async () => {
       try {
         setIsLoading(true);
-        // Remove cache busting - let HTTP caching work properly
-        const res = await fetch('/api/blog', {
-          headers: {
-            'Cache-Control': 'max-age=300' // 5 minutes cache
-          }
-        });
+        // No cache-busting query param - browser HTTP caching applies as-is.
+        // (Cache-Control as a *request* header is a no-op; only the server's
+        // response header controls caching.)
+        const res = await fetch('/api/blog');
 
         if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) {
           throw new Error(`Failed to fetch blog data: ${res.status} ${res.statusText}`);

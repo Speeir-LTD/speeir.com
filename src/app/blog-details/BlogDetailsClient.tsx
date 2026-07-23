@@ -7,7 +7,6 @@ import Image from "next/image";
 import { BlogPost } from "@/types/post";
 import ReactMarkdown from "react-markdown";
 import { useSearchParams } from "next/navigation";
-import Head from "next/head";
 
 export default function BlogDetailsClient() {
     const [blogDetails, setBlogDetails] = useState<BlogPost | null>(null);
@@ -136,20 +135,16 @@ const BlogContent = ({ blogDetails }: { blogDetails: BlogPost }) => {
         });
     };
 
+    // next/head doesn't work in the app router (no HeadManagerContext), so it
+    // was rendering these meta tags nowhere. document.title is the one piece
+    // that's achievable client-side; real OG/description tags for crawlers
+    // need generateMetadata with the post fetched server-side.
+    useEffect(() => {
+        document.title = `${blogDetails.title} | Speeir Blog`;
+    }, [blogDetails.title]);
+
     return (
         <>
-            <Head>
-                <title>{blogDetails.title} | Speeir Blog</title>
-                <meta name="description" content={blogDetails.content ? blogDetails.content.substring(0, 160).replace(/[#*`]/g, '').trim() + '...' : 'Read this insightful article from Speeir about software development and technology.'} />
-                <meta property="og:title" content={blogDetails.title} />
-                <meta property="og:description" content={blogDetails.content ? blogDetails.content.substring(0, 160).replace(/[#*`]/g, '').trim() + '...' : 'Read this insightful article from Speeir.'} />
-                <meta property="og:type" content="article" />
-                <meta property="article:author" content={blogDetails.author} />
-                <meta property="article:published_time" content={new Date(blogDetails.createdAt).toISOString()} />
-                {blogDetails.tags && blogDetails.tags.map((tag, index) => (
-                    <meta key={index} property="article:tag" content={tag} />
-                ))}
-            </Head>
             <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-900/90 py-16 md:py-20 lg:py-28">
             {/* Modern background elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-5 dark:opacity-10">
