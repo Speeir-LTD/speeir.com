@@ -10,6 +10,7 @@ import {
   BlogPostInsert
 } from '@/types/post';
 import { validateBlogPost } from '@/utils/validators/blog';
+import { isAuthenticated } from '@/utils/requireAuth';
 
 // Helper for error responses
 const errorResponse = (message: string, status: number) => {
@@ -21,8 +22,10 @@ export async function GET(request: Request): Promise<NextResponse<ApiResponse<Bl
     const db = await getDb();
     const { searchParams } = new URL(request.url);
     
-    const limit = Math.min(parseInt(searchParams.get('limit') || '10'), 100);
-    const page = parseInt(searchParams.get('page') || '1');
+    const parsedLimit = parseInt(searchParams.get('limit') || '10', 10);
+    const parsedPage = parseInt(searchParams.get('page') || '1', 10);
+    const limit = Math.min(Number.isFinite(parsedLimit) && parsedLimit > 0 ? parsedLimit : 10, 100);
+    const page = Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
     
     // Optional filters
     const author = searchParams.get('author');
@@ -62,10 +65,12 @@ export async function GET(request: Request): Promise<NextResponse<ApiResponse<Bl
 
 export async function POST(request: Request): Promise<NextResponse<ApiResponse<BlogPost>>> {
   try {
+    if (!(await isAuthenticated())) {
+      return errorResponse('Unauthorized', 401);
+    }
+
     const db = await getDb();
     const body: BlogPostCreateDTO = await request.json();
-
-    console.log('Incoming POST body:', body); // Debugging log
 
     // Validate input
     const validation = validateBlogPost(body);
@@ -73,10 +78,11 @@ export async function POST(request: Request): Promise<NextResponse<ApiResponse<B
       console.error('Validation Error:', validation.error); // Log validation error
       return errorResponse(validation.error?.message ?? 'Validation failed', 400);
     }
-    
+
+    // Use the validated (and unknown-key-stripped) data, not the raw body
     const newPost: BlogPostInsert = {
-      ...body,
-      tags: body.tags || [],
+      ...validation.data,
+      tags: validation.data.tags || [],
       views: 0,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -110,6 +116,10 @@ export async function POST(request: Request): Promise<NextResponse<ApiResponse<B
 
 export async function PUT(request: Request): Promise<NextResponse<ApiResponse<BlogPost>>> {
   try {
+    if (!(await isAuthenticated())) {
+      return errorResponse('Unauthorized', 401);
+    }
+
     const db = await getDb();
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
@@ -119,15 +129,17 @@ export async function PUT(request: Request): Promise<NextResponse<ApiResponse<Bl
       return errorResponse('Valid post ID is required', 400);
     }
 
-    // Exclude the `_id` field if it exists in the body
-    const updateData = { ...body };
-    if ('_id' in updateData) {
-      delete updateData._id;
+    // Validate input (partial schema, since PUT allows partial updates).
+    // Using the validated data (not the raw body) also strips any unknown
+    // fields, preventing mass-assignment of unexpected document keys.
+    const validation = validateBlogPost(body, true);
+    if (!validation.success) {
+      return errorResponse(validation.error?.message ?? 'Validation failed', 400);
     }
 
     const result = await db.collection<BlogPost>('posts').updateOne(
       { _id: new ObjectId(id) as any },
-      { $set: { ...updateData, updatedAt: new Date() } } // Add updatedAt field
+      { $set: { ...validation.data, updatedAt: new Date() } } // Add updatedAt field
     );
 
     if (result.matchedCount === 0) {
@@ -157,6 +169,10 @@ export async function PUT(request: Request): Promise<NextResponse<ApiResponse<Bl
 
 export async function DELETE(request: Request): Promise<NextResponse<ApiResponse>> {
   try {
+    if (!(await isAuthenticated())) {
+      return errorResponse('Unauthorized', 401);
+    }
+
     const db = await getDb();
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');

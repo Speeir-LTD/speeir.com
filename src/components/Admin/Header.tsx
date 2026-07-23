@@ -88,9 +88,9 @@ export function AdminHeader() {
                  
                   <Link
                     href="#"
-                    onClick={() => {
-                      localStorage.removeItem('isAuthenticated'); // Remove authToken from localStorage
-                      window.location.href = '/login'; // Redirect to login page
+                    onClick={async () => {
+                      await fetch('/api/auth/logout', { method: 'POST' });
+                      window.location.href = '/login';
                     }}
                     className="block px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center"
                   >
