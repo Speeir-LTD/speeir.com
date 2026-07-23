@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, Plus, Loader2 } from 'lucide-react';
+import { X, Plus, Loader2, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 
 export function BlogModal({
@@ -27,6 +27,8 @@ export function BlogModal({
   const [loading, setLoading] = useState(false);
   const [tagInput, setTagInput] = useState('');
   const [errors, setErrors] = useState<{ title?: string; author?: string; content?: string }>({});
+  const [topic, setTopic] = useState('');
+  const [generating, setGenerating] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -36,7 +38,33 @@ export function BlogModal({
       setFormData({ title: '', content: '', author: '', tags: [], status: 'draft' });
     }
     setErrors({});
+    setTopic('');
   }, [open, post, mode]);
+
+  const generateWithAI = async () => {
+    if (!topic.trim()) return;
+    setGenerating(true);
+    try {
+      const response = await fetch('/api/blog/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Failed to generate post');
+      setFormData((prev) => ({
+        ...prev,
+        title: data.data.title,
+        content: data.data.content,
+        tags: data.data.tags || [],
+      }));
+      toast.success('Draft generated — review before saving');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'An error occurred');
+    } finally {
+      setGenerating(false);
+    }
+  };
 
   // Close on Escape, matching standard modal behavior elsewhere in the app.
   useEffect(() => {
@@ -143,6 +171,38 @@ export function BlogModal({
 
     {/* Form Content */}
     <form onSubmit={handleSubmit} className="space-y-6 p-6">
+      {/* AI Generation */}
+      {mode === 'create' && (
+        <div className="space-y-2 rounded-lg border border-dashed border-gray-300 p-4 dark:border-gray-600">
+          <label htmlFor="topic" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Generate with AI
+          </label>
+          <div className="flex gap-2">
+            <input
+              id="topic"
+              type="text"
+              value={topic}
+              onChange={(e) => setTopic(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), generateWithAI())}
+              className="flex-1 rounded-lg border border-gray-300 px-4 py-3 shadow-sm transition-all focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              placeholder="Enter a topic, e.g. 'benefits of remote work'"
+            />
+            <button
+              type="button"
+              onClick={generateWithAI}
+              disabled={generating || !topic.trim()}
+              className="inline-flex items-center justify-center rounded-lg bg-purple-600 px-4 py-3 text-sm font-medium text-white shadow-sm transition-all hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50"
+            >
+              {generating ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Sparkles className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Title Field */}
       <div className="space-y-2">
         <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300">

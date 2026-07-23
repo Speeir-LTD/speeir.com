@@ -9,13 +9,13 @@ const nextConfig = {
   
   // Image optimization
   images: {
-    domains: ["localhost", "speeir.com", "ui-avatars.com", "picsum.photos"],
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "cdn.sanity.io",
-        port: "",
-      },
+      { protocol: "https", hostname: "speeir.com" },
+      { protocol: "https", hostname: "ui-avatars.com" },
+      { protocol: "https", hostname: "picsum.photos" },
+      { protocol: "https", hostname: "images.pexels.com" },
+      { protocol: "https", hostname: "cdn.sanity.io" },
+      { protocol: "http", hostname: "localhost" },
     ],
     dangerouslyAllowSVG: true,
     formats: ['image/webp', 'image/avif'], // Modern image formats

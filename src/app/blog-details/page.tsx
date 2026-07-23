@@ -1,5 +1,9 @@
 import { Metadata } from "next";
 import BlogDetailsClient from "./BlogDetailsClient";
+import { toPlainText } from "@/utils/markdown";
+
+const SITE_URL = process.env.BASE_URL || "https://speeir.com";
+const DEFAULT_OG_IMAGE = `${SITE_URL}/images/blog/og-image.jpg`;
 
 export async function generateMetadata({
   searchParams,
@@ -10,41 +14,50 @@ export async function generateMetadata({
 
   if (!id) {
     return {
-      title: "Blog Not Found | Speeir",
+      // Root layout applies a "%s | Speeir" title template — don't append
+      // "| Speeir" here too, or it renders twice.
+      title: "Blog Not Found",
       description: "We couldn't find the blog you're looking for.",
       robots: "noindex, nofollow",
     };
   }
 
   try {
-    const res = await fetch(`https://speeir.com/api/blog/${id}`, {
+    const res = await fetch(`${SITE_URL}/api/blog/${id}`, {
       next: { revalidate: 60 }, // Optional: cache for 60s
     });
     const blog = await res.json();
-    const { title, description, author, publishedAt, image } = blog.data;
+    const { title, content, author, createdAt } = blog.data;
+    const description = toPlainText(content, 160);
+    const socialTitle = `${title} | Speeir`;
 
-    const blogUrl = `https://speeir.com/blog-details?id=${id}`;
-
+    const blogUrl = `${SITE_URL}/blog-details?id=${id}`;
 
     return {
-      title: `${title} | Speeir`,
+      title, // root layout's title template appends "| Speeir"
       description,
       alternates: {
         canonical: blogUrl,
       },
       openGraph: {
         type: "article",
-        title: `${title} | Speeir`,
+        title: socialTitle,
         description,
         url: blogUrl,
-        images: [{ url: image }],
-        publishedTime: publishedAt,
+        images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630 }],
+        publishedTime: createdAt,
         authors: [author],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: socialTitle,
+        description,
+        images: [DEFAULT_OG_IMAGE],
       },
     };
   } catch (error) {
     return {
-      title: "Blog Error | Speeir",
+      title: "Blog Error",
       description: "An error occurred while loading the blog.",
       robots: "noindex, nofollow",
     };

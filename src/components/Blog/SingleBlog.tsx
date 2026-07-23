@@ -1,8 +1,38 @@
+import { useEffect, useState } from "react";
 import { BlogPost } from "@/types/post";
 import Image from "next/image";
 import Link from "next/link";
+import { toPlainText } from "@/utils/markdown";
 
 const SingleBlog = ({ post }: { post: BlogPost | undefined }) => {
+  // Combine the top few tags rather than just one — a single tag ("ireland")
+  // is too generic, but the full post title is too specific (Pexels returns
+  // zero results for a literal phrase like "...with VisaJobs.ie").
+  const topic = post?.tags.slice(0, 3).join(" ") || "technology";
+  // Deterministic per-post index into the search results, so the same post
+  // always shows the same photo instead of reshuffling on every visit.
+  const seed = post
+    ? String(post._id)
+        .split("")
+        .reduce((hash, char) => hash + char.charCodeAt(0), 0)
+    : 0;
+
+  const [imageUrl, setImageUrl] = useState("/images/placeholder.png");
+
+  useEffect(() => {
+    if (!post) return;
+    let cancelled = false;
+    fetch(`/api/blog/image?query=${encodeURIComponent(topic)}&seed=${seed}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!cancelled && data.url) setImageUrl(data.url);
+      })
+      .catch(() => {}); // keep the placeholder on failure
+    return () => {
+      cancelled = true;
+    };
+  }, [post, topic, seed]);
+
   if (!post) {
     return (
       <div className="text-center text-gray-500 dark:text-gray-400">
@@ -12,11 +42,6 @@ const SingleBlog = ({ post }: { post: BlogPost | undefined }) => {
   }
 
   const { title, content, author, tags, createdAt, views, status } = post;
-
-  // Generate image URLs
-  const dummyImage = `https://picsum.photos/600/400?random=${tags[0] || 'blog'}`;
-  const fallbackImage = "/images/placeholder.png"; // Use a static fallback image
-  const imageUrl = dummyImage || fallbackImage; // Use fallback if dummyImage is unavailable
   const authorImage = `https://ui-avatars.com/api/?name=${author.split(' ').join('+')}&background=random`;
 
   // Format date
@@ -70,7 +95,7 @@ const SingleBlog = ({ post }: { post: BlogPost | undefined }) => {
         </h3>
         
         <p className="mb-6 line-clamp-3 text-gray-600 dark:text-gray-300">
-          {content}
+          {toPlainText(content)}
         </p>
         
         {/* Footer with author, date, and views */}

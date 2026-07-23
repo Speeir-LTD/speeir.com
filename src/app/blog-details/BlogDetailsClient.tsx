@@ -249,11 +249,14 @@ const BlogContent = ({ blogDetails }: { blogDetails: BlogPost }) => {
                                     a: ({ node, ...props }) => (
                                         <a {...props} className="text-blue-600 hover:underline font-medium" target="_blank" rel="noopener noreferrer" />
                                     ),
-                                    code: ({ node, inline, ...props }: { node: any; inline?: boolean; [key: string]: any }) => (
-                                        <code
-                                            {...props}
-                                            className={inline ? "px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-sm" : "block p-4 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm my-4 overflow-x-auto"}
-                                        />
+                                    // react-markdown v9+ no longer passes an `inline` prop to the
+                                    // code renderer — block code is distinguished by being wrapped
+                                    // in <pre>, so that's styled separately and `code` stays inline.
+                                    pre: ({ node, ...props }) => (
+                                        <pre {...props} className="my-4 overflow-x-auto rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-800" />
+                                    ),
+                                    code: ({ node, ...props }) => (
+                                        <code {...props} className="rounded bg-gray-100 px-2 py-1 text-sm dark:bg-gray-800" />
                                     ),
                                     blockquote: ({ node, ...props }) => (
                                         <blockquote {...props} className="border-l-4 border-blue-600 pl-4 my-6 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-r-lg" />
