@@ -17,14 +17,22 @@ export default function LoginPage() {
     setError('');
     setIsLoading(true);
 
-    // Simulate network delay for premium feel
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    if (email === 'admin@speeir.com' && password === 'admin@123') {
-      localStorage.setItem('isAuthenticated', 'true');
-      router.push('/admin');
-    } else {
-      setError('Invalid email or password');
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        router.push('/admin');
+      } else {
+        setError(data.error || 'Invalid email or password');
+        setIsLoading(false);
+      }
+    } catch {
+      setError('Something went wrong. Please try again.');
       setIsLoading(false);
     }
   };
