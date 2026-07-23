@@ -1,24 +1,31 @@
 // src/components/admin/data-table.tsx
 'use client';
 
+import { useState } from 'react';
 import {
-  useState,
-  useEffect,
-  useMemo,
-} from 'react';
+  type ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  useReactTable,
+  type SortingState,
+} from '@tanstack/react-table';
 
-export interface ColumnDef<T> {
-  accessorKey: string;
-  header: string;
-  cell?: (info: { row: { original: T }; table: { options: { meta?: Record<string, any> } } }) => React.ReactNode; // Add table property
+export type { ColumnDef };
+
+declare module '@tanstack/react-table' {
+  interface TableMeta<TData> {
+    onEdit?: (row: TData) => void;
+    onDelete?: (id: string) => void;
+  }
 }
 
 interface DataTableProps<T> {
-  columns: ColumnDef<T>[];
+  columns: ColumnDef<T, any>[];
   data: T[];
   loading?: boolean;
   onRowClick?: (data: T) => void;
-  meta?: Record<string, any>; // Add meta property to pass additional context
+  meta?: Record<string, any>;
 }
 
 export function DataTable<T>({
@@ -26,60 +33,43 @@ export function DataTable<T>({
   data,
   loading = false,
   onRowClick,
-  meta, // Add meta to pass to the table
+  meta,
 }: DataTableProps<T>) {
-  const [sortConfig, setSortConfig] = useState<{
-    key: string;
-    direction: 'ascending' | 'descending';
-  } | null>(null);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
-  const sortedData = useMemo(() => {
-    if (!sortConfig) return data;
-    
-    return [...data].sort((a, b) => {
-      // @ts-ignore
-      if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === 'ascending' ? -1 : 1;
-      }
-      // @ts-ignore
-      if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === 'ascending' ? 1 : -1;
-      }
-      return 0;
-    });
-  }, [data, sortConfig]);
-
-  const requestSort = (key: string) => {
-    let direction: 'ascending' | 'descending' = 'ascending';
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
-    }
-    setSortConfig({ key, direction });
-  };
+  const table = useReactTable({
+    data,
+    columns,
+    state: { sorting },
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    meta,
+  });
 
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
         <thead className="bg-gray-50 dark:bg-gray-700">
-          <tr>
-            {columns.map((column) => (
-              <th
-                key={column.accessorKey}
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300"
-                onClick={() => requestSort(column.accessorKey)}
-              >
-                <div className="flex items-center">
-                  {column.header}
-                  {sortConfig?.key === column.accessorKey && (
-                    <span className="ml-1">
-                      {sortConfig.direction === 'ascending' ? '↑' : '↓'}
-                    </span>
-                  )}
-                </div>
-              </th>
-            ))}
-          </tr>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  scope="col"
+                  className="cursor-pointer select-none px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300"
+                  onClick={header.column.getToggleSortingHandler()}
+                >
+                  <div className="flex items-center">
+                    {flexRender(header.column.columnDef.header, header.getContext())}
+                    {{ asc: <span className="ml-1">↑</span>, desc: <span className="ml-1">↓</span> }[
+                      header.column.getIsSorted() as string
+                    ] ?? null}
+                  </div>
+                </th>
+              ))}
+            </tr>
+          ))}
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
           {loading ? (
@@ -88,33 +78,27 @@ export function DataTable<T>({
                 Loading...
               </td>
             </tr>
-          ) : sortedData.length === 0 ? (
+          ) : table.getRowModel().rows.length === 0 ? (
             <tr>
               <td colSpan={columns.length} className="px-6 py-4 text-center">
                 No data available
               </td>
             </tr>
           ) : (
-            sortedData.map((row, rowIndex) => (
+            table.getRowModel().rows.map((row) => (
               <tr
-                key={rowIndex}
-                onClick={() => onRowClick?.(row)}
+                key={row.id}
+                onClick={() => onRowClick?.(row.original)}
                 className={`hover:bg-gray-50 dark:hover:bg-gray-700 ${
                   onRowClick ? 'cursor-pointer' : ''
                 }`}
               >
-                {columns.map((column) => (
+                {row.getVisibleCells().map((cell) => (
                   <td
-                    key={`${rowIndex}-${column.accessorKey}`}
+                    key={cell.id}
                     className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-300"
                   >
-                    {column.cell
-                      ? column.cell({
-                          row: { original: row },
-                          table: { options: { meta } }, // Pass table with meta
-                        })
-                      : // @ts-ignore
-                        row[column.accessorKey]}
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
               </tr>

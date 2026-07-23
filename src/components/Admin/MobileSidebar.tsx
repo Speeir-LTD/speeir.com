@@ -10,11 +10,6 @@ export function MobileSidebar() {
   const pathname = usePathname();
   const { isOpen, close } = useSidebar();
 
-  console.log('MobileSidebar isOpen:', isOpen); // Debugging isOpen state
-
-  // Ensure the component triggering the sidebar calls the `open` function
-  // Example: <button onClick={open}>Open Sidebar</button>
-
   const navItems = [
     {
       href: '/admin',

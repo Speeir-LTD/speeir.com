@@ -1,5 +1,3 @@
-require('dotenv').config(); // Load environment variables from .env file
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ['framer-motion'],

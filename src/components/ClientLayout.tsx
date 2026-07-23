@@ -7,7 +7,6 @@ import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import CustomCursor from "@/components/Common/CustomCursor";
 import ErrorBoundary from "@/components/Common/ErrorBoundary";
-import PerformanceOptimizer from "@/components/Common/PerformanceOptimizer";
 import { Toaster } from 'sonner';
 import { OrganizationSchema } from "@/components/Seo/OrganizationSchema";
 import { Providers } from "@/app/providers";
@@ -77,7 +76,6 @@ const ClientLayout = ({ children }: ClientLayoutProps) => {
       
       <ErrorBoundary>
         <Providers>
-          <PerformanceOptimizer />
           <Toaster position="top-right" />
           {!isAdminRoute && <Header />}
           {children}

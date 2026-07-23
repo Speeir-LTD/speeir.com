@@ -1,5 +1,5 @@
 // src/app/admin/blog/columns.tsx
-import { ColumnDef } from '@/components/Admin/data-table';
+import { ColumnDef } from '@tanstack/react-table';
 import { BlogPost } from '@/types/post';
 
 export const BlogColumns: ColumnDef<BlogPost>[] = [
@@ -47,7 +47,7 @@ export const BlogColumns: ColumnDef<BlogPost>[] = [
     },
   },
   {
-    accessorKey: 'actions',
+    id: 'actions',
     header: 'Actions',
     cell: ({ row, table }) => {
       const post = row.original;
@@ -63,7 +63,7 @@ export const BlogColumns: ColumnDef<BlogPost>[] = [
             Edit
           </button>
           <button
-            onClick={() => onDelete && onDelete(post._id)} // Trigger the delete handler
+            onClick={() => onDelete && onDelete(post._id.toString())} // Trigger the delete handler
             className="text-red-600 hover:underline"
           >
             Delete

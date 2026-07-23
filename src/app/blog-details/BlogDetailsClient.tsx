@@ -22,7 +22,6 @@ export default function BlogDetailsClient() {
         }
 
         try {
-            console.log("Fetching blog details for ID:", id);
             setIsLoading(true);
             const res = await fetch(`/api/blog/${id}`, {
                 method: "GET",

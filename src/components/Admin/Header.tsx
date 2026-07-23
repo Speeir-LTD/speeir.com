@@ -1,33 +1,15 @@
 // src/components/admin/Header.tsx
 'use client';
 
-import { FiMenu, FiSearch, FiBell, FiMessageSquare, FiUser, FiSettings, FiLogOut } from 'react-icons/fi';
+import { FiMenu, FiSearch, FiLogOut } from 'react-icons/fi';
 import { useSidebar } from '@/hooks/use-sidebar';
-import { useState, useRef, useEffect } from 'react';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import Image from 'next/image';
-import Link from 'next/link';
 
 export function AdminHeader() {
   const { toggle } = useSidebar();
-  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-  const [isMessagesOpen, setIsMessagesOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const authorImage = `https://ui-avatars.com/api/?name=ADMINUSER&background=random`;
-
-  // Close dropdowns when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsUserDropdownOpen(false);
-        setIsNotificationsOpen(false);
-        setIsMessagesOpen(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   return (
     <header className="sticky top-0 z-40 border-b border-gray-100 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg supports-backdrop-blur:bg-white/60">
@@ -58,49 +40,41 @@ export function AdminHeader() {
         </div>
 
         {/* Right section - Icons and user dropdown */}
-        <div className="flex items-center space-x-3" ref={dropdownRef}>
-      
-          {/* User dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => {
-                setIsUserDropdownOpen(!isUserDropdownOpen);
-                setIsMessagesOpen(false);
-                setIsNotificationsOpen(false);
-              }}
-              className="flex items-center space-x-2 focus:outline-none"
-            >
-              <Image
-                src={authorImage}
-                alt="Admin"
-                width={36}
-                height={36}
-                className="rounded-full"
-              />
-              <span className="hidden md:inline-block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Admin User
-              </span>
-            </button>
-
-            {isUserDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden z-50">
-                <div className="py-1">
-                 
-                  <Link
-                    href="#"
-                    onClick={async () => {
-                      await fetch('/api/auth/logout', { method: 'POST' });
-                      window.location.href = '/login';
-                    }}
-                    className="block px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center"
-                  >
-                    <FiLogOut className="mr-2 h-4 w-4" />
-                    Sign out
-                  </Link>
-                </div>
-              </div>
-            )}
-          </div>
+        <div className="flex items-center space-x-3">
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger asChild>
+              <button className="flex items-center space-x-2 focus:outline-none">
+                <Image
+                  src={authorImage}
+                  alt="Admin"
+                  width={36}
+                  height={36}
+                  className="rounded-full"
+                />
+                <span className="hidden md:inline-block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Admin User
+                </span>
+              </button>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Portal>
+              <DropdownMenu.Content
+                align="end"
+                sideOffset={8}
+                className="w-48 overflow-hidden rounded-xl border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-700 dark:bg-gray-800 z-50"
+              >
+                <DropdownMenu.Item
+                  onSelect={async () => {
+                    await fetch('/api/auth/logout', { method: 'POST' });
+                    window.location.href = '/login';
+                  }}
+                  className="flex cursor-pointer items-center px-4 py-2 text-sm text-red-600 outline-none transition-colors hover:bg-gray-100 dark:text-red-400 dark:hover:bg-gray-700"
+                >
+                  <FiLogOut className="mr-2 h-4 w-4" />
+                  Sign out
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu.Portal>
+          </DropdownMenu.Root>
         </div>
       </div>
     </header>

@@ -23,7 +23,6 @@ export default function BlogAdminPage() {
       setLoading(true);
       const response = await fetch(`/api/blog`);
       const data = await response.json();
-      // console.log("data",data);
       if (!response.ok) throw new Error(data.error || 'Failed to fetch posts');
       setPosts(data.data);
     } catch (error) {
@@ -42,25 +41,6 @@ export default function BlogAdminPage() {
       if (!response.ok) throw new Error(data.error || 'Failed to delete post');
       setPosts((prev) => prev.filter((post) => post._id.toString() !== id));
       toast.success('Post deleted successfully');
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'An error occurred');
-    }
-  };
-
-  const toggleStatus = async (post: any) => {
-    try {
-      const newStatus = post.status === 'published' ? 'draft' : 'published';
-      const response = await fetch(`/api/blog?id=${post._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'Failed to update status');
-      setPosts((prev) =>
-        prev.map((p) => (p._id === post._id ? { ...p, status: newStatus } : p))
-      );
-      toast.success(`Post ${newStatus === 'published' ? 'published' : 'unpublished'} successfully`);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'An error occurred');
     }
@@ -145,9 +125,8 @@ export default function BlogAdminPage() {
           data={posts} 
           loading={loading}
           meta={{
-            onDelete: deletePost, // Pass the delete handler
-            onEdit: editPost, // Pass the edit handler
-            onToggleStatus: toggleStatus,
+            onDelete: deletePost,
+            onEdit: editPost,
           }}
         />
       </div>
