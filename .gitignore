@@ -1,32 +1,15 @@
-# binaries
-bin/
-dist/
-lib/
-
-# editors
-*.swp
-.idea/
-.vs/
-.vscode/
-.DS_Store
-
-# node
-node_modules/
-build
-
-# dotenv environment variables file
-.env
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+/node_modules
 /.pnp
-.pnp.js
-.vscode
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
 # testing
 /coverage
 
@@ -47,12 +30,12 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# local env files
-.env*.local
+# env files (can opt-in for committing if needed)
+.env*
 
 # vercel
 .vercel
 
-# Local Netlify folder
-.netlify
-tsconfig.tsbuildinfo
+# typescript
+*.tsbuildinfo
+next-env.d.ts
