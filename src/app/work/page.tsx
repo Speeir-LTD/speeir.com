@@ -6,6 +6,30 @@ import { work } from "@/data/work";
 export const metadata: Metadata = {
   title: "Work — Speeir",
   description: "Products and case studies built by Speeir.",
+  alternates: {
+    canonical: "/work",
+  },
+  openGraph: {
+    title: "Work — Speeir",
+    description: "Products and case studies built by Speeir.",
+    url: new URL("https://speeir.com/work"),
+    siteName: "Speeir",
+    type: "website",
+    images: [
+      {
+        url: new URL("https://speeir.com/logo.svg"),
+        width: 1200,
+        height: 630,
+        alt: "Speeir logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Work — Speeir",
+    description: "Products and case studies built by Speeir.",
+    images: ["https://speeir.com/logo.svg"],
+  },
 };
 
 export default function WorkPage() {
