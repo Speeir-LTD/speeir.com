@@ -93,7 +93,7 @@ export default function Home() {
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted">
               In a crowded market, finding a reliable tech partner matters more
-              than ever. But building quality software is painfully slow — until
+              than ever. But building quality software is painfully slow. Until
               now.
             </p>
           </div>
@@ -157,7 +157,7 @@ export default function Home() {
 
       {/* ── Testimonial / social proof ── */}
       <section className="p-4 md:p-6">
-        <div className="rounded-3xl bg-white py-20 md:py-28">
+        <div className="overflow-hidden rounded-3xl bg-white py-20 md:py-28">
           <div className="container">
             <TestimonialsSlider testimonials={testimonials} />
           </div>

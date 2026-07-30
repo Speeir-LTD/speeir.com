@@ -1,6 +1,17 @@
 import Link from "next/link";
+import { InstagramLogo, FacebookLogo, LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
 import { Logo } from "./Logo";
 import { TextHoverEffect } from "./ui/text-hover-effect";
+
+const SOCIAL_LINKS = [
+  { href: "https://ie.linkedin.com/company/speeir", label: "LinkedIn", icon: LinkedinLogo },
+  { href: "https://www.instagram.com/speeir.ltd/", label: "Instagram", icon: InstagramLogo },
+  {
+    href: "https://www.facebook.com/people/Speeir/61576228562819/",
+    label: "Facebook",
+    icon: FacebookLogo,
+  },
+];
 
 const COLUMNS = [
   {
@@ -19,6 +30,8 @@ const COLUMNS = [
     links: [
       { href: "/about", label: "About" },
       { href: "/work", label: "Work" },
+      { href: "/case-studies", label: "Case Studies" },
+      { href: "/faq", label: "FAQ" },
       { href: "/contact", label: "Contact" },
     ],
   },
@@ -39,7 +52,7 @@ export function Footer() {
             <Logo />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
               Speeir designs and ships its own software before it ever touches a
-              client&apos;s roadmap — then brings that same discipline to yours.
+              client&apos;s roadmap, then brings that same discipline to yours.
             </p>
           </div>
 
@@ -58,6 +71,24 @@ export function Footer() {
                   </li>
                 ))}
               </ul>
+
+              {col.title === "Connect" && (
+                <ul className="mt-4 flex items-center gap-3">
+                  {SOCIAL_LINKS.map((social) => (
+                    <li key={social.href}>
+                      <a
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={social.label}
+                        className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors hover:bg-primary/20"
+                      >
+                        <social.icon size={20} weight="fill" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           ))}
         </div>

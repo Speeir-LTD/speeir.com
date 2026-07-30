@@ -46,7 +46,7 @@ export function WobbleCards() {
             Launch &amp; Scale
           </h2>
           <p className="mt-4 max-w-[26rem] text-left text-base/6 text-white/80">
-            After launch, we remain your technology partner — offering
+            After launch, we remain your technology partner, offering
             maintenance, enhancements, and scaling support as your needs grow.
           </p>
         </div>

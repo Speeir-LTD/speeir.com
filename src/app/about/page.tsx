@@ -9,14 +9,14 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata: Metadata = {
-  title: "About — Speeir",
+  title: "About | Speeir",
   description:
     "Learn more about Speeir, our mission, values, and the team behind our innovative solutions.",
   alternates: {
     canonical: "/about",
   },
   openGraph: {
-    title: "About — Speeir",
+    title: "About | Speeir",
     description:
       "Learn more about Speeir, our mission, values, and the team behind our innovative solutions.",
     url: new URL("https://speeir.com/about"),
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "About — Speeir",
+    title: "About | Speeir",
     description:
       "Learn more about Speeir, our mission, values, and the team behind our innovative solutions.",
   },
@@ -53,7 +53,7 @@ const PROCESS = [
   {
     title: "Support & Scaling",
     description:
-      "After launch, we remain your technology partner — offering maintenance, enhancements, and scaling support as your needs grow.",
+      "After launch, we remain your technology partner, offering maintenance, enhancements, and scaling support as your needs grow.",
     icon: RocketLaunch,
   },
 ];

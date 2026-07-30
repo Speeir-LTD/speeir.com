@@ -3,13 +3,13 @@ import { services } from "@/data/services";
 import { ServiceCard } from "@/components/ServiceCard";
 
 export const metadata: Metadata = {
-  title: "Services — Speeir",
+  title: "Services | Speeir",
   description: "What Speeir builds: web, mobile, custom software, e-commerce, and more.",
   alternates: {
     canonical: "/services",
   },
   openGraph: {
-    title: "Services — Speeir",
+    title: "Services | Speeir",
     description: "What Speeir builds: web, mobile, custom software, e-commerce, and more.",
     url: new URL("https://speeir.com/services"),
     siteName: "Speeir",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Services — Speeir",
+    title: "Services | Speeir",
     description: "What Speeir builds: web, mobile, custom software, e-commerce, and more.",
   },
 };
@@ -33,7 +33,7 @@ export default function ServicesPage() {
           What we build
         </h1>
         <p className="mt-4 text-base leading-relaxed text-muted">
-          Six disciplines, one team — from first line of code to the support
+          Six disciplines, one team: from first line of code to the support
           that keeps it running.
         </p>
       </div>

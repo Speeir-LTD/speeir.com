@@ -1,13 +1,22 @@
 import type { MetadataRoute } from "next";
 import { services } from "@/data/services";
 import { work } from "@/data/work";
+import { caseStudies } from "@/data/case-studies";
 
 const SITE_URL = "https://speeir.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
-  const pages = ["", "/about", "/services", "/work", "/contact"].map((path) => ({
+  const pages = [
+    "",
+    "/about",
+    "/services",
+    "/work",
+    "/case-studies",
+    "/faq",
+    "/contact",
+  ].map((path) => ({
     url: `${SITE_URL}${path || "/"}`,
     lastModified,
     changeFrequency: "weekly" as const,
@@ -28,5 +37,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...pages, ...servicePages, ...workPages];
+  const caseStudyPages = caseStudies.map((item) => ({
+    url: `${SITE_URL}/case-studies/${item.slug}`,
+    lastModified: new Date(item.updatedAt),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  return [...pages, ...servicePages, ...workPages, ...caseStudyPages];
 }

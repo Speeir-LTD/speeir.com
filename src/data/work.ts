@@ -10,6 +10,7 @@ export interface WorkItem {
   updatedAt: string;
 }
 
+// Speeir's own products only — client/brand work lives in data/case-studies.ts.
 // Ships empty on purpose — populate once real product names, screenshots,
 // and case-study copy are supplied. No placeholder entries.
 // `caseStudy` is rendered as plain paragraphs split on blank lines — no markdown.

@@ -18,13 +18,13 @@ export async function generateMetadata({
   const service = getServiceBySlug(slug);
   if (!service) return {};
   return {
-    title: `${service.title} — Speeir`,
+    title: `${service.title} | Speeir`,
     description: service.description,
     alternates: {
       canonical: `/services/${slug}`,
     },
     openGraph: {
-      title: `${service.title} — Speeir`,
+      title: `${service.title} | Speeir`,
       description: service.description,
       url: new URL(`https://speeir.com/services/${slug}`),
       siteName: "Speeir",
@@ -32,7 +32,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${service.title} — Speeir`,
+      title: `${service.title} | Speeir`,
       description: service.description,
     },
   };
@@ -47,8 +47,38 @@ export default async function ServiceDetailPage({
   const service = getServiceBySlug(slug);
   if (!service) notFound();
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        name: service.title,
+        description: service.description,
+        provider: { "@type": "Organization", name: "Speeir", url: "https://speeir.com" },
+        areaServed: "IE",
+        url: `https://speeir.com/services/${slug}`,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Services", item: "https://speeir.com/services" },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: service.title,
+            item: `https://speeir.com/services/${slug}`,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="container py-20 md:py-28">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <Link
         href="/services"
         className="inline-flex items-center gap-1.5 text-sm font-medium text-muted hover:text-primary"

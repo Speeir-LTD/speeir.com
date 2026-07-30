@@ -3,10 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
-import { work, getWorkBySlug } from "@/data/work";
+import { caseStudies, getCaseStudyBySlug } from "@/data/case-studies";
 
 export function generateStaticParams() {
-  return work.map((item) => ({ slug: item.slug }));
+  return caseStudies.map((item) => ({ slug: item.slug }));
 }
 
 export async function generateMetadata({
@@ -15,18 +15,18 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const item = getWorkBySlug(slug);
+  const item = getCaseStudyBySlug(slug);
   if (!item) return {};
   return {
     title: `${item.title} | Speeir`,
     description: item.summary,
     alternates: {
-      canonical: `/work/${slug}`,
+      canonical: `/case-studies/${slug}`,
     },
     openGraph: {
       title: `${item.title} | Speeir`,
       description: item.summary,
-      url: new URL(`https://speeir.com/work/${slug}`),
+      url: new URL(`https://speeir.com/case-studies/${slug}`),
       siteName: "Speeir",
       type: "article",
     },
@@ -38,13 +38,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function WorkDetailPage({
+export default async function CaseStudyDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const item = getWorkBySlug(slug);
+  const item = getCaseStudyBySlug(slug);
   if (!item) notFound();
 
   const [cover, ...gallery] = item.images;
@@ -54,8 +54,18 @@ export default async function WorkDetailPage({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Work", item: "https://speeir.com/work" },
-      { "@type": "ListItem", position: 2, name: item.title, item: `https://speeir.com/work/${slug}` },
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Case Studies",
+        item: "https://speeir.com/case-studies",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: item.title,
+        item: `https://speeir.com/case-studies/${slug}`,
+      },
     ],
   };
 
@@ -66,11 +76,11 @@ export default async function WorkDetailPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <Link
-        href="/work"
+        href="/case-studies"
         className="inline-flex items-center gap-1.5 text-sm font-medium text-muted hover:text-primary"
       >
         <ArrowLeft size={14} />
-        All work
+        All case studies
       </Link>
 
       <div className="mx-auto mt-8 max-w-2xl text-center">

@@ -1,0 +1,29 @@
+# Speeir
+
+> Speeir is a software agency based in Dublin, Ireland. It designs and ships its own software products before it ever touches a client's roadmap, then brings that same discipline to client projects across web, mobile, and custom software.
+
+Speeir has delivered 50+ projects across six core disciplines, with a 98% client retention rate, and offers 24/7 support and monitoring after launch. Its teams work across borders with startups, scale-ups, and enterprise clients internationally.
+
+## Services
+
+- [Web Development](https://speeir.com/services/web-development): Custom web applications built with modern technologies.
+- [Mobile App Development](https://speeir.com/services/mobile-development): Native and cross-platform mobile applications for iOS and Android.
+- [Custom Software Development](https://speeir.com/services/custom-software): Tailor-made software solutions for unique business needs.
+- [Digital Marketing](https://speeir.com/services/digital-marketing): Data-driven strategies to boost online presence and growth.
+- [E-Commerce](https://speeir.com/services/e-commerce): High-performance online stores with seamless user experience.
+- [Maintenance & Support](https://speeir.com/services/maintenance-support): Ongoing technical support and optimization for digital products.
+
+## Company
+
+- [About](https://speeir.com/about): Speeir's mission, values, and team.
+- [Work](https://speeir.com/work): Products built by Speeir.
+- [Case Studies](https://speeir.com/case-studies): Client and brand work delivered by Speeir.
+- [FAQ](https://speeir.com/faq): Answers to common questions about Speeir.
+- [Contact](https://speeir.com/contact): Start a project with Speeir.
+
+## Contact
+
+- Email: info@speeir.com
+- LinkedIn: https://ie.linkedin.com/company/speeir
+- Instagram: https://www.instagram.com/speeir.ltd/
+- Facebook: https://www.facebook.com/people/Speeir/61576228562819/

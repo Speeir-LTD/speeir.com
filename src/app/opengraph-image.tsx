@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Speeir — Software agency that builds what it pitches";
+export const alt = "Speeir | Software agency that builds what it pitches";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -79,7 +79,7 @@ export default function OpengraphImage() {
               lineHeight: 1.4,
             }}
           >
-            Web, mobile, and custom software — and our own products first.
+            Web, mobile, and custom software, building our own products first.
           </div>
         </div>
 

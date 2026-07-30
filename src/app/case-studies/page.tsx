@@ -2,41 +2,41 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Sparkle } from "@phosphor-icons/react/dist/ssr";
-import { work } from "@/data/work";
+import { caseStudies } from "@/data/case-studies";
 
 export const metadata: Metadata = {
-  title: "Work | Speeir",
-  description: "Products built by Speeir.",
+  title: "Case Studies | Speeir",
+  description: "Client and brand work delivered by Speeir.",
   alternates: {
-    canonical: "/work",
+    canonical: "/case-studies",
   },
   openGraph: {
-    title: "Work | Speeir",
-    description: "Products built by Speeir.",
-    url: new URL("https://speeir.com/work"),
+    title: "Case Studies | Speeir",
+    description: "Client and brand work delivered by Speeir.",
+    url: new URL("https://speeir.com/case-studies"),
     siteName: "Speeir",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Work | Speeir",
-    description: "Products built by Speeir.",
+    title: "Case Studies | Speeir",
+    description: "Client and brand work delivered by Speeir.",
   },
 };
 
-export default function WorkPage() {
+export default function CaseStudiesPage() {
   return (
     <div className="container py-20 md:py-28">
       <div className="mx-auto max-w-2xl text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          Work
+          Case Studies
         </p>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-ink md:text-5xl">
-          What we&apos;ve built
+          Brands we&apos;ve worked with
         </h1>
       </div>
 
-      {work.length === 0 ? (
+      {caseStudies.length === 0 ? (
         <div className="group relative mx-auto mt-16 flex max-w-lg flex-col items-center rounded-2xl border border-dashed border-border/40 bg-white p-14 text-center shadow-md">
           {/* Ambient glow */}
           <div
@@ -48,10 +48,10 @@ export default function WorkPage() {
               <Sparkle size={20} weight="duotone" />
             </div>
             <h2 className="mt-5 text-lg font-semibold text-ink">
-              Products coming soon
+              Case studies coming soon
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-muted">
-              We&apos;re putting together the products we&apos;ve shipped.
+              We&apos;re putting together the brands we&apos;ve worked with.
               Check back shortly, or see what we can build for you.
             </p>
             <Link
@@ -65,10 +65,10 @@ export default function WorkPage() {
         </div>
       ) : (
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {work.map((item) => (
+          {caseStudies.map((item) => (
             <Link
               key={item.id}
-              href={`/work/${item.slug}`}
+              href={`/case-studies/${item.slug}`}
               className="group relative flex flex-col rounded-2xl border border-border/40 bg-white p-6 shadow-md transition-transform hover:-translate-y-1"
             >
               <div
@@ -106,7 +106,7 @@ export default function WorkPage() {
                   </ul>
                 )}
                 <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                  View project
+                  View case study
                   <ArrowRight size={14} />
                 </span>
               </div>

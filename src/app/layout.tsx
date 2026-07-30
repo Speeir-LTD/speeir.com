@@ -10,26 +10,26 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Speeir — Software agency that builds what it pitches",
+  title: "Speeir | Software agency that builds what it pitches",
   description:
-    "Speeir designs and ships web, mobile, and custom software — and builds its own products first.",
+    "Speeir designs and ships web, mobile, and custom software, building its own products first.",
   metadataBase: new URL("https://speeir.com"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Speeir — Software agency that builds what it pitches",
+    title: "Speeir | Software agency that builds what it pitches",
     description:
-      "Speeir designs and ships web, mobile, and custom software — and builds its own products first.",
+      "Speeir designs and ships web, mobile, and custom software, building its own products first.",
     url: new URL("/", "https://speeir.com"),
     siteName: "Speeir",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Speeir — Software agency that builds what it pitches",
+    title: "Speeir | Software agency that builds what it pitches",
     description:
-      "Speeir designs and ships web, mobile, and custom software — and builds its own products first.",
+      "Speeir designs and ships web, mobile, and custom software, building its own products first.",
   },
   robots: {
     index: true,
@@ -54,7 +54,11 @@ const structuredData = {
       "name": "Speeir",
       "url": "https://speeir.com",
       "logo": "https://speeir.com/logo.svg",
-      "sameAs": [],
+      "sameAs": [
+        "https://ie.linkedin.com/company/speeir",
+        "https://www.instagram.com/speeir.ltd/",
+        "https://www.facebook.com/people/Speeir/61576228562819/"
+      ],
       "contactPoint": [
         {
           "@type": "ContactPoint",

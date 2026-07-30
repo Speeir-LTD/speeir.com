@@ -57,7 +57,7 @@ export function GlassHero() {
               className="mx-auto mt-6 max-w-lg text-lg leading-relaxed text-ink/70"
             >
               Speeir designs and ships its own software before it ever
-              touches a client&apos;s roadmap — then brings that same
+              touches a client&apos;s roadmap, then brings that same
               discipline to yours.
             </motion.p>
 

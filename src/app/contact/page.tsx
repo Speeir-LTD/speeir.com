@@ -3,13 +3,13 @@ import { EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
 import { ContactForm } from "@/components/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact — Speeir",
+  title: "Contact | Speeir",
   description: "Tell us what you're building.",
   alternates: {
     canonical: "/contact",
   },
   openGraph: {
-    title: "Contact — Speeir",
+    title: "Contact | Speeir",
     description: "Tell us what you're building.",
     url: new URL("https://speeir.com/contact"),
     siteName: "Speeir",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact — Speeir",
+    title: "Contact | Speeir",
     description: "Tell us what you're building.",
   },
 };
