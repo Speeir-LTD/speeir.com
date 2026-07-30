@@ -1,16 +1,6 @@
 import Link from "next/link";
-import { House, Wrench, Briefcase, User, Envelope } from "@phosphor-icons/react/dist/ssr";
 import { Logo } from "./Logo";
 import { TextHoverEffect } from "./ui/text-hover-effect";
-import { FloatingDock } from "./ui/floating-dock";
-
-const DOCK_ITEMS = [
-  { title: "Home", icon: <House className="h-full w-full" />, href: "/" },
-  { title: "Services", icon: <Wrench className="h-full w-full" />, href: "/services" },
-  { title: "Work", icon: <Briefcase className="h-full w-full" />, href: "/work" },
-  { title: "About", icon: <User className="h-full w-full" />, href: "/about" },
-  { title: "Contact", icon: <Envelope className="h-full w-full" />, href: "/contact" },
-];
 
 const COLUMNS = [
   {
@@ -51,9 +41,6 @@ export function Footer() {
               Speeir designs and ships its own software before it ever touches a
               client&apos;s roadmap — then brings that same discipline to yours.
             </p>
-            <div className="mt-6 flex justify-start">
-              <FloatingDock items={DOCK_ITEMS} />
-            </div>
           </div>
 
           {COLUMNS.map((col) => (
