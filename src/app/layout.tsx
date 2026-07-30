@@ -24,21 +24,12 @@ export const metadata: Metadata = {
     url: new URL("/", "https://speeir.com"),
     siteName: "Speeir",
     type: "website",
-    images: [
-      {
-        url: new URL("/logo.svg", "https://speeir.com"),
-        width: 1200,
-        height: 630,
-        alt: "Speeir logo",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Speeir — Software agency that builds what it pitches",
     description:
       "Speeir designs and ships web, mobile, and custom software — and builds its own products first.",
-    images: ["/logo.svg"],
   },
   robots: {
     index: true,
@@ -49,8 +40,11 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/logo.svg",
-    shortcut: "/logo.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/logo.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.ico",
     apple: "/logo.svg",
   },
 };
@@ -71,32 +65,31 @@ const structuredData = {
           "email": "info@speeir.com",
           "availableLanguage": "en"
         }
+      ]
+    },
+    {
+      "@type": "LocalBusiness",
+      "name": "Speeir",
+      "url": "https://speeir.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IE",
+        "addressLocality": "Dublin",
+        "addressRegion": "Dublin"
+      },
+      "areaServed": ["IE"],
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "53.3498",
+        "longitude": "-6.2603"
+      },
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=53.3498,-6.2603",
+      "contactPoint": [
         {
-          "@type": "LocalBusiness",
-          "name": "Speeir",
-          "url": "https://speeir.com",
-          "telephone": "",
-          "address": {
-            "@type": "PostalAddress",
-            "addressCountry": "IE",
-            "addressLocality": "Dublin",
-            "addressRegion": "Dublin"
-          },
-          "areaServed": ["IE"],
-          "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "53.3498",
-            "longitude": "-6.2603"
-          },
-          "hasMap": "https://www.google.com/maps/search/?api=1&query=53.3498,-6.2603",
-          "contactPoint": [
-            {
-              "@type": "ContactPoint",
-              "contactType": "sales",
-              "email": "info@speeir.com",
-              "availableLanguage": "en"
-            }
-          ]
+          "@type": "ContactPoint",
+          "contactType": "sales",
+          "email": "info@speeir.com",
+          "availableLanguage": "en"
         }
       ]
     },
