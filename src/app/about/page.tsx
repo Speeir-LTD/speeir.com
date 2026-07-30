@@ -22,21 +22,12 @@ export const metadata: Metadata = {
     url: new URL("https://speeir.com/about"),
     siteName: "Speeir",
     type: "website",
-    images: [
-      {
-        url: new URL("https://speeir.com/logo.svg"),
-        width: 1200,
-        height: 630,
-        alt: "Speeir logo",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "About — Speeir",
     description:
       "Learn more about Speeir, our mission, values, and the team behind our innovative solutions.",
-    images: ["https://speeir.com/logo.svg"],
   },
 };
 

@@ -14,20 +14,11 @@ export const metadata: Metadata = {
     url: new URL("https://speeir.com/services"),
     siteName: "Speeir",
     type: "website",
-    images: [
-      {
-        url: new URL("https://speeir.com/logo.svg"),
-        width: 1200,
-        height: 630,
-        alt: "Speeir logo",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Services — Speeir",
     description: "What Speeir builds: web, mobile, custom software, e-commerce, and more.",
-    images: ["https://speeir.com/logo.svg"],
   },
 };
 

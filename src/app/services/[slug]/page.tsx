@@ -29,20 +29,11 @@ export async function generateMetadata({
       url: new URL(`https://speeir.com/services/${slug}`),
       siteName: "Speeir",
       type: "website",
-      images: [
-        {
-          url: new URL("https://speeir.com/logo.svg"),
-          width: 1200,
-          height: 630,
-          alt: `${service.title} | Speeir`,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${service.title} — Speeir`,
       description: service.description,
-      images: ["https://speeir.com/logo.svg"],
     },
   };
 }
