@@ -1,17 +1,16 @@
 {
-  "name": "speeir-redesign",
-  "version": "0.1.0",
+  "name": "speeir",
+  "version": "2.2.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3100",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "generate-sitemap": "node scripts/generate-sitemap.mjs",
-    "postbuild": "node scripts/generate-sitemap.mjs"
+    "lint": "eslint"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.10",
+    "@netlify/plugin-nextjs": "^5.15.13",
     "@phosphor-icons/react": "^2.1.10",
     "@tsparticles/engine": "^4.3.2",
     "@tsparticles/react": "^4.3.2",
