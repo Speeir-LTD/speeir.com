@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Sparkle } from "@phosphor-icons/react/dist/ssr";
 import { work } from "@/data/work";
@@ -15,20 +16,11 @@ export const metadata: Metadata = {
     url: new URL("https://speeir.com/work"),
     siteName: "Speeir",
     type: "website",
-    images: [
-      {
-        url: new URL("https://speeir.com/logo.svg"),
-        width: 1200,
-        height: 630,
-        alt: "Speeir logo",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Work — Speeir",
     description: "Products and case studies built by Speeir.",
-    images: ["https://speeir.com/logo.svg"],
   },
 };
 
@@ -74,23 +66,51 @@ export default function WorkPage() {
       ) : (
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {work.map((item) => (
-            <div
+            <Link
               key={item.id}
-              className="group relative rounded-2xl border border-border/40 bg-white p-6 shadow-md"
+              href={`/work/${item.slug}`}
+              className="group relative flex flex-col rounded-2xl border border-border/40 bg-white p-6 shadow-md transition-transform hover:-translate-y-1"
             >
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -inset-px rounded-2xl bg-primary/10 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
               />
-              <div className="relative z-10">
+              <div className="relative z-10 flex flex-1 flex-col">
+                {item.images[0] && (
+                  <div className="mb-5 overflow-hidden rounded-xl border border-border/40">
+                    <Image
+                      src={item.images[0]}
+                      alt={item.title}
+                      width={640}
+                      height={400}
+                      className="h-auto w-full"
+                    />
+                  </div>
+                )}
                 <h3 className="text-lg font-semibold text-ink">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-sm text-muted">
+                <p className="mt-2 flex-1 text-sm text-muted">
                   {item.summary}
                 </p>
+                {item.tags.length > 0 && (
+                  <ul className="mt-5 flex flex-wrap gap-2">
+                    {item.tags.map((tag) => (
+                      <li
+                        key={tag}
+                        className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary"
+                      >
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                  View project
+                  <ArrowRight size={14} />
+                </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

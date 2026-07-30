@@ -12,4 +12,9 @@ export interface WorkItem {
 
 // Ships empty on purpose — populate once real product names, screenshots,
 // and case-study copy are supplied. No placeholder entries.
+// `caseStudy` is rendered as plain paragraphs split on blank lines — no markdown.
 export const work: WorkItem[] = [];
+
+export function getWorkBySlug(slug: string) {
+  return work.find((item) => item.slug === slug);
+}

@@ -17,6 +17,7 @@ import { Logo } from "./Logo";
 const NAV_LINKS = [
   { name: "About", link: "/about" },
   { name: "Services", link: "/services" },
+  { name: "Work", link: "/work" },
   { name: "Contact", link: "/contact" },
 ];
 
