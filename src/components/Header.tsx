@@ -17,10 +17,21 @@ import { Logo } from "./Logo";
 const NAV_LINKS = [
   { name: "About", link: "/about" },
   { name: "Services", link: "/services" },
-  { name: "Work", link: "/work" },
-  { name: "Case Studies", link: "/case-studies" },
+  {
+    name: "Work",
+    link: "/work",
+    children: [
+      { name: "Products", link: "/work" },
+      { name: "Case Studies", link: "/case-studies" },
+    ],
+  },
+  { name: "Blog", link: "/blog" },
   { name: "Contact", link: "/contact" },
 ];
+
+// MobileNavMenu renders a flat vertical list — plenty of room there, so
+// unlike the desktop bar it doesn't need the Work/Case Studies grouping.
+const MOBILE_NAV_LINKS = NAV_LINKS.flatMap((item) => item.children ?? [item]);
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -44,7 +55,7 @@ export function Header() {
         </MobileNavHeader>
 
         <MobileNavMenu isOpen={open} onClose={() => setOpen(false)}>
-          {NAV_LINKS.map((item) => (
+          {MOBILE_NAV_LINKS.map((item) => (
             <Link
               key={item.link}
               href={item.link}

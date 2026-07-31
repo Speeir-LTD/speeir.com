@@ -18,6 +18,7 @@ Speeir has delivered 50+ projects across six core disciplines, with a 98% client
 - [About](https://speeir.com/about): Speeir's mission, values, and team.
 - [Work](https://speeir.com/work): Products built by Speeir.
 - [Case Studies](https://speeir.com/case-studies): Client and brand work delivered by Speeir.
+- [Blog](https://speeir.com/blog): Insights on software, product, and how Speeir builds.
 - [FAQ](https://speeir.com/faq): Answers to common questions about Speeir.
 - [Contact](https://speeir.com/contact): Start a project with Speeir.
 

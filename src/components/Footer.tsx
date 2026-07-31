@@ -31,6 +31,7 @@ const COLUMNS = [
       { href: "/about", label: "About" },
       { href: "/work", label: "Work" },
       { href: "/case-studies", label: "Case Studies" },
+      { href: "/blog", label: "Blog" },
       { href: "/faq", label: "FAQ" },
       { href: "/contact", label: "Contact" },
     ],
