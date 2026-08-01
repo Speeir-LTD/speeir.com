@@ -1,17 +1,40 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight } from "@phosphor-icons/react";
+import { ArrowRight, Spinner } from "@phosphor-icons/react";
 
 const inputClasses =
   "w-full rounded-xl border border-border/40 bg-white px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-primary";
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setError("");
+    setSending(true);
+
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form));
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || "Something went wrong");
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setSending(false);
+    }
   }
 
   if (submitted) {
@@ -60,12 +83,16 @@ export function ContactForm() {
         />
       </div>
 
+      {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+
       <button
         type="submit"
-        className="mt-6 inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+        disabled={sending}
+        className="mt-6 inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        Send message
-        <ArrowRight size={16} />
+        {sending && <Spinner size={16} className="animate-spin" />}
+        {sending ? "Sending..." : "Send message"}
+        {!sending && <ArrowRight size={16} />}
       </button>
     </form>
   );

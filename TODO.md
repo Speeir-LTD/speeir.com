@@ -12,5 +12,9 @@ Things temporarily hidden/commented out in code, to revisit later.
 - **Testimonials section** — commented out in `src/app/page.tsx`, along
   with the `TestimonialsSlider`/`testimonials` imports.
 
+
+Zoho SMTP host/port/user/app-password + which inbox receives submissions
+GTM container ID
+
 To bring any of these back, uncomment the marked block(s) in the file(s)
 above.

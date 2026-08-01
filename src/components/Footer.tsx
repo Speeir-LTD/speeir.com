@@ -95,10 +95,18 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 border-t border-border/40 pt-8">
-          <p className="text-center text-sm text-muted">
+        <div className="mt-12 flex flex-col items-center gap-4 border-t border-border/40 pt-8 sm:flex-row sm:justify-between">
+          <p className="text-sm text-muted">
             &copy; {new Date().getFullYear()} Speeir LTD. All rights reserved.
           </p>
+          <div className="flex items-center gap-5">
+            <Link href="/privacy" className="text-sm text-muted transition-colors hover:text-primary">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="text-sm text-muted transition-colors hover:text-primary">
+              Terms of Service
+            </Link>
+          </div>
         </div>
 
         <div className="mt-4 h-96 w-full">
