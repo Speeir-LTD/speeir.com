@@ -25,16 +25,17 @@ import { StatsGrid } from "@/components/StatsGrid";
 import { BackgroundLines } from "@/components/ui/background-lines";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 
-const CLIENTS = [
-  "Startups",
-  "Scale-ups",
-  "Enterprise",
-  "SaaS",
-  "FinTech",
-  "HealthTech",
-  "E-Commerce",
-  "EdTech",
-];
+// Used by the trust bar below, currently hidden — re-enable together.
+// const CLIENTS = [
+//   "Startups",
+//   "Scale-ups",
+//   "Enterprise",
+//   "SaaS",
+//   "FinTech",
+//   "HealthTech",
+//   "E-Commerce",
+//   "EdTech",
+// ];
 
 const STATS = [
   { end: 50, suffix: "+", label: "projects delivered" },
@@ -61,7 +62,7 @@ export default function Home() {
     <>
       <GlassHero />
 
-      {/* ── Trust bar ── */}
+      {/* ── Trust bar — hidden for now, re-enable when ready ──
       <section className="border-y border-border/40 bg-white/60">
         <div className="container py-6">
           <p className="mb-4 text-center text-xs font-medium uppercase tracking-widest text-muted">
@@ -76,6 +77,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
       {/* ── Intro statement — like Arcade's "You're the storyteller" ── */}
       <section className="py-20 md:py-28">

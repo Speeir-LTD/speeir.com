@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useId, useState, useRef } from "react";
 import dynamic from "next/dynamic";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 // Pulls in tsparticles, only needed once the cover is hovered
@@ -20,6 +20,10 @@ export const Cover = ({
   const [hovered, setHovered] = useState(false);
 
   const ref = useRef<HTMLDivElement>(null);
+  // Plays the same animation once the user scrolls it into view, so it
+  // doesn't depend on a mouse hover to ever be seen (e.g. on touch devices).
+  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const active = hovered || inView;
 
   const [containerWidth, setContainerWidth] = useState(0);
   const [beamPositions, setBeamPositions] = useState<number[]>([]);
@@ -44,10 +48,13 @@ export const Cover = ({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       ref={ref}
-      className="group/cover relative inline-block rounded-sm bg-primary/10 px-2 py-2 transition duration-200 hover:bg-ink"
+      className={cn(
+        "group/cover relative inline-block rounded-sm bg-primary/10 px-2 py-2 transition duration-200 hover:bg-ink",
+        active && "bg-ink"
+      )}
     >
       <AnimatePresence>
-        {hovered && (
+        {active && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -80,7 +87,7 @@ export const Cover = ({
       {beamPositions.map((position, index) => (
         <Beam
           key={index}
-          hovered={hovered}
+          hovered={active}
           duration={Math.random() * 2 + 1}
           delay={Math.random() * 2 + 1}
           width={containerWidth}
@@ -90,10 +97,10 @@ export const Cover = ({
         />
       ))}
       <motion.span
-        key={String(hovered)}
+        key={String(active)}
         animate={{
-          scale: hovered ? 1.04 : 1,
-          y: hovered ? -2 : 0,
+          scale: active ? 1.04 : 1,
+          y: active ? -2 : 0,
         }}
         exit={{
           scale: 1,
@@ -105,6 +112,7 @@ export const Cover = ({
         }}
         className={cn(
           "relative z-20 inline-block text-primary transition duration-200 group-hover/cover:text-white",
+          active && "text-white",
           className
         )}
       >

@@ -14,17 +14,20 @@ import {
 } from "./ui/resizable-navbar";
 import { Logo } from "./Logo";
 
-const NAV_LINKS = [
+type NavLink = { name: string; link: string; children?: { name: string; link: string }[] };
+
+const NAV_LINKS: NavLink[] = [
   { name: "About", link: "/about" },
   { name: "Services", link: "/services" },
-  {
-    name: "Work",
-    link: "/work",
-    children: [
-      { name: "Products", link: "/work" },
-      { name: "Case Studies", link: "/case-studies" },
-    ],
-  },
+  // Hidden for now, re-enable when ready.
+  // {
+  //   name: "Work",
+  //   link: "/work",
+  //   children: [
+  //     { name: "Products", link: "/work" },
+  //     { name: "Case Studies", link: "/case-studies" },
+  //   ],
+  // },
   { name: "Blog", link: "/blog" },
   { name: "Contact", link: "/contact" },
 ];

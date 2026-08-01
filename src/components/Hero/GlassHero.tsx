@@ -14,7 +14,7 @@ export function GlassHero() {
 
   return (
     <section className="p-4 md:p-4">
-      <div className="relative flex min-h-[85dvh] items-center overflow-hidden rounded-3xl py-20 md:py-28">
+      <div className="relative flex min-h-[100dvh] items-center overflow-hidden rounded-3xl py-20 md:py-28">
         {/* Animated mesh gradient background */}
         <MeshGradient />
 
