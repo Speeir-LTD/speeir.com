@@ -1,5 +1,10 @@
 import { ObjectId } from "mongodb";
 
+export interface CoverImageCredit {
+  name: string;
+  url: string;
+}
+
 export interface BlogPostBase {
   title: string;
   slug: string;
@@ -8,6 +13,8 @@ export interface BlogPostBase {
   tags: string[];
   views: number;
   status: "published" | "draft" | "archived";
+  coverImage?: string | null;
+  coverImageCredit?: CoverImageCredit | null;
 }
 
 export interface BlogPost extends BlogPostBase {

@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowRight, Sparkle } from "@phosphor-icons/react/dist/ssr";
 import { getDb } from "@/utils/dbConnect";
 import type { BlogPost } from "@/types/post";
+import { BlogGrid } from "@/components/Blog/BlogGrid";
+import { getUnsplashCover } from "@/utils/unsplash";
 
 export const metadata: Metadata = {
   title: "Blog | Speeir",
@@ -29,6 +31,18 @@ export const metadata: Metadata = {
 // MONGODB_URI configured).
 export const dynamic = "force-dynamic";
 
+// Posts with no admin-set cover get a topic-relevant Unsplash photo instead
+// of the plain gradient — resolved at render time, never written back to
+// the database, so it stays in sync if a post's tags/title change later.
+async function withResolvedCover(post: BlogPost): Promise<BlogPost> {
+  if (post.coverImage) return post;
+
+  const photo = await getUnsplashCover(post.tags[0] || post.title, post.slug);
+  if (!photo) return post;
+
+  return { ...post, coverImage: photo.url, coverImageCredit: photo.credit };
+}
+
 async function getPublishedPosts(): Promise<BlogPost[]> {
   const db = await getDb();
   const posts = await db
@@ -36,7 +50,9 @@ async function getPublishedPosts(): Promise<BlogPost[]> {
     .find({ status: "published" })
     .sort({ createdAt: -1 })
     .toArray();
-  return posts.map((post) => ({ ...post, _id: post._id.toString() }));
+  return Promise.all(
+    posts.map((post) => withResolvedCover({ ...post, _id: post._id.toString() }))
+  );
 }
 
 export default async function BlogPage() {
@@ -51,6 +67,9 @@ export default async function BlogPage() {
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-ink md:text-5xl">
           Insights from Speeir
         </h1>
+        <p className="mt-4 text-balance text-sm leading-relaxed text-muted md:text-base">
+          Notes on the software, products, and decisions behind what we build.
+        </p>
       </div>
 
       {posts.length === 0 ? (
@@ -79,52 +98,7 @@ export default async function BlogPage() {
           </div>
         </div>
       ) : (
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <Link
-              key={post._id.toString()}
-              href={`/blog/${post.slug}`}
-              className="group relative flex flex-col rounded-2xl border border-border/40 bg-white p-6 shadow-md transition-transform hover:-translate-y-1"
-            >
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -inset-px rounded-2xl bg-primary/10 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
-              />
-              <div className="relative z-10 flex flex-1 flex-col">
-                <p className="text-xs text-muted">
-                  {new Date(post.createdAt).toLocaleDateString(undefined, {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
-                <h3 className="mt-2 text-lg font-semibold text-ink">
-                  {post.title}
-                </h3>
-                <p className="mt-2 flex-1 text-sm text-muted">
-                  {post.content.replace(/[#*_`>-]/g, "").slice(0, 140)}
-                  {post.content.length > 140 ? "…" : ""}
-                </p>
-                {post.tags.length > 0 && (
-                  <ul className="mt-5 flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <li
-                        key={tag}
-                        className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary"
-                      >
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                  Read post
-                  <ArrowRight size={14} />
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <BlogGrid posts={posts} />
       )}
     </div>
   );

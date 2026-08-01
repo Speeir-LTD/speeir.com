@@ -12,6 +12,10 @@ const blogPostSchema = z.object({
   author: z.string().min(3),
   tags: z.array(z.string()).optional(),
   status: z.enum(["published", "draft", "archived"]).optional(),
+  // Data URL (uploaded file) or an https:// URL (e.g. an Unsplash photo) —
+  // capped well under MongoDB's 16MB document limit.
+  coverImage: z.string().max(3_000_000).nullable().optional(),
+  coverImageCredit: z.object({ name: z.string(), url: z.string() }).nullable().optional(),
 });
 
 export function validateBlogPost(
