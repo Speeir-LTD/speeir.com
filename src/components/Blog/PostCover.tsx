@@ -1,5 +1,3 @@
-import type { CoverImageCredit } from "@/types/post";
-
 const GRAIN_URL =
   "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E\")";
 
@@ -21,18 +19,11 @@ export function PostCover({
   seed,
   title,
   image,
-  credit,
-  showCredit = false,
   fill = false,
 }: {
   seed: string;
   title: string;
   image?: string | null;
-  credit?: CoverImageCredit | null;
-  // Attribution only makes sense where the photo is shown large and on its
-  // own (the post banner) — repeating it on every small grid thumbnail is
-  // just clutter.
-  showCredit?: boolean;
   // Fill the parent instead of imposing its own 16:10 box — for use as an
   // absolutely-positioned background layer behind card content.
   fill?: boolean;
@@ -45,17 +36,15 @@ export function PostCover({
         {/* eslint-disable-next-line @next/next/no-img-element -- covers can be
             data: URLs (uploaded) or arbitrary remote hosts (Unsplash), which
             next/image can't handle without per-source config */}
-        <img src={image} alt={title} className="h-full w-full object-cover" />
-        {showCredit && credit && (
-          <a
-            href={credit.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute bottom-2 right-2 rounded-full bg-ink/60 px-2 py-0.5 text-[10px] text-white/80 backdrop-blur-sm hover:text-white"
-          >
-            Photo: {credit.name}
-          </a>
-        )}
+        <img
+          src={image}
+          alt={title}
+          className="h-full w-full scale-100 object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-ink/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        />
       </div>
     );
   }
@@ -63,7 +52,9 @@ export function PostCover({
   const initial = title.trim().charAt(0).toUpperCase() || "S";
 
   return (
-    <div className={`${sizing} overflow-hidden ${VARIANTS[variantFor(seed)]}`}>
+    <div
+      className={`${sizing} overflow-hidden transition-transform duration-500 ease-out group-hover:scale-110 ${VARIANTS[variantFor(seed)]}`}
+    >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-overlay"

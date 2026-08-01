@@ -2,22 +2,26 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import { ArrowLeft, ArrowRight, Clock } from "@phosphor-icons/react/dist/ssr";
-import { ObjectId } from "mongodb";
+import { ArrowLeft, ArrowRight, Clock, Eye } from "@phosphor-icons/react/dist/ssr";
 import { getDb } from "@/utils/dbConnect";
 import type { BlogPost } from "@/types/post";
 import { readingTime } from "@/utils/readingTime";
 import { PostCover } from "@/components/Blog/PostCover";
 import { getUnsplashCover } from "@/utils/unsplash";
+import { ShareButton } from "@/components/Blog/ShareButton";
 
 export const dynamic = "force-dynamic";
 
 async function getPublishedPostBySlug(slug: string): Promise<BlogPost | null> {
   const db = await getDb();
-  const post = await db.collection<BlogPost>("posts").findOne({ slug, status: "published" });
+  const post = await db
+    .collection<BlogPost>("posts")
+    .findOneAndUpdate(
+      { slug, status: "published" },
+      { $inc: { views: 1 } },
+      { returnDocument: "after" }
+    );
   if (!post) return null;
-
-  await db.collection("posts").updateOne({ _id: post._id as ObjectId }, { $inc: { views: 1 } });
 
   return { ...post, _id: post._id.toString() };
 }
@@ -45,6 +49,16 @@ export async function generateMetadata({
 
   const description = post.content.replace(/[#*_`>-]/g, "").slice(0, 160);
 
+  // Social crawlers fetch this URL directly, so only a real http(s) URL
+  // works here — an admin-uploaded cover is stored as a data: URL, which
+  // isn't fetchable and falls back to the site's default OG image instead.
+  let ogImage = post.coverImage;
+  if (!ogImage) {
+    const photo = await getUnsplashCover(post.tags[0] || post.title, post.slug);
+    ogImage = photo?.url;
+  }
+  const images = ogImage?.startsWith("http") ? [{ url: ogImage, width: 1200, height: 630, alt: post.title }] : undefined;
+
   return {
     title: `${post.title} | Speeir`,
     description,
@@ -57,11 +71,13 @@ export async function generateMetadata({
       url: new URL(`https://speeir.com/blog/${slug}`),
       siteName: "Speeir",
       type: "article",
+      images,
     },
     twitter: {
       card: "summary_large_image",
       title: `${post.title} | Speeir`,
       description,
+      images: images?.map((img) => img.url),
     },
   };
 }
@@ -78,13 +94,9 @@ export default async function BlogPostPage({
   const morePosts = await getOtherPublishedPosts(slug);
 
   let cover = post.coverImage;
-  let coverCredit = post.coverImageCredit;
   if (!cover) {
     const photo = await getUnsplashCover(post.tags[0] || post.title, post.slug);
-    if (photo) {
-      cover = photo.url;
-      coverCredit = photo.credit;
-    }
+    if (photo) cover = photo.url;
   }
 
   const structuredData = {
@@ -93,6 +105,7 @@ export default async function BlogPostPage({
       {
         "@type": "BlogPosting",
         headline: post.title,
+        ...(cover?.startsWith("http") ? { image: cover } : {}),
         author: { "@type": "Person", name: post.author },
         datePublished: new Date(post.createdAt).toISOString(),
         dateModified: new Date(post.updatedAt).toISOString(),
@@ -144,6 +157,11 @@ export default async function BlogPostPage({
             <Clock size={12} />
             {readingTime(post.content)} min read
           </span>
+          <span aria-hidden="true">&middot;</span>
+          <span className="inline-flex items-center gap-1">
+            <Eye size={12} />
+            {post.views} views
+          </span>
         </div>
 
         {post.tags.length > 0 && (
@@ -160,11 +178,15 @@ export default async function BlogPostPage({
         )}
 
         <div className="mt-8 overflow-hidden rounded-2xl shadow-md">
-          <PostCover seed={post.slug} title={post.title} image={cover} credit={coverCredit} showCredit />
+          <PostCover seed={post.slug} title={post.title} image={cover} />
         </div>
 
         <div className="prose prose-neutral mt-12 max-w-none prose-headings:font-semibold prose-headings:text-ink prose-p:text-muted prose-a:text-primary prose-strong:text-ink">
           <ReactMarkdown>{post.content}</ReactMarkdown>
+        </div>
+
+        <div className="mt-10 flex justify-center border-t border-border/40 pt-8">
+          <ShareButton title={post.title} url={`https://speeir.com/blog/${post.slug}`} />
         </div>
 
         <div className="mx-auto mt-20 max-w-3xl rounded-2xl border border-border/40 bg-white p-8 text-center shadow-md">

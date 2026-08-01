@@ -84,10 +84,10 @@ export function BlogGrid({ posts }: { posts: BlogPost[] }) {
             )}
             <div className="mt-6 flex items-center justify-between border-t border-border/40 pt-5">
               <Meta post={featured} />
-              <ArrowRight
-                size={16}
-                className="shrink-0 text-primary transition-transform group-hover:translate-x-0.5"
-              />
+              <span className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-primary">
+                Read
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              </span>
             </div>
           </div>
         </Link>
@@ -129,10 +129,10 @@ export function BlogGrid({ posts }: { posts: BlogPost[] }) {
 
                   <div className="mt-5 flex items-center justify-between border-t border-border/40 pt-4">
                     <Meta post={post} />
-                    <ArrowRight
-                      size={16}
-                      className="shrink-0 text-primary transition-transform group-hover:translate-x-0.5"
-                    />
+                    <span className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-primary">
+                      Read
+                      <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                    </span>
                   </div>
                 </div>
               </Link>
