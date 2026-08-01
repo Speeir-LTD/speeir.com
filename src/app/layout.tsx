@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import { SiteChrome } from "@/components/SiteChrome";
@@ -7,6 +7,10 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  themeColor: "#A15FDC",
+};
 
 export const metadata: Metadata = {
   title: "Speeir | Software agency that builds what it pitches",
