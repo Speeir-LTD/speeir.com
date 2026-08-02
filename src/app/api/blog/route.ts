@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { errorResponse } from "@/lib/api";
+import { errorResponse, serialize } from "@/lib/api";
 import { getDb } from "@/utils/dbConnect";
-import { auth } from "@/auth";
+import { requireAdmin } from "@/lib/admin";
 import { slugify } from "@/utils/slugify";
 import type { ApiResponse, BlogPost, BlogPostCreateDTO, BlogPostInsert } from "@/types/post";
 import { validateBlogPost } from "@/utils/validators/blog";
@@ -10,8 +10,8 @@ import { validateBlogPost } from "@/utils/validators/blog";
 // Admin-only: returns posts of every status. The public blog reads the
 // database directly in Server Components, so this route has no public caller.
 export async function GET(): Promise<NextResponse<ApiResponse<BlogPost[]>>> {
-  const session = await auth();
-  if (!session?.user) return errorResponse("Unauthorized", 401);
+  const denied = await requireAdmin();
+  if (denied) return denied;
 
   try {
     const db = await getDb();
@@ -23,7 +23,7 @@ export async function GET(): Promise<NextResponse<ApiResponse<BlogPost[]>>> {
 
     return NextResponse.json({
       success: true,
-      data: posts.map((post) => ({ ...post, _id: post._id.toString() })),
+      data: posts.map(serialize),
       total: posts.length,
     });
   } catch (error) {
@@ -33,8 +33,8 @@ export async function GET(): Promise<NextResponse<ApiResponse<BlogPost[]>>> {
 }
 
 export async function POST(request: Request): Promise<NextResponse<ApiResponse<BlogPost>>> {
-  const session = await auth();
-  if (!session?.user) return errorResponse("Unauthorized", 401);
+  const denied = await requireAdmin();
+  if (denied) return denied;
 
   try {
     const db = await getDb();
@@ -70,7 +70,7 @@ export async function POST(request: Request): Promise<NextResponse<ApiResponse<B
     if (!createdPost) return errorResponse("Failed to retrieve created post", 500);
 
     return NextResponse.json(
-      { success: true, data: { ...createdPost, _id: createdPost._id.toString() } },
+      { success: true, data: serialize(createdPost) },
       { status: 201 }
     );
   } catch (error) {

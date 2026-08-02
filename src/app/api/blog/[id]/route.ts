@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { errorResponse } from "@/lib/api";
+import { errorResponse, serialize } from "@/lib/api";
 import { ObjectId } from "mongodb";
 import { getDb } from "@/utils/dbConnect";
-import { auth } from "@/auth";
+import { requireAdmin } from "@/lib/admin";
 import { slugify } from "@/utils/slugify";
 import type { ApiResponse, BlogPost, BlogPostUpdateDTO } from "@/types/post";
 import { validateBlogPost } from "@/utils/validators/blog";
@@ -12,8 +12,8 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse<ApiResponse<BlogPost>>> {
-  const session = await auth();
-  if (!session?.user) return errorResponse("Unauthorized", 401);
+  const denied = await requireAdmin();
+  if (denied) return denied;
 
   try {
     const db = await getDb();
@@ -54,10 +54,7 @@ export async function PUT(
     const updatedPost = await db.collection<BlogPost>("posts").findOne({ _id: new ObjectId(id) });
     if (!updatedPost) return errorResponse("Failed to retrieve updated post", 500);
 
-    return NextResponse.json({
-      success: true,
-      data: { ...updatedPost, _id: updatedPost._id.toString() },
-    });
+    return NextResponse.json({ success: true, data: serialize(updatedPost) });
   } catch (error) {
     console.error("PUT Error:", error);
     return errorResponse("Failed to update post", 500);
@@ -68,8 +65,8 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse<ApiResponse>> {
-  const session = await auth();
-  if (!session?.user) return errorResponse("Unauthorized", 401);
+  const denied = await requireAdmin();
+  if (denied) return denied;
 
   try {
     const db = await getDb();

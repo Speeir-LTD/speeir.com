@@ -4,6 +4,7 @@ import { cn, CTA_SM_CLASS } from "@/lib/utils";
 import Link from "next/link";
 import { ArrowRight, Sparkle } from "@phosphor-icons/react/dist/ssr";
 import { getDb } from "@/utils/dbConnect";
+import { serialize } from "@/lib/api";
 import type { BlogPost } from "@/types/post";
 import { BlogGrid } from "@/components/Blog/BlogGrid";
 import { resolveCover } from "@/utils/unsplash";
@@ -36,7 +37,7 @@ async function getPublishedPosts(): Promise<BlogPost[]> {
     .sort({ createdAt: -1 })
     .toArray();
   return Promise.all(
-    posts.map((post) => withResolvedCover({ ...post, _id: post._id.toString() }))
+    posts.map((post) => withResolvedCover(serialize(post)))
   );
 }
 

@@ -5,6 +5,7 @@ import type { PortfolioItem, Section } from "@/data/portfolio";
 import { breadcrumbs } from "@/lib/metadata";
 import { CTA_CLASS, CTA_SM_CLASS } from "@/lib/utils";
 import { BackLink, CTACard, Eyebrow } from "@/components/ui/primitives";
+import { JsonLd } from "@/components/ui/json-ld";
 
 const TAG_CLASS =
   "rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary";
@@ -115,10 +116,7 @@ export function PortfolioDetail({
 
   return (
     <div className="container py-20 md:py-28">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+      <JsonLd data={structuredData} />
       <BackLink href={section.path}>{section.backLabel}</BackLink>
 
       <div className="mx-auto mt-8 max-w-2xl text-center">

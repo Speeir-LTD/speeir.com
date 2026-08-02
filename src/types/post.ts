@@ -5,7 +5,7 @@ export interface CoverImageCredit {
   url: string;
 }
 
-export interface BlogPostBase {
+interface BlogPostBase {
   title: string;
   slug: string;
   content: string;

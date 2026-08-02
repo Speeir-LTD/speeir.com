@@ -2,6 +2,17 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
+// All three layers sit in the same place; only the paint differs.
+const TEXT_PROPS = {
+  x: "50%",
+  y: "66%",
+  textAnchor: "middle",
+  dominantBaseline: "middle",
+  strokeWidth: "0.3",
+} as const;
+
+const TEXT_CLASS = "font-[helvetica] text-7xl font-bold";
+
 export const TextHoverEffect = ({ text }: { text: string }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
@@ -74,23 +85,15 @@ export const TextHoverEffect = ({ text }: { text: string }) => {
         </mask>
       </defs>
       <text
-        x="50%"
-        y="66%"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        strokeWidth="0.3"
-        className="fill-ink/[0.04] stroke-border font-[helvetica] text-7xl font-bold"
+        {...TEXT_PROPS}
+        className={`fill-ink/[0.04] stroke-border ${TEXT_CLASS}`}
         style={{ opacity: hovered ? 0.7 : 0 }}
       >
         {text}
       </text>
       <motion.text
-        x="50%"
-        y="66%"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        strokeWidth="0.3"
-        className="fill-ink/[0.04] stroke-border font-[helvetica] text-7xl font-bold"
+        {...TEXT_PROPS}
+        className={`fill-ink/[0.04] stroke-border ${TEXT_CLASS}`}
         initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
         animate={{
           strokeDashoffset: 0,
@@ -104,14 +107,10 @@ export const TextHoverEffect = ({ text }: { text: string }) => {
         {text}
       </motion.text>
       <text
-        x="50%"
-        y="66%"
-        textAnchor="middle"
-        dominantBaseline="middle"
+        {...TEXT_PROPS}
         stroke="url(#textGradient)"
-        strokeWidth="0.3"
         mask="url(#textMask)"
-        className="fill-transparent font-[helvetica] text-7xl font-bold"
+        className={`fill-transparent ${TEXT_CLASS}`}
       >
         {text}
       </text>

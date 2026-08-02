@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { errorResponse } from "@/lib/api";
-import { auth } from "@/auth";
+import { requireAdmin } from "@/lib/admin";
 import type { ApiResponse } from "@/types/post";
 
 
@@ -9,8 +9,8 @@ const GEMINI_MODEL = "gemini-flash-latest";
 type GeneratedDraft = { title: string; content: string; tags: string[] };
 
 export async function POST(request: Request): Promise<NextResponse<ApiResponse<GeneratedDraft>>> {
-  const session = await auth();
-  if (!session?.user) return errorResponse("Unauthorized", 401);
+  const denied = await requireAdmin();
+  if (denied) return denied;
 
   if (!process.env.GEMINI_API_KEY) {
     return errorResponse("GEMINI_API_KEY is not configured", 500);

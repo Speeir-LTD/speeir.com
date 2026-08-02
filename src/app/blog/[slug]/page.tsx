@@ -7,11 +7,13 @@ import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { ArrowRight, Clock, Eye } from "@phosphor-icons/react/dist/ssr";
 import { getDb } from "@/utils/dbConnect";
+import { serialize } from "@/lib/api";
 import type { BlogPost } from "@/types/post";
 import { readingTime } from "@/utils/readingTime";
 import { PostCover } from "@/components/Blog/PostCover";
 import { resolveCover } from "@/utils/unsplash";
 import { ShareButton } from "@/components/Blog/ShareButton";
+import { JsonLd } from "@/components/ui/json-ld";
 
 export const dynamic = "force-dynamic";
 
@@ -26,7 +28,7 @@ async function getPublishedPostBySlug(slug: string): Promise<BlogPost | null> {
     );
   if (!post) return null;
 
-  return { ...post, _id: post._id.toString() };
+  return serialize(post);
 }
 
 async function getOtherPublishedPosts(excludeSlug: string, limit = 2): Promise<BlogPost[]> {
@@ -37,7 +39,7 @@ async function getOtherPublishedPosts(excludeSlug: string, limit = 2): Promise<B
     .sort({ createdAt: -1 })
     .limit(limit)
     .toArray();
-  return posts.map((post) => ({ ...post, _id: post._id.toString() }));
+  return posts.map(serialize);
 }
 
 export async function generateMetadata({
@@ -104,10 +106,7 @@ export default async function BlogPostPage({
 
   return (
     <div className="container py-20 md:py-28">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+      <JsonLd data={structuredData} />
 
       <div className="mx-auto max-w-3xl">
         <BackLink href="/blog">All posts</BackLink>

@@ -12,6 +12,10 @@ export const CTA_CLASS =
 export const CTA_SM_CLASS =
   "inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5";
 
+// Bordered form control. Compose sizing/extras through cn().
+export const INPUT_CLASS =
+  "w-full rounded-lg border border-border/60 px-4 py-2.5 text-sm text-ink outline-none focus:border-primary";
+
 // Long-form body copy (legal pages, rendered markdown).
 export const PROSE_CLASS =
   "prose prose-neutral prose-headings:font-semibold prose-headings:text-ink prose-p:text-muted prose-a:text-primary prose-strong:text-ink prose-li:text-muted";

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Check } from "@phosphor-icons/react/dist/ssr";
 import { services, getServiceBySlug } from "@/data/services";
 import { ServiceIcon } from "@/components/ServiceIcon";
+import { JsonLd } from "@/components/ui/json-ld";
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
@@ -54,10 +55,7 @@ export default async function ServiceDetailPage({
 
   return (
     <div className="container py-20 md:py-28">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+      <JsonLd data={structuredData} />
       <BackLink href="/services">All services</BackLink>
 
       <div className="mx-auto mt-8 max-w-2xl text-center">

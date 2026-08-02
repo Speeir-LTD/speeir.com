@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { toast } from "sonner";
 import { MagnifyingGlass, PencilSimple, Plus, Trash } from "@phosphor-icons/react";
 import type { BlogPost } from "@/types/post";
-import { CTA_SM_CLASS } from "@/lib/utils";
+import { cn, CTA_SM_CLASS, INPUT_CLASS } from "@/lib/utils";
 import { BlogFormModal } from "./BlogFormModal";
 
 const STATUS_STYLES: Record<string, string> = {
@@ -81,7 +81,7 @@ export default function AdminBlogPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by title..."
-          className="w-full rounded-lg border border-border/60 bg-white py-2 pl-9 pr-4 text-sm text-ink outline-none focus:border-primary"
+          className={cn(INPUT_CLASS, "bg-white py-2 pl-9 pr-4")}
         />
       </div>
 

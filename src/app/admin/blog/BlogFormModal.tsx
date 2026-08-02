@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { X, Plus, Spinner, Sparkle, UploadSimple, ArrowsClockwise, ImageSquare } from "@phosphor-icons/react";
 import type { BlogPost, CoverImageCredit } from "@/types/post";
-import { cn, CTA_SM_CLASS } from "@/lib/utils";
+import { cn, CTA_SM_CLASS, INPUT_CLASS } from "@/lib/utils";
 
 type FormState = {
   title: string;
@@ -30,6 +30,10 @@ const EMPTY_FORM: FormState = {
 
 const COVER_MAX_DIMENSION = 1600;
 
+// Small bordered buttons in the cover-image toolbar.
+const TOOL_BTN_CLASS =
+  "inline-flex items-center gap-1.5 rounded-lg border border-border/60 px-3 py-2 text-xs font-medium text-ink hover:border-primary/40 disabled:opacity-50";
+
 // Downscale + re-encode client-side so an uploaded photo doesn't balloon the
 // post document — covers are stored as a data URL directly on the post
 // (no file storage service configured for this project).
@@ -54,6 +58,25 @@ function compressImageFile(file: File): Promise<string> {
     };
     reader.readAsDataURL(file);
   });
+}
+
+function Field({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <label className="mb-1.5 block text-sm font-medium text-ink">
+        {label} {hint && <span className="text-muted">({hint})</span>}
+      </label>
+      {children}
+    </div>
+  );
 }
 
 export function BlogFormModal({
@@ -100,6 +123,12 @@ export function BlogFormModal({
   if (!open) return null;
 
   const isEdit = !!post;
+
+  // Every text control writes one key of FormState.
+  const set =
+    (key: "title" | "slug" | "author" | "content" | "status") =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+      setForm((f) => ({ ...f, [key]: e.target.value }));
 
   const generateWithAI = async () => {
     if (!topic.trim()) return;
@@ -240,7 +269,7 @@ export function BlogFormModal({
                       generateWithAI();
                     }
                   }}
-                  className="flex-1 rounded-lg border border-border/60 px-4 py-2.5 text-sm text-ink outline-none focus:border-primary"
+                  className={cn(INPUT_CLASS, "flex-1")}
                   placeholder="Enter a topic, e.g. 'benefits of remote work'"
                 />
                 <button
@@ -298,7 +327,7 @@ export function BlogFormModal({
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploadingImage}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-border/60 px-3 py-2 text-xs font-medium text-ink hover:border-primary/40 disabled:opacity-50"
+                className={TOOL_BTN_CLASS}
               >
                 {uploadingImage ? (
                   <Spinner size={14} className="animate-spin" />
@@ -318,13 +347,13 @@ export function BlogFormModal({
                   }
                 }}
                 placeholder={form.tags[0] || "Search Unsplash, e.g. 'remote work'"}
-                className="min-w-[10rem] flex-1 rounded-lg border border-border/60 px-3 py-2 text-xs text-ink outline-none focus:border-primary"
+                className={cn(INPUT_CLASS, "min-w-[10rem] flex-1 px-3 py-2 text-xs")}
               />
               <button
                 type="button"
                 onClick={() => findOnUnsplash()}
                 disabled={findingImage || !(imageQuery.trim() || form.tags[0] || form.title)}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-border/60 px-3 py-2 text-xs font-medium text-ink hover:border-primary/40 disabled:opacity-50"
+                className={TOOL_BTN_CLASS}
               >
                 {findingImage ? <Spinner size={14} className="animate-spin" /> : <ImageSquare size={14} />}
                 Find on Unsplash
@@ -336,7 +365,7 @@ export function BlogFormModal({
                   onClick={() => findOnUnsplash(true)}
                   disabled={findingImage}
                   aria-label="Try another photo"
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-border/60 px-3 py-2 text-xs font-medium text-ink hover:border-primary/40 disabled:opacity-50"
+                  className={TOOL_BTN_CLASS}
                 >
                   <ArrowsClockwise size={14} />
                 </button>
@@ -344,58 +373,49 @@ export function BlogFormModal({
             </div>
           </div>
 
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">Title</label>
+          <Field label="Title">
             <input
               required
               value={form.title}
-              onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-              className="w-full rounded-lg border border-border/60 px-4 py-2.5 text-sm text-ink outline-none focus:border-primary"
+              onChange={set("title")}
+              className={INPUT_CLASS}
               placeholder="Post title"
             />
-          </div>
+          </Field>
 
           {isEdit && (
-            <div>
-              <label className="mb-1.5 block text-sm font-medium text-ink">
-                Slug <span className="text-muted">(leave as-is to keep the current URL)</span>
-              </label>
+            <Field label="Slug" hint="leave as-is to keep the current URL">
               <input
                 value={form.slug}
-                onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
-                className="w-full rounded-lg border border-border/60 px-4 py-2.5 text-sm text-ink outline-none focus:border-primary"
+                onChange={set("slug")}
+                className={INPUT_CLASS}
                 placeholder="post-slug"
               />
-            </div>
+            </Field>
           )}
 
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">Author</label>
+          <Field label="Author">
             <input
               required
               value={form.author}
-              onChange={(e) => setForm((f) => ({ ...f, author: e.target.value }))}
-              className="w-full rounded-lg border border-border/60 px-4 py-2.5 text-sm text-ink outline-none focus:border-primary"
+              onChange={set("author")}
+              className={INPUT_CLASS}
               placeholder="Author name"
             />
-          </div>
+          </Field>
 
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">
-              Content <span className="text-muted">(Markdown supported)</span>
-            </label>
+          <Field label="Content" hint="Markdown supported">
             <textarea
               required
               rows={10}
               value={form.content}
-              onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))}
-              className="w-full rounded-lg border border-border/60 px-4 py-2.5 font-mono text-sm text-ink outline-none focus:border-primary"
+              onChange={set("content")}
+              className={cn(INPUT_CLASS, "font-mono")}
               placeholder="Write the post in Markdown..."
             />
-          </div>
+          </Field>
 
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">Tags</label>
+          <Field label="Tags">
             <div className="flex gap-2">
               <input
                 value={tagInput}
@@ -406,7 +426,7 @@ export function BlogFormModal({
                     addTag();
                   }
                 }}
-                className="flex-1 rounded-lg border border-border/60 px-4 py-2.5 text-sm text-ink outline-none focus:border-primary"
+                className={cn(INPUT_CLASS, "flex-1")}
                 placeholder="Add a tag and press Enter"
               />
               <button
@@ -433,22 +453,19 @@ export function BlogFormModal({
                 ))}
               </ul>
             )}
-          </div>
+          </Field>
 
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-ink">Status</label>
+          <Field label="Status">
             <select
               value={form.status}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, status: e.target.value as FormState["status"] }))
-              }
-              className="w-full rounded-lg border border-border/60 px-4 py-2.5 text-sm text-ink outline-none focus:border-primary"
+              onChange={set("status")}
+              className={INPUT_CLASS}
             >
               <option value="draft">Draft</option>
               <option value="published">Published</option>
               <option value="archived">Archived</option>
             </select>
-          </div>
+          </Field>
 
           <div className="flex justify-end gap-3 border-t border-border/40 pt-5">
             <button

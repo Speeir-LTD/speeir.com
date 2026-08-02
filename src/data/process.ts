@@ -1,4 +1,4 @@
-export interface ProcessStep {
+interface ProcessStep {
   title: string;
   description: string;
 }

@@ -3,6 +3,8 @@ import { Geist } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { SiteChrome } from "@/components/SiteChrome";
+import { JsonLd } from "@/components/ui/json-ld";
+import { pageMeta } from "@/lib/metadata";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
@@ -15,41 +17,24 @@ export const viewport: Viewport = {
   themeColor: "#A15FDC",
 };
 
-const OG_CARD = {
-  url:
-    "/api/og?title=" +
-    encodeURIComponent("Software agency that builds what it pitches") +
-    "&subtitle=" +
-    encodeURIComponent("Web, mobile, and custom software, building our own products first."),
-  width: 1200,
-  height: 630,
-  alt: "Speeir | Software agency that builds what it pitches",
-};
+// The homepage leads with the brand; every other page leads with its own
+// name (see pageMeta). Only the title differs, so reuse the rest.
+const HOME_TITLE = "Speeir | Software agency that builds what it pitches";
+const HOME_DESCRIPTION =
+  "Speeir designs and ships web, mobile, and custom software, building its own products first.";
+
+const home = pageMeta({
+  title: "Software agency that builds what it pitches",
+  description: HOME_DESCRIPTION,
+  path: "/",
+});
 
 export const metadata: Metadata = {
-  title: "Speeir | Software agency that builds what it pitches",
-  description:
-    "Speeir designs and ships web, mobile, and custom software, building its own products first.",
+  ...home,
+  title: HOME_TITLE,
   metadataBase: new URL("https://speeir.com"),
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "Speeir | Software agency that builds what it pitches",
-    description:
-      "Speeir designs and ships web, mobile, and custom software, building its own products first.",
-    url: new URL("/", "https://speeir.com"),
-    siteName: "Speeir",
-    type: "website",
-    images: [OG_CARD],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Speeir | Software agency that builds what it pitches",
-    description:
-      "Speeir designs and ships web, mobile, and custom software, building its own products first.",
-    images: [OG_CARD.url],
-  },
+  openGraph: { ...home.openGraph, title: HOME_TITLE },
+  twitter: { ...home.twitter, title: HOME_TITLE },
   robots: {
     index: true,
     follow: true,
@@ -138,10 +123,7 @@ export default function RootLayout({
         <meta name="geo.region" content="IE" />
         <meta name="geo.country" content="IE" />
         <meta name="geo.placename" content="Ireland" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
+        <JsonLd data={structuredData} />
         {GTM_ID && (
           <Script id="gtm-script" strategy="afterInteractive">
             {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

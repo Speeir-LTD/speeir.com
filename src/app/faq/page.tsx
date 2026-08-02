@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/metadata";
 import { faqs } from "@/data/faqs";
 import { Eyebrow } from "@/components/ui/primitives";
+import { JsonLd } from "@/components/ui/json-ld";
 
 export const metadata: Metadata = pageMeta({
   title: "FAQ",
@@ -26,10 +27,7 @@ export default function FaqPage() {
 
   return (
     <div className="container py-20 md:py-28">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+      <JsonLd data={structuredData} />
 
       <div className="mx-auto max-w-2xl text-center">
         <Eyebrow>FAQ</Eyebrow>

@@ -17,7 +17,7 @@ export interface PortfolioItem {
 export const work: PortfolioItem[] = [];
 
 // Client/brand work.
-export const caseStudies: PortfolioItem[] = [];
+const caseStudies: PortfolioItem[] = [];
 
 // The two sections render identically; only the copy and the data source differ.
 export const SECTIONS = {
@@ -49,7 +49,7 @@ export const SECTIONS = {
   },
 } as const;
 
-export type SectionKey = keyof typeof SECTIONS;
+type SectionKey = keyof typeof SECTIONS;
 export type Section = (typeof SECTIONS)[SectionKey];
 
 export function getItem(section: SectionKey, slug: string) {

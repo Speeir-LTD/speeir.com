@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { errorResponse } from "@/lib/api";
-import { auth } from "@/auth";
+import { requireAdmin } from "@/lib/admin";
 import { getUnsplashCover } from "@/utils/unsplash";
 import type { ApiResponse } from "@/types/post";
 import type { UnsplashPhoto } from "@/utils/unsplash";
 
 
 export async function GET(request: Request): Promise<NextResponse<ApiResponse<UnsplashPhoto>>> {
-  const session = await auth();
-  if (!session?.user) return errorResponse("Unauthorized", 401);
+  const denied = await requireAdmin();
+  if (denied) return denied;
 
   if (!process.env.UNSPLASH_ACCESS_KEY) {
     return errorResponse("UNSPLASH_ACCESS_KEY is not configured", 500);

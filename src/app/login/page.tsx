@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Envelope, LockKey, Eye, EyeSlash } from "@phosphor-icons/react";
 import { Logo } from "@/components/Logo";
-import { cn, CTA_CLASS } from "@/lib/utils";
+import { cn, CTA_CLASS, INPUT_CLASS } from "@/lib/utils";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -64,7 +64,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@speeir.com"
-                className="w-full rounded-lg border border-border/60 bg-white py-2.5 pl-10 pr-4 text-sm text-ink outline-none transition-colors focus:border-primary"
+                className={cn(INPUT_CLASS, "bg-white pl-10 pr-4 transition-colors")}
               />
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-lg border border-border/60 bg-white py-2.5 pl-10 pr-10 text-sm text-ink outline-none transition-colors focus:border-primary"
+                className={cn(INPUT_CLASS, "bg-white pl-10 pr-10 transition-colors")}
               />
               <button
                 type="button"
