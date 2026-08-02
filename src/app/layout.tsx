@@ -15,6 +15,17 @@ export const viewport: Viewport = {
   themeColor: "#A15FDC",
 };
 
+const OG_CARD = {
+  url:
+    "/api/og?title=" +
+    encodeURIComponent("Software agency that builds what it pitches") +
+    "&subtitle=" +
+    encodeURIComponent("Web, mobile, and custom software, building our own products first."),
+  width: 1200,
+  height: 630,
+  alt: "Speeir | Software agency that builds what it pitches",
+};
+
 export const metadata: Metadata = {
   title: "Speeir | Software agency that builds what it pitches",
   description:
@@ -30,12 +41,14 @@ export const metadata: Metadata = {
     url: new URL("/", "https://speeir.com"),
     siteName: "Speeir",
     type: "website",
+    images: [OG_CARD],
   },
   twitter: {
     card: "summary_large_image",
     title: "Speeir | Software agency that builds what it pitches",
     description:
       "Speeir designs and ships web, mobile, and custom software, building its own products first.",
+    images: [OG_CARD.url],
   },
   robots: {
     index: true,
