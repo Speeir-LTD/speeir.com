@@ -20,23 +20,25 @@ export async function POST(request: Request) {
   }
   const { name, email, message } = validation.data;
 
-  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, CONTACT_TO_EMAIL } = process.env;
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !CONTACT_TO_EMAIL) {
+  const { COMPANY_SMTP_HOST, COMPANY_SMTP_PORT, COMPANY_USER, COMPANY_APP_PASSWORD } = process.env;
+  if (!COMPANY_SMTP_HOST || !COMPANY_SMTP_PORT || !COMPANY_USER || !COMPANY_APP_PASSWORD) {
     console.error("Contact form: SMTP env vars are not configured");
     return errorResponse("Contact form is not configured yet", 500);
   }
 
   try {
     const transporter = nodemailer.createTransport({
-      host: SMTP_HOST,
-      port: Number(SMTP_PORT),
-      secure: Number(SMTP_PORT) === 465,
-      auth: { user: SMTP_USER, pass: SMTP_PASS },
+      host: COMPANY_SMTP_HOST,
+      port: Number(COMPANY_SMTP_PORT),
+      secure: Number(COMPANY_SMTP_PORT) === 465,
+      auth: { user: COMPANY_USER, pass: COMPANY_APP_PASSWORD },
     });
 
     await transporter.sendMail({
-      from: SMTP_USER,
-      to: CONTACT_TO_EMAIL,
+      from: COMPANY_USER,
+      // Submissions land in the same mailbox that sends them — .env has no
+      // separate recipient key.
+      to: COMPANY_USER,
       replyTo: email,
       subject: `New contact form message from ${name}`,
       text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
