@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | Speeir",
-  description: "How Speeir collects, uses, and protects your information.",
-  alternates: {
-    canonical: "/privacy",
-  },
-};
+export const metadata: Metadata = pageMeta({
+  title: "Privacy Policy",
+  description:
+    "How Speeir collects, uses, and protects your information.",
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

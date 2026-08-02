@@ -173,8 +173,6 @@ export const MobileNav = ({
           ? "0 0 24px rgba(20, 24, 28, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(20, 24, 28, 0.04), 0 0 4px rgba(20, 24, 28, 0.08), 0 16px 68px rgba(20, 24, 28, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
         width: visible ? "90%" : "100%",
-        paddingRight: visible ? "12px" : "0px",
-        paddingLeft: visible ? "12px" : "0px",
         borderRadius: visible ? "1rem" : "2rem",
         y: visible ? 12 : 0,
       }}
@@ -184,7 +182,7 @@ export const MobileNav = ({
         damping: 50,
       }}
       className={cn(
-        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-4 py-2 lg:hidden",
+        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-3 py-2 lg:hidden",
         visible && "bg-white/80",
         className
       )}
@@ -241,48 +239,38 @@ export const MobileNavToggle = ({
   isOpen: boolean;
   onClick: () => void;
 }) => {
-  return isOpen ? (
-    <X size={22} className="text-ink" onClick={onClick} />
-  ) : (
-    <List size={22} className="text-ink" onClick={onClick} />
+  const Icon = isOpen ? X : List;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={isOpen ? "Close menu" : "Open menu"}
+      aria-expanded={isOpen}
+      // -mr-2 keeps the icon optically aligned with the edge while the
+      // padding gives it a 44px tap target.
+      className="-mr-2 flex h-11 w-11 items-center justify-center rounded-full text-ink transition-colors hover:text-primary"
+    >
+      <Icon size={22} />
+    </button>
   );
 };
 
 export const NavbarButton = ({
   href,
-  as: Tag = "a",
   children,
   className,
-  variant = "primary",
   ...props
-}: {
-  href?: string;
-  as?: React.ElementType;
-  children: React.ReactNode;
-  className?: string;
-  variant?: "primary" | "secondary" | "dark" | "gradient";
-} & (
-  | React.ComponentPropsWithoutRef<"a">
-  | React.ComponentPropsWithoutRef<"button">
-)) => {
-  const baseStyles =
-    "px-5 py-2 rounded-full bg-white text-ink text-sm font-semibold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
-
-  const variantStyles = {
-    primary: "shadow-sm border border-border/40",
-    secondary: "bg-transparent shadow-none",
-    dark: "bg-ink text-white shadow-sm hover:shadow-lg",
-    gradient:
-      "bg-gradient-to-b from-primary to-[#7B3FA0] text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]",
-  };
-
+}: React.ComponentPropsWithoutRef<"a">) => {
   return (
-    <Tag
-      href={href || undefined}
-      className={cn(baseStyles, variantStyles[variant], className)}
+    <a
+      href={href}
+      className={cn(
+        "px-5 py-2 rounded-full bg-ink text-white text-sm font-semibold relative cursor-pointer hover:-translate-y-0.5 hover:shadow-lg shadow-sm transition duration-200 inline-block text-center",
+        className
+      )}
       {...props}
     >
       {children}
-    </Tag>
+    </a>
   );
 };

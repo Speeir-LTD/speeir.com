@@ -17,6 +17,10 @@ const iconVariants = {
   visible: { opacity: 1, scale: 1, y: 0 },
 };
 
+const SPRING = { type: "spring", stiffness: 400, damping: 20 } as const;
+const ICON_CLASS =
+  "flex h-8 w-8 items-center justify-center rounded-full text-muted hover:bg-primary/10 hover:text-primary";
+
 export function ShareButton({ title, url }: { title: string; url: string }) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -72,57 +76,54 @@ export function ShareButton({ title, url }: { title: string; url: string }) {
             transition={{ staggerChildren: 0.05, delayChildren: 0.03 }}
             className="absolute left-1/2 top-full z-20 mt-2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-border/40 bg-white p-1.5 shadow-md"
           >
-            <motion.a
-              variants={iconVariants}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Share on X"
-              className="flex h-8 w-8 items-center justify-center rounded-full text-muted hover:bg-primary/10 hover:text-primary"
-            >
-              <XLogo size={15} />
-            </motion.a>
-            <motion.a
-              variants={iconVariants}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Share on LinkedIn"
-              className="flex h-8 w-8 items-center justify-center rounded-full text-muted hover:bg-primary/10 hover:text-primary"
-            >
-              <LinkedinLogo size={15} />
-            </motion.a>
-            <motion.a
-              variants={iconVariants}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Share on Facebook"
-              className="flex h-8 w-8 items-center justify-center rounded-full text-muted hover:bg-primary/10 hover:text-primary"
-            >
-              <FacebookLogo size={15} />
-            </motion.a>
+            {[
+              {
+                label: "Share on X",
+                Icon: XLogo,
+                href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+              },
+              {
+                label: "Share on LinkedIn",
+                Icon: LinkedinLogo,
+                href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+              },
+              {
+                label: "Share on Facebook",
+                Icon: FacebookLogo,
+                href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+              },
+            ].map(({ label, Icon, href }) => (
+              <motion.a
+                key={label}
+                variants={iconVariants}
+                transition={SPRING}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className={ICON_CLASS}
+              >
+                <Icon size={15} />
+              </motion.a>
+            ))}
             <motion.button
               variants={iconVariants}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              transition={SPRING}
               type="button"
               onClick={shareInstagram}
               aria-label="Copy link and open Instagram"
               title="Instagram doesn't support direct link sharing — this copies the link and opens Instagram"
-              className="flex h-8 w-8 items-center justify-center rounded-full text-muted hover:bg-primary/10 hover:text-primary"
+              className={ICON_CLASS}
             >
               {instagramCopied ? <Check size={15} className="text-primary" /> : <InstagramLogo size={15} />}
             </motion.button>
             <motion.button
               variants={iconVariants}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              transition={SPRING}
               type="button"
               onClick={copyLink}
               aria-label="Copy link"
-              className="flex h-8 w-8 items-center justify-center rounded-full text-muted hover:bg-primary/10 hover:text-primary"
+              className={ICON_CLASS}
             >
               {copied ? <Check size={15} className="text-primary" /> : <LinkSimple size={15} />}
             </motion.button>

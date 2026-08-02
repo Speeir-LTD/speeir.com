@@ -1,25 +1,13 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/metadata";
 import { faqs } from "@/data/faqs";
 
-export const metadata: Metadata = {
-  title: "FAQ | Speeir",
-  description: "Answers to common questions about Speeir, our services, and how we work.",
-  alternates: {
-    canonical: "/faq",
-  },
-  openGraph: {
-    title: "FAQ | Speeir",
-    description: "Answers to common questions about Speeir, our services, and how we work.",
-    url: new URL("https://speeir.com/faq"),
-    siteName: "Speeir",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "FAQ | Speeir",
-    description: "Answers to common questions about Speeir, our services, and how we work.",
-  },
-};
+export const metadata: Metadata = pageMeta({
+  title: "FAQ",
+  description:
+    "Answers to common questions about Speeir, our services, and how we work.",
+  path: "/faq",
+});
 
 export default function FaqPage() {
   const structuredData = {

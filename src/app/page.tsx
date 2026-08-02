@@ -18,9 +18,6 @@ import { GlassHero } from "@/components/Hero/GlassHero";
 import { ServiceSpotlightGrid } from "@/components/ServiceSpotlightGrid";
 import { WobbleCards } from "@/components/WobbleCards";
 import { Cover } from "@/components/ui/cover";
-// Used by the testimonials section below, currently hidden — re-enable together.
-// import { TestimonialsSlider } from "@/components/TestimonialsSlider";
-// import { testimonials } from "@/data/testimonials";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import { StatsGrid } from "@/components/StatsGrid";
 import { BackgroundLines } from "@/components/ui/background-lines";
@@ -157,16 +154,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* ── Testimonial / social proof — hidden for now, re-enable when ready ──
-      <section className="p-4 md:p-6">
-        <div className="overflow-hidden rounded-3xl bg-white py-20 md:py-28">
-          <div className="container">
-            <TestimonialsSlider testimonials={testimonials} />
-          </div>
-        </div>
-      </section>
-      */}
 
       {/* ── Dark section — Tech stack (like Arcade's integrations) ── */}
       <section className="py-20 md:py-28">

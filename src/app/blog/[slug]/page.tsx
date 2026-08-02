@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/metadata";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
@@ -7,7 +8,7 @@ import { getDb } from "@/utils/dbConnect";
 import type { BlogPost } from "@/types/post";
 import { readingTime } from "@/utils/readingTime";
 import { PostCover } from "@/components/Blog/PostCover";
-import { getUnsplashCover } from "@/utils/unsplash";
+import { resolveCover } from "@/utils/unsplash";
 import { ShareButton } from "@/components/Blog/ShareButton";
 
 export const dynamic = "force-dynamic";
@@ -52,34 +53,18 @@ export async function generateMetadata({
   // Social crawlers fetch this URL directly, so only a real http(s) URL
   // works here — an admin-uploaded cover is stored as a data: URL, which
   // isn't fetchable and falls back to the site's default OG image instead.
-  let ogImage = post.coverImage;
-  if (!ogImage) {
-    const photo = await getUnsplashCover(post.tags[0] || post.title, post.slug);
-    ogImage = photo?.url;
-  }
-  const images = ogImage?.startsWith("http") ? [{ url: ogImage, width: 1200, height: 630, alt: post.title }] : undefined;
+  const ogImage = (await resolveCover(post))?.url;
+  const images = ogImage?.startsWith("http")
+    ? [{ url: ogImage, width: 1200, height: 630, alt: post.title }]
+    : undefined;
 
-  return {
-    title: `${post.title} | Speeir`,
+  return pageMeta({
+    title: post.title,
     description,
-    alternates: {
-      canonical: `/blog/${slug}`,
-    },
-    openGraph: {
-      title: `${post.title} | Speeir`,
-      description,
-      url: new URL(`https://speeir.com/blog/${slug}`),
-      siteName: "Speeir",
-      type: "article",
-      images,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${post.title} | Speeir`,
-      description,
-      images: images?.map((img) => img.url),
-    },
-  };
+    path: `/blog/${slug}`,
+    type: "article",
+    images,
+  });
 }
 
 export default async function BlogPostPage({
@@ -93,11 +78,7 @@ export default async function BlogPostPage({
 
   const morePosts = await getOtherPublishedPosts(slug);
 
-  let cover = post.coverImage;
-  if (!cover) {
-    const photo = await getUnsplashCover(post.tags[0] || post.title, post.slug);
-    if (photo) cover = photo.url;
-  }
+  const cover = (await resolveCover(post))?.url;
 
   const structuredData = {
     "@context": "https://schema.org",

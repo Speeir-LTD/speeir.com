@@ -96,10 +96,12 @@ const SVG = ({
       transition={{ duration: 1 }}
       className="pointer-events-none absolute inset-0 h-full w-full"
     >
-      {paths.map((path, idx) => (
+      {/* Each path is drawn twice, with independent random delays, so the
+          screen stays busier than a single pass through the set. */}
+      {[...paths, ...paths].map((path, idx) => (
         <motion.path
           d={path}
-          stroke={colors[idx]}
+          stroke={colors[idx % colors.length]}
           strokeWidth="2.3"
           strokeLinecap="round"
           variants={pathVariants}
@@ -113,29 +115,7 @@ const SVG = ({
             delay: Math.floor(Math.random() * 10),
             repeatDelay: Math.floor(Math.random() * 10 + 2),
           }}
-          key={`path-first-${idx}`}
-        />
-      ))}
-
-      {/* duplicate for more paths */}
-      {paths.map((path, idx) => (
-        <motion.path
-          d={path}
-          stroke={colors[idx]}
-          strokeWidth="2.3"
-          strokeLinecap="round"
-          variants={pathVariants}
-          initial="initial"
-          animate="animate"
-          transition={{
-            duration: svgOptions?.duration || 10,
-            ease: "linear",
-            repeat: Infinity,
-            repeatType: "loop",
-            delay: Math.floor(Math.random() * 10),
-            repeatDelay: Math.floor(Math.random() * 10 + 2),
-          }}
-          key={`path-second-${idx}`}
+          key={`path-${idx}`}
         />
       ))}
     </motion.svg>

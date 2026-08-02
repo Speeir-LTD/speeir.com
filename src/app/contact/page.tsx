@@ -1,26 +1,14 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/metadata";
 import { EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
 import { ContactForm } from "@/components/ContactForm";
 
-export const metadata: Metadata = {
-  title: "Contact | Speeir",
-  description: "Tell us what you're building.",
-  alternates: {
-    canonical: "/contact",
-  },
-  openGraph: {
-    title: "Contact | Speeir",
-    description: "Tell us what you're building.",
-    url: new URL("https://speeir.com/contact"),
-    siteName: "Speeir",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Contact | Speeir",
-    description: "Tell us what you're building.",
-  },
-};
+export const metadata: Metadata = pageMeta({
+  title: "Contact",
+  description:
+    "Tell us what you're building.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

@@ -2,10 +2,7 @@
 
 import { motion } from "framer-motion";
 import React from "react";
-import { cn } from "@/lib/utils";
-
-const GRAIN_URL =
-  "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E\")";
+import { cn, GRAIN_STYLE } from "@/lib/utils";
 
 export const Card = ({
   className,
@@ -25,11 +22,7 @@ export const Card = ({
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 opacity-[0.05] mix-blend-overlay"
-        style={{
-          backgroundImage: GRAIN_URL,
-          backgroundRepeat: "repeat",
-          backgroundSize: "180px 180px",
-        }}
+        style={GRAIN_STYLE}
       />
       <div className="relative z-10">{children}</div>
     </div>
@@ -67,19 +60,15 @@ export const CardDescription = ({
 export const CardSkeletonContainer = ({
   className,
   children,
-  showGradient = true,
 }: {
   className?: string;
   children: React.ReactNode;
-  showGradient?: boolean;
 }) => {
   return (
     <div
       className={cn(
-        "z-40 h-[12rem] rounded-xl",
-        className,
-        showGradient &&
-          "bg-surface [mask-image:radial-gradient(50%_50%_at_50%_50%,white_0%,transparent_100%)]"
+        "z-40 h-[12rem] rounded-xl bg-surface [mask-image:radial-gradient(50%_50%_at_50%_50%,white_0%,transparent_100%)]",
+        className
       )}
     >
       {children}
@@ -87,7 +76,7 @@ export const CardSkeletonContainer = ({
   );
 };
 
-export const IconOrb = ({
+const IconOrb = ({
   className,
   children,
 }: {

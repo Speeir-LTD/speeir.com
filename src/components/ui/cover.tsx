@@ -1,13 +1,26 @@
 "use client";
 import React, { useEffect, useId, useState, useRef } from "react";
-import dynamic from "next/dynamic";
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-// Pulls in tsparticles, only needed once the cover is hovered
-const SparklesField = dynamic(
-  () => import("@/components/ui/sparkles-field").then((m) => m.SparklesField),
-  { ssr: false }
+// Fixed positions rather than Math.random(), so server and client render the
+// same markup. Percentages of the (200%-wide) scrolling field.
+const SPARKS = [
+  [4, 18], [11, 62], [17, 34], [23, 81], [29, 9], [35, 47],
+  [41, 72], [47, 21], [53, 58], [59, 88], [65, 13], [71, 41],
+  [77, 67], [83, 28], [89, 76], [95, 52],
+] as const;
+
+const SparklesField = () => (
+  <div aria-hidden="true" className="relative h-full w-full">
+    {SPARKS.map(([left, top], i) => (
+      <span
+        key={i}
+        className="absolute h-[2px] w-[2px] animate-twinkle rounded-full bg-[#EDE9FE]"
+        style={{ left: `${left}%`, top: `${top}%`, animationDelay: `${(i % 8) * 0.35}s` }}
+      />
+    ))}
+  </div>
 );
 
 export const Cover = ({
@@ -79,7 +92,7 @@ export const Cover = ({
               }}
               className="flex h-full w-[200%]"
             >
-              <SparklesField particleColor="#EDE9FE" />
+              <SparklesField />
             </motion.div>
           </motion.div>
         )}
@@ -126,7 +139,7 @@ export const Cover = ({
   );
 };
 
-export const Beam = ({
+const Beam = ({
   className,
   delay,
   duration,
@@ -188,7 +201,7 @@ export const Beam = ({
   );
 };
 
-export const CircleIcon = ({
+const CircleIcon = ({
   className,
   delay,
 }: {

@@ -20,6 +20,31 @@ function formatDate(date: Date | string): string {
   });
 }
 
+function Tags({ tags }: { tags: string[] }) {
+  if (tags.length === 0) return null;
+  return (
+    <ul className="mt-5 flex flex-wrap gap-2">
+      {tags.map((tag) => (
+        <li
+          key={tag}
+          className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary"
+        >
+          {tag}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ReadMore() {
+  return (
+    <span className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-primary">
+      Read
+      <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+    </span>
+  );
+}
+
 function Meta({ post }: { post: BlogPost }) {
   return (
     <div className="flex items-center gap-2">
@@ -70,24 +95,10 @@ export function BlogGrid({ posts }: { posts: BlogPost[] }) {
             <p className="mt-3 text-sm leading-relaxed text-muted">
               {excerpt(featured.content, 200)}
             </p>
-            {featured.tags.length > 0 && (
-              <ul className="mt-5 flex flex-wrap gap-2">
-                {featured.tags.map((tag) => (
-                  <li
-                    key={tag}
-                    className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary"
-                  >
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            )}
+            <Tags tags={featured.tags} />
             <div className="mt-6 flex items-center justify-between border-t border-border/40 pt-5">
               <Meta post={featured} />
-              <span className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-primary">
-                Read
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </span>
+              <ReadMore />
             </div>
           </div>
         </Link>
@@ -114,25 +125,11 @@ export function BlogGrid({ posts }: { posts: BlogPost[] }) {
                     {excerpt(post.content, 140)}
                   </p>
 
-                  {post.tags.length > 0 && (
-                    <ul className="mt-5 flex flex-wrap gap-2">
-                      {post.tags.map((tag) => (
-                        <li
-                          key={tag}
-                          className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary"
-                        >
-                          {tag}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  <Tags tags={post.tags} />
 
                   <div className="mt-5 flex items-center justify-between border-t border-border/40 pt-4">
                     <Meta post={post} />
-                    <span className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-primary">
-                      Read
-                      <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-                    </span>
+                    <ReadMore />
                   </div>
                 </div>
               </Link>

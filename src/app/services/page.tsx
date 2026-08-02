@@ -1,26 +1,14 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/metadata";
 import { services } from "@/data/services";
 import { ServiceCard } from "@/components/ServiceCard";
 
-export const metadata: Metadata = {
-  title: "Services | Speeir",
-  description: "What Speeir builds: web, mobile, custom software, e-commerce, and more.",
-  alternates: {
-    canonical: "/services",
-  },
-  openGraph: {
-    title: "Services | Speeir",
-    description: "What Speeir builds: web, mobile, custom software, e-commerce, and more.",
-    url: new URL("https://speeir.com/services"),
-    siteName: "Speeir",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Services | Speeir",
-    description: "What Speeir builds: web, mobile, custom software, e-commerce, and more.",
-  },
-};
+export const metadata: Metadata = pageMeta({
+  title: "Services",
+  description:
+    "What Speeir builds: web, mobile, custom software, e-commerce, and more.",
+  path: "/services",
+});
 
 export default function ServicesPage() {
   return (

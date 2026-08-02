@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
+import { errorResponse } from "@/lib/api";
 import { auth } from "@/auth";
 import { getUnsplashCover } from "@/utils/unsplash";
 import type { ApiResponse } from "@/types/post";
 import type { UnsplashPhoto } from "@/utils/unsplash";
 
-const errorResponse = (message: string, status: number) => {
-  return NextResponse.json({ success: false, error: message }, { status });
-};
 
 export async function GET(request: Request): Promise<NextResponse<ApiResponse<UnsplashPhoto>>> {
   const session = await auth();

@@ -31,8 +31,6 @@ export interface ApiResponse<T = unknown> {
   error?: string;
   message?: string;
   total?: number;
-  page?: number;
-  limit?: number;
 }
 
 export interface BlogPostCreateDTO extends Omit<BlogPostBase, "views" | "tags" | "slug"> {

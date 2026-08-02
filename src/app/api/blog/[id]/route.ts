@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { errorResponse } from "@/lib/api";
 import { ObjectId } from "mongodb";
 import { getDb } from "@/utils/dbConnect";
 import { auth } from "@/auth";
@@ -6,9 +7,6 @@ import { slugify } from "@/utils/slugify";
 import type { ApiResponse, BlogPost, BlogPostUpdateDTO } from "@/types/post";
 import { validateBlogPost } from "@/utils/validators/blog";
 
-const errorResponse = (message: string, status: number) => {
-  return NextResponse.json({ success: false, error: message }, { status });
-};
 
 export async function PUT(
   request: Request,

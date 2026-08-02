@@ -85,7 +85,7 @@ export function BlogFormModal({
         content: post.content,
         author: post.author,
         tags: post.tags,
-        status: post.status === "archived" ? "archived" : post.status === "published" ? "published" : "draft",
+        status: post.status,
         coverImage: post.coverImage ?? null,
         coverImageCredit: post.coverImageCredit ?? null,
       });

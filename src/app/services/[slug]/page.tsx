@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/metadata";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Check } from "@phosphor-icons/react/dist/ssr";
@@ -17,25 +18,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = getServiceBySlug(slug);
   if (!service) return {};
-  return {
-    title: `${service.title} | Speeir`,
+  return pageMeta({
+    title: service.title,
     description: service.description,
-    alternates: {
-      canonical: `/services/${slug}`,
-    },
-    openGraph: {
-      title: `${service.title} | Speeir`,
-      description: service.description,
-      url: new URL(`https://speeir.com/services/${slug}`),
-      siteName: "Speeir",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${service.title} | Speeir`,
-      description: service.description,
-    },
-  };
+    path: `/services/${slug}`,
+  });
 }
 
 export default async function ServiceDetailPage({

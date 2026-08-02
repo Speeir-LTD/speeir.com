@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
+import { errorResponse } from "@/lib/api";
 import { auth } from "@/auth";
 import type { ApiResponse } from "@/types/post";
 
-const errorResponse = (message: string, status: number) => {
-  return NextResponse.json({ success: false, error: message }, { status });
-};
 
 const GEMINI_MODEL = "gemini-flash-latest";
 

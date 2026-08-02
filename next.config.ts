@@ -10,8 +10,6 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "speeir.com" },
       { protocol: "https", hostname: "ui-avatars.com" },
-      { protocol: "https", hostname: "picsum.photos" },
-      { protocol: "https", hostname: "cdn.sanity.io" },
     ],
     formats: ["image/webp", "image/avif"],
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days

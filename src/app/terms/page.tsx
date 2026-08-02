@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Terms of Service | Speeir",
-  description: "The terms that govern use of the Speeir website.",
-  alternates: {
-    canonical: "/terms",
-  },
-};
+export const metadata: Metadata = pageMeta({
+  title: "Terms of Service",
+  description:
+    "The terms that govern use of the Speeir website.",
+  path: "/terms",
+});
 
 export default function TermsPage() {
   return (

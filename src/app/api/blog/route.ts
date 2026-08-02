@@ -1,44 +1,30 @@
 import { NextResponse } from "next/server";
+import { errorResponse } from "@/lib/api";
 import { getDb } from "@/utils/dbConnect";
 import { auth } from "@/auth";
 import { slugify } from "@/utils/slugify";
 import type { ApiResponse, BlogPost, BlogPostCreateDTO, BlogPostInsert } from "@/types/post";
 import { validateBlogPost } from "@/utils/validators/blog";
 
-const errorResponse = (message: string, status: number) => {
-  return NextResponse.json({ success: false, error: message }, { status });
-};
 
 // Admin-only: returns posts of every status. The public blog reads the
 // database directly in Server Components, so this route has no public caller.
-export async function GET(request: Request): Promise<NextResponse<ApiResponse<BlogPost[]>>> {
+export async function GET(): Promise<NextResponse<ApiResponse<BlogPost[]>>> {
   const session = await auth();
   if (!session?.user) return errorResponse("Unauthorized", 401);
 
   try {
     const db = await getDb();
-    const { searchParams } = new URL(request.url);
-
-    const limit = Math.min(parseInt(searchParams.get("limit") || "50"), 100);
-    const page = parseInt(searchParams.get("page") || "1");
-
-    const [posts, total] = await Promise.all([
-      db
-        .collection<BlogPost>("posts")
-        .find({})
-        .sort({ createdAt: -1 })
-        .skip((page - 1) * limit)
-        .limit(limit)
-        .toArray(),
-      db.collection<BlogPost>("posts").countDocuments({}),
-    ]);
+    const posts = await db
+      .collection<BlogPost>("posts")
+      .find({})
+      .sort({ createdAt: -1 })
+      .toArray();
 
     return NextResponse.json({
       success: true,
       data: posts.map((post) => ({ ...post, _id: post._id.toString() })),
-      total,
-      page,
-      limit,
+      total: posts.length,
     });
   } catch (error) {
     console.error("GET Error:", error);

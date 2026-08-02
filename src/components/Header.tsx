@@ -45,7 +45,7 @@ export function Header() {
         <Logo />
         <NavItems items={NAV_LINKS} />
         <div className="flex items-center gap-4">
-          <NavbarButton href="/contact" variant="dark">
+          <NavbarButton href="/contact">
             Start a project
           </NavbarButton>
         </div>
@@ -71,7 +71,6 @@ export function Header() {
           <NavbarButton
             href="/contact"
             onClick={() => setOpen(false)}
-            variant="dark"
             className="w-full"
           >
             Start a project

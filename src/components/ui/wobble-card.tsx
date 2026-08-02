@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn, GRAIN_STYLE } from "@/lib/utils";
 
 export const WobbleCard = ({
   children,
@@ -22,20 +21,24 @@ export const WobbleCard = ({
     const y = (clientY - (rect.top + rect.height / 2)) / 20;
     setMousePosition({ x, y });
   };
+
+  // The inner layer counter-shifts against the outer one for the parallax feel.
+  const shift = (direction: number, scale: number) => ({
+    transform: isHovering
+      ? `translate3d(${mousePosition.x * direction}px, ${mousePosition.y * direction}px, 0) scale3d(${scale}, ${scale}, 1)`
+      : "translate3d(0px, 0px, 0) scale3d(1, 1, 1)",
+    transition: "transform 0.1s ease-out",
+  });
+
   return (
-    <motion.section
+    <section
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => {
         setIsHovering(false);
         setMousePosition({ x: 0, y: 0 });
       }}
-      style={{
-        transform: isHovering
-          ? `translate3d(${mousePosition.x}px, ${mousePosition.y}px, 0) scale3d(1, 1, 1)`
-          : "translate3d(0px, 0px, 0) scale3d(1, 1, 1)",
-        transition: "transform 0.1s ease-out",
-      }}
+      style={shift(1, 1)}
       className={cn(
         "mx-auto w-full bg-indigo-800 relative rounded-2xl overflow-hidden",
         containerClassName
@@ -48,31 +51,15 @@ export const WobbleCard = ({
             "0 10px 32px rgba(34, 42, 53, 0.12), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.05), 0 4px 6px rgba(34, 42, 53, 0.08), 0 24px 108px rgba(47, 48, 55, 0.10)",
         }}
       >
-        <motion.div
-          style={{
-            transform: isHovering
-              ? `translate3d(${-mousePosition.x}px, ${-mousePosition.y}px, 0) scale3d(1.03, 1.03, 1)`
-              : "translate3d(0px, 0px, 0) scale3d(1, 1, 1)",
-            transition: "transform 0.1s ease-out",
-          }}
-          className={cn("h-full px-4 py-20 sm:px-10", className)}
-        >
-          <Noise />
+        <div style={shift(-1, 1.03)} className={cn("h-full px-4 py-20 sm:px-10", className)}>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full scale-[1.2] transform opacity-10 [mask-image:radial-gradient(#fff,transparent,75%)]"
+            style={GRAIN_STYLE}
+          />
           {children}
-        </motion.div>
+        </div>
       </div>
-    </motion.section>
-  );
-};
-
-const Noise = () => {
-  return (
-    <div
-      className="absolute inset-0 w-full h-full scale-[1.2] transform opacity-10 [mask-image:radial-gradient(#fff,transparent,75%)]"
-      style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")`,
-        backgroundSize: "180px 180px",
-      }}
-    />
+    </section>
   );
 };

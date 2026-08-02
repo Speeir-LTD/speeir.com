@@ -1,3 +1,4 @@
+import { cache } from "react";
 import type { CoverImageCredit } from "@/types/post";
 
 export type UnsplashPhoto = {
@@ -8,7 +9,7 @@ export type UnsplashPhoto = {
 // Unsplash's API guidelines require hotlinking (not re-hosting) their photos
 // and crediting the photographer, which is why we only ever store the
 // `regular` URL + attribution — never download/persist the image ourselves.
-export async function searchUnsplash(query: string, perPage = 10): Promise<UnsplashPhoto[]> {
+async function searchUnsplash(query: string, perPage = 10): Promise<UnsplashPhoto[]> {
   if (!process.env.UNSPLASH_ACCESS_KEY) return [];
 
   try {
@@ -39,13 +40,32 @@ export async function searchUnsplash(query: string, perPage = 10): Promise<Unspl
 }
 
 // Deterministic pick so a given post's auto-cover doesn't reshuffle on
-// every page load.
-export async function getUnsplashCover(query: string, seed: string): Promise<UnsplashPhoto | null> {
-  const photos = await searchUnsplash(query, 15);
-  if (photos.length === 0) return null;
+// every page load. Cached per (query, seed) so a page that resolves the same
+// cover in both generateMetadata and its render only calls Unsplash once.
+export const getUnsplashCover = cache(
+  async (query: string, seed: string): Promise<UnsplashPhoto | null> => {
+    const photos = await searchUnsplash(query, 15);
+    if (photos.length === 0) return null;
 
-  let hash = 0;
-  for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) | 0;
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) | 0;
 
-  return photos[Math.abs(hash) % photos.length];
+    return photos[Math.abs(hash) % photos.length];
+  }
+);
+
+// A post's own cover if it has one, otherwise a topic-relevant Unsplash photo.
+// Never written back to the database, so it stays in sync if a post's
+// tags/title change later.
+export async function resolveCover(post: {
+  coverImage?: string | null;
+  coverImageCredit?: CoverImageCredit | null;
+  tags: string[];
+  title: string;
+  slug: string;
+}): Promise<{ url: string; credit: CoverImageCredit | null } | null> {
+  if (post.coverImage) {
+    return { url: post.coverImage, credit: post.coverImageCredit ?? null };
+  }
+  return getUnsplashCover(post.tags[0] || post.title, post.slug);
 }

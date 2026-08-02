@@ -1,11 +1,9 @@
 import type { MetadataRoute } from "next";
 import { services } from "@/data/services";
-import { work } from "@/data/work";
-import { caseStudies } from "@/data/case-studies";
+import { SECTIONS } from "@/data/portfolio";
 import { getDb } from "@/utils/dbConnect";
 import type { BlogPost } from "@/types/post";
-
-const SITE_URL = "https://speeir.com";
+import { SITE_URL } from "@/lib/metadata";
 
 async function getBlogPages() {
   // Best-effort: a missing/unreachable database shouldn't fail the whole
@@ -50,28 +48,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: path === "" ? 1 : 0.7,
   }));
 
-  const servicePages = services.map((service) => ({
-    url: `${SITE_URL}/services/${service.slug}`,
-    lastModified,
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
+  const detailPages = [
+    ...services.map((service) => ({
+      url: `${SITE_URL}/services/${service.slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
+    ...Object.values(SECTIONS).flatMap((section) =>
+      section.items.map((item) => ({
+        url: `${SITE_URL}${section.path}/${item.slug}`,
+        lastModified: new Date(item.updatedAt),
+        changeFrequency: "monthly" as const,
+        priority: 0.8,
+      }))
+    ),
+  ];
 
-  const workPages = work.map((item) => ({
-    url: `${SITE_URL}/work/${item.slug}`,
-    lastModified: new Date(item.updatedAt),
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
-
-  const caseStudyPages = caseStudies.map((item) => ({
-    url: `${SITE_URL}/case-studies/${item.slug}`,
-    lastModified: new Date(item.updatedAt),
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
-
-  const blogPages = await getBlogPages();
-
-  return [...pages, ...servicePages, ...workPages, ...caseStudyPages, ...blogPages];
+  return [...pages, ...detailPages, ...(await getBlogPages())];
 }

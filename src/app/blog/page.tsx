@@ -1,46 +1,29 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/metadata";
 import Link from "next/link";
 import { ArrowRight, Sparkle } from "@phosphor-icons/react/dist/ssr";
 import { getDb } from "@/utils/dbConnect";
 import type { BlogPost } from "@/types/post";
 import { BlogGrid } from "@/components/Blog/BlogGrid";
-import { getUnsplashCover } from "@/utils/unsplash";
+import { resolveCover } from "@/utils/unsplash";
 
-export const metadata: Metadata = {
-  title: "Blog | Speeir",
-  description: "Insights on software, product, and how Speeir builds.",
-  alternates: {
-    canonical: "/blog",
-  },
-  openGraph: {
-    title: "Blog | Speeir",
-    description: "Insights on software, product, and how Speeir builds.",
-    url: new URL("https://speeir.com/blog"),
-    siteName: "Speeir",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Blog | Speeir",
-    description: "Insights on software, product, and how Speeir builds.",
-  },
-};
+export const metadata: Metadata = pageMeta({
+  title: "Blog",
+  description:
+    "Insights on software, product, and how Speeir builds.",
+  path: "/blog",
+});
 
 // Never attempted at build time — this route needs a live DB connection,
 // which may not exist yet in every environment (e.g. a build without
 // MONGODB_URI configured).
 export const dynamic = "force-dynamic";
 
-// Posts with no admin-set cover get a topic-relevant Unsplash photo instead
-// of the plain gradient — resolved at render time, never written back to
-// the database, so it stays in sync if a post's tags/title change later.
 async function withResolvedCover(post: BlogPost): Promise<BlogPost> {
-  if (post.coverImage) return post;
+  const cover = await resolveCover(post);
+  if (!cover) return post;
 
-  const photo = await getUnsplashCover(post.tags[0] || post.title, post.slug);
-  if (!photo) return post;
-
-  return { ...post, coverImage: photo.url, coverImageCredit: photo.credit };
+  return { ...post, coverImage: cover.url, coverImageCredit: cover.credit };
 }
 
 async function getPublishedPosts(): Promise<BlogPost[]> {
