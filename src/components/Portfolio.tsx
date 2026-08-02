@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowSquareOut, Sparkle } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
 import type { PortfolioItem, Section } from "@/data/portfolio";
 import { breadcrumbs } from "@/lib/metadata";
-import { CTA_CLASS, CTA_SM_CLASS } from "@/lib/utils";
-import { BackLink, CTACard, Eyebrow } from "@/components/ui/primitives";
+import { CTA_CLASS } from "@/lib/utils";
+import { BackLink, CTACard, EmptyState, Eyebrow, Glow } from "@/components/ui/primitives";
 import { JsonLd } from "@/components/ui/json-ld";
 
 const TAG_CLASS =
@@ -34,28 +34,7 @@ export function PortfolioList({ section }: { section: Section }) {
       </div>
 
       {section.items.length === 0 ? (
-        <div className="group relative mx-auto mt-16 flex max-w-lg flex-col items-center rounded-2xl border border-dashed border-border/40 bg-white p-14 text-center shadow-md">
-          {/* Ambient glow */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -inset-px rounded-2xl bg-primary/10 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
-          />
-          <div className="relative z-10 flex flex-col items-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <Sparkle size={20} weight="duotone" />
-            </div>
-            <h2 className="mt-5 text-lg font-semibold text-ink">
-              {section.emptyHeading}
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted">
-              {section.emptyBody}
-            </p>
-            <Link href="/contact" className={`mt-6 ${CTA_SM_CLASS}`}>
-              Start a project
-              <ArrowRight size={16} />
-            </Link>
-          </div>
-        </div>
+        <EmptyState heading={section.emptyHeading} body={section.emptyBody} />
       ) : (
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {section.items.map((item) => (
@@ -64,10 +43,7 @@ export function PortfolioList({ section }: { section: Section }) {
               href={`${section.path}/${item.slug}`}
               className="group relative flex flex-col rounded-2xl border border-border/40 bg-white p-6 shadow-md transition-transform hover:-translate-y-1"
             >
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -inset-px rounded-2xl bg-primary/10 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
-              />
+              <Glow />
               <div className="relative z-10 flex flex-1 flex-col">
                 {item.images[0] && (
                   <div className="mb-5 overflow-hidden rounded-xl border border-border/40">

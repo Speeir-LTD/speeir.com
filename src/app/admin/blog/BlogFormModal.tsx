@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { X, Plus, Spinner, Sparkle, UploadSimple, ArrowsClockwise, ImageSquare } from "@phosphor-icons/react";
 import type { BlogPost, CoverImageCredit } from "@/types/post";
 import { cn, CTA_SM_CLASS, INPUT_CLASS } from "@/lib/utils";
+import { apiRequest, apiSend, toastError } from "@/lib/fetcher";
 
 type FormState = {
   title: string;
@@ -29,6 +30,26 @@ const EMPTY_FORM: FormState = {
 };
 
 const COVER_MAX_DIMENSION = 1600;
+
+/** Swaps in a spinner while an action is in flight. */
+function BusyIcon({
+  busy,
+  icon: Icon,
+  size = 16,
+}: {
+  busy: boolean;
+  icon: typeof Spinner;
+  size?: number;
+}) {
+  return busy ? <Spinner size={size} className="animate-spin" /> : <Icon size={size} />;
+}
+
+/** Submit-on-Enter for the single-line inputs, without submitting the form. */
+const onEnter = (run: () => void) => (e: React.KeyboardEvent) => {
+  if (e.key !== "Enter") return;
+  e.preventDefault();
+  run();
+};
 
 // Small bordered buttons in the cover-image toolbar.
 const TOOL_BTN_CLASS =
@@ -134,22 +155,16 @@ export function BlogFormModal({
     if (!topic.trim()) return;
     setGenerating(true);
     try {
-      const res = await fetch("/api/blog/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ topic }),
-      });
-      const json = await res.json();
-      if (!res.ok || !json.success) throw new Error(json.error || "Failed to generate post");
-      setForm((f) => ({
-        ...f,
-        title: json.data.title,
-        content: json.data.content,
-        tags: json.data.tags || [],
-      }));
+      const draft = await apiSend<{ title: string; content: string; tags?: string[] }>(
+        "/api/blog/generate",
+        "POST",
+        { topic },
+        "Failed to generate post"
+      );
+      setForm((f) => ({ ...f, title: draft.title, content: draft.content, tags: draft.tags || [] }));
       toast.success("Draft generated — review before saving");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to generate post");
+      toastError(error, "Failed to generate post");
     } finally {
       setGenerating(false);
     }
@@ -165,7 +180,7 @@ export function BlogFormModal({
       const dataUrl = await compressImageFile(file);
       setForm((f) => ({ ...f, coverImage: dataUrl, coverImageCredit: null }));
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to process image");
+      toastError(error, "Failed to process image");
     } finally {
       setUploadingImage(false);
     }
@@ -179,14 +194,14 @@ export function BlogFormModal({
 
     setFindingImage(true);
     try {
-      const res = await fetch(
-        `/api/blog/image?query=${encodeURIComponent(query)}&reroll=${rerollRef.current}`
+      const photo = await apiRequest<{ url: string; credit: CoverImageCredit }>(
+        `/api/blog/image?query=${encodeURIComponent(query)}&reroll=${rerollRef.current}`,
+        undefined,
+        "Failed to find an image"
       );
-      const json = await res.json();
-      if (!res.ok || !json.success) throw new Error(json.error || "Failed to find an image");
-      setForm((f) => ({ ...f, coverImage: json.data.url, coverImageCredit: json.data.credit }));
+      setForm((f) => ({ ...f, coverImage: photo.url, coverImageCredit: photo.credit }));
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to find an image");
+      toastError(error, "Failed to find an image");
     } finally {
       setFindingImage(false);
     }
@@ -213,24 +228,17 @@ export function BlogFormModal({
     setSaving(true);
 
     try {
-      const url = isEdit ? `/api/blog/${post._id}` : "/api/blog";
-      const method = isEdit ? "PUT" : "POST";
-      const res = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      const json = await res.json();
-      if (!res.ok || !json.success) {
-        throw new Error(json.error || "Failed to save post");
-      }
-
+      await apiSend(
+        isEdit ? `/api/blog/${post._id}` : "/api/blog",
+        isEdit ? "PUT" : "POST",
+        form,
+        "Failed to save post"
+      );
       toast.success(isEdit ? "Post updated" : "Post created");
       onSaved();
       onClose();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Something went wrong");
+      toastError(error, "Something went wrong");
     } finally {
       setSaving(false);
     }
@@ -263,12 +271,7 @@ export function BlogFormModal({
                   id="topic"
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      generateWithAI();
-                    }
-                  }}
+                  onKeyDown={onEnter(generateWithAI)}
                   className={cn(INPUT_CLASS, "flex-1")}
                   placeholder="Enter a topic, e.g. 'benefits of remote work'"
                 />
@@ -278,11 +281,7 @@ export function BlogFormModal({
                   disabled={generating || !topic.trim()}
                   className="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white disabled:opacity-50"
                 >
-                  {generating ? (
-                    <Spinner size={16} className="animate-spin" />
-                  ) : (
-                    <Sparkle size={16} />
-                  )}
+                  <BusyIcon busy={generating} icon={Sparkle} />
                 </button>
               </div>
             </div>
@@ -329,23 +328,14 @@ export function BlogFormModal({
                 disabled={uploadingImage}
                 className={TOOL_BTN_CLASS}
               >
-                {uploadingImage ? (
-                  <Spinner size={14} className="animate-spin" />
-                ) : (
-                  <UploadSimple size={14} />
-                )}
+                <BusyIcon busy={uploadingImage} icon={UploadSimple} size={14} />
                 Upload image
               </button>
 
               <input
                 value={imageQuery}
                 onChange={(e) => setImageQuery(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    findOnUnsplash();
-                  }
-                }}
+                onKeyDown={onEnter(() => findOnUnsplash())}
                 placeholder={form.tags[0] || "Search Unsplash, e.g. 'remote work'"}
                 className={cn(INPUT_CLASS, "min-w-[10rem] flex-1 px-3 py-2 text-xs")}
               />
@@ -355,7 +345,7 @@ export function BlogFormModal({
                 disabled={findingImage || !(imageQuery.trim() || form.tags[0] || form.title)}
                 className={TOOL_BTN_CLASS}
               >
-                {findingImage ? <Spinner size={14} className="animate-spin" /> : <ImageSquare size={14} />}
+                <BusyIcon busy={findingImage} icon={ImageSquare} size={14} />
                 Find on Unsplash
               </button>
 
@@ -420,12 +410,7 @@ export function BlogFormModal({
               <input
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    addTag();
-                  }
-                }}
+                onKeyDown={onEnter(addTag)}
                 className={cn(INPUT_CLASS, "flex-1")}
                 placeholder="Add a tag and press Enter"
               />

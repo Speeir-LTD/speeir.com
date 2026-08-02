@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/metadata";
-import { cn, CTA_SM_CLASS } from "@/lib/utils";
-import Link from "next/link";
-import { ArrowRight, Sparkle } from "@phosphor-icons/react/dist/ssr";
 import { getDb } from "@/utils/dbConnect";
 import { serialize } from "@/lib/api";
 import type { BlogPost } from "@/types/post";
 import { BlogGrid } from "@/components/Blog/BlogGrid";
+import { EmptyState } from "@/components/ui/primitives";
 import { resolveCover } from "@/utils/unsplash";
 import { Eyebrow } from "@/components/ui/primitives";
 
@@ -57,30 +55,10 @@ export default async function BlogPage() {
       </div>
 
       {posts.length === 0 ? (
-        <div className="group relative mx-auto mt-16 flex max-w-lg flex-col items-center rounded-2xl border border-dashed border-border/40 bg-white p-14 text-center shadow-md">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -inset-px rounded-2xl bg-primary/10 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
-          />
-          <div className="relative z-10 flex flex-col items-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <Sparkle size={20} weight="duotone" />
-            </div>
-            <h2 className="mt-5 text-lg font-semibold text-ink">
-              First post coming soon
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted">
-              We&apos;re writing up what we&apos;ve learned. Check back shortly.
-            </p>
-            <Link
-              href="/contact"
-              className={cn(CTA_SM_CLASS, "mt-6 px-6 py-2.5")}
-            >
-              Start a project
-              <ArrowRight size={16} />
-            </Link>
-          </div>
-        </div>
+        <EmptyState
+          heading="First post coming soon"
+          body="We're writing up what we've learned. Check back shortly."
+        />
       ) : (
         <BlogGrid posts={posts} />
       )}

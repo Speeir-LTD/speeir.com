@@ -5,13 +5,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { services, type Service } from "@/data/services";
 import { ServiceIcon } from "@/components/ServiceIcon";
-import {
-  Card,
-  CardTitle,
-  CardDescription,
-  CardSkeletonContainer,
-  CardSkeleton,
-} from "@/components/ui/damn-good-card";
+import { Card, CardSkeleton } from "@/components/ui/damn-good-card";
 
 function ServiceSpotlightCard({
   service,
@@ -45,13 +39,13 @@ function ServiceSpotlightCard({
       </AnimatePresence>
 
       <Card className="relative z-20 transition-colors duration-300 group-hover:border-primary/40">
-        <CardSkeletonContainer>
+        <div className="z-40 h-[12rem] rounded-xl bg-surface [mask-image:radial-gradient(50%_50%_at_50%_50%,white_0%,transparent_100%)]">
           <CardSkeleton>
             <ServiceIcon name={service.icon} size={26} />
           </CardSkeleton>
-        </CardSkeletonContainer>
-        <CardTitle>{service.title}</CardTitle>
-        <CardDescription>{service.description}</CardDescription>
+        </div>
+        <h3 className="py-2 text-lg font-semibold text-ink">{service.title}</h3>
+        <p className="max-w-sm text-sm font-normal text-muted">{service.description}</p>
       </Card>
     </Link>
   );

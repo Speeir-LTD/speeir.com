@@ -29,72 +29,6 @@ export const Card = ({
   );
 };
 
-export const CardTitle = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <h3 className={cn("py-2 text-lg font-semibold text-ink", className)}>
-      {children}
-    </h3>
-  );
-};
-
-export const CardDescription = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <p className={cn("max-w-sm text-sm font-normal text-muted", className)}>
-      {children}
-    </p>
-  );
-};
-
-export const CardSkeletonContainer = ({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => {
-  return (
-    <div
-      className={cn(
-        "z-40 h-[12rem] rounded-xl bg-surface [mask-image:radial-gradient(50%_50%_at_50%_50%,white_0%,transparent_100%)]",
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
-};
-
-const IconOrb = ({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => {
-  return (
-    <div
-      className={cn(
-        "flex h-16 w-16 items-center justify-center rounded-full bg-primary/[0.06] text-primary shadow-[0px_0px_8px_0px_rgba(161,95,220,0.15)_inset,0px_16px_24px_-16px_rgba(20,24,28,0.25)]",
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
-};
-
 export const CardSkeleton = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="relative flex h-full items-center justify-center overflow-hidden p-8">
@@ -102,7 +36,9 @@ export const CardSkeleton = ({ children }: { children: React.ReactNode }) => {
         animate={{ scale: [1, 1.08, 1], y: [0, -4, 0] }}
         transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 0.6 }}
       >
-        <IconOrb>{children}</IconOrb>
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/[0.06] text-primary shadow-[0px_0px_8px_0px_rgba(161,95,220,0.15)_inset,0px_16px_24px_-16px_rgba(20,24,28,0.25)]">
+          {children}
+        </div>
       </motion.div>
 
       <div className="absolute top-1/2 z-0 h-32 w-px -translate-y-1/2 animate-move bg-gradient-to-b from-transparent via-primary/50 to-transparent">

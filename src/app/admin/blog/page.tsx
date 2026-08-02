@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { MagnifyingGlass, PencilSimple, Plus, Trash } from "@phosphor-icons/react";
 import type { BlogPost } from "@/types/post";
 import { cn, CTA_SM_CLASS, INPUT_CLASS } from "@/lib/utils";
+import { apiRequest, toastError } from "@/lib/fetcher";
 import { BlogFormModal } from "./BlogFormModal";
 
 const STATUS_STYLES: Record<string, string> = {
@@ -23,12 +24,9 @@ export default function AdminBlogPage() {
   const fetchPosts = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/blog");
-      const json = await res.json();
-      if (!res.ok || !json.success) throw new Error(json.error || "Failed to load posts");
-      setPosts(json.data || []);
+      setPosts(await apiRequest<BlogPost[]>("/api/blog", undefined, "Failed to load posts"));
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to load posts");
+      toastError(error, "Failed to load posts");
     } finally {
       setLoading(false);
     }
@@ -42,13 +40,11 @@ export default function AdminBlogPage() {
     if (!confirm(`Delete "${post.title}"? This can't be undone.`)) return;
 
     try {
-      const res = await fetch(`/api/blog/${post._id}`, { method: "DELETE" });
-      const json = await res.json();
-      if (!res.ok || !json.success) throw new Error(json.error || "Failed to delete post");
+      await apiRequest(`/api/blog/${post._id}`, { method: "DELETE" }, "Failed to delete post");
       toast.success("Post deleted");
       fetchPosts();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to delete post");
+      toastError(error, "Failed to delete post");
     }
   };
 

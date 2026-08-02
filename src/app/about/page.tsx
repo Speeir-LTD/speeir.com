@@ -9,7 +9,7 @@ import {
   RocketLaunch,
   ArrowsClockwise,
 } from "@phosphor-icons/react/dist/ssr";
-import { Eyebrow } from "@/components/ui/primitives";
+import { Eyebrow, Glow } from "@/components/ui/primitives";
 import { process } from "@/data/process";
 
 export const metadata: Metadata = pageMeta({
@@ -68,11 +68,7 @@ export default function AboutPage() {
               key={item.title}
               className="group relative rounded-2xl border border-border/40 bg-white p-6 shadow-md"
             >
-              {/* Ambient glow on hover */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -inset-px rounded-2xl bg-primary/10 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
-              />
+              <Glow />
               <div className="relative z-10">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                   <Icon size={18} weight="duotone" />
