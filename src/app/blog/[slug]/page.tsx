@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { pageMeta } from "@/lib/metadata";
+import { breadcrumbs, pageMeta } from "@/lib/metadata";
+import { cn, PROSE_CLASS } from "@/lib/utils";
+import { BackLink, CTACard, Eyebrow } from "@/components/ui/primitives";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import { ArrowLeft, ArrowRight, Clock, Eye } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, Clock, Eye } from "@phosphor-icons/react/dist/ssr";
 import { getDb } from "@/utils/dbConnect";
 import type { BlogPost } from "@/types/post";
 import { readingTime } from "@/utils/readingTime";
@@ -93,13 +95,10 @@ export default async function BlogPostPage({
         publisher: { "@type": "Organization", name: "Speeir", url: "https://speeir.com" },
         url: `https://speeir.com/blog/${slug}`,
       },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Blog", item: "https://speeir.com/blog" },
-          { "@type": "ListItem", position: 2, name: post.title, item: `https://speeir.com/blog/${slug}` },
-        ],
-      },
+      breadcrumbs([
+        { name: "Blog", path: "/blog" },
+        { name: post.title, path: `/blog/${slug}` },
+      ]),
     ],
   };
 
@@ -111,13 +110,7 @@ export default async function BlogPostPage({
       />
 
       <div className="mx-auto max-w-3xl">
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted hover:text-primary"
-        >
-          <ArrowLeft size={14} />
-          All posts
-        </Link>
+        <BackLink href="/blog">All posts</BackLink>
 
         <h1 className="mt-5 text-3xl font-semibold tracking-tight text-ink md:text-4xl">
           {post.title}
@@ -162,7 +155,7 @@ export default async function BlogPostPage({
           <PostCover seed={post.slug} title={post.title} image={cover} />
         </div>
 
-        <div className="prose prose-neutral mt-12 max-w-none prose-headings:font-semibold prose-headings:text-ink prose-p:text-muted prose-a:text-primary prose-strong:text-ink">
+        <div className={cn(PROSE_CLASS, "mt-12 max-w-none")}>
           <ReactMarkdown>{post.content}</ReactMarkdown>
         </div>
 
@@ -170,22 +163,11 @@ export default async function BlogPostPage({
           <ShareButton title={post.title} url={`https://speeir.com/blog/${post.slug}`} />
         </div>
 
-        <div className="mx-auto mt-20 max-w-3xl rounded-2xl border border-border/40 bg-white p-8 text-center shadow-md">
-          <h2 className="text-xl font-semibold text-ink">Have a project in mind?</h2>
-          <Link
-            href="/contact"
-            className="mt-5 inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
-          >
-            Start a project
-            <ArrowRight size={16} />
-          </Link>
-        </div>
+        <CTACard heading="Have a project in mind?" className="max-w-3xl" />
 
         {morePosts.length > 0 && (
           <div className="mx-auto mt-20 max-w-3xl border-t border-border/40 pt-12 pb-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              More from the blog
-            </p>
+            <Eyebrow>More from the blog</Eyebrow>
             <ul className="mt-6 space-y-6">
               {morePosts.map((other) => (
                 <li key={other._id.toString()}>

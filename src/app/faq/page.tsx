@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/metadata";
 import { faqs } from "@/data/faqs";
+import { Eyebrow } from "@/components/ui/primitives";
 
 export const metadata: Metadata = pageMeta({
   title: "FAQ",
@@ -31,9 +32,7 @@ export default function FaqPage() {
       />
 
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          FAQ
-        </p>
+        <Eyebrow>FAQ</Eyebrow>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-ink md:text-5xl">
           Frequently asked questions
         </h1>

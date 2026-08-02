@@ -7,7 +7,6 @@ export type ServiceIcon =
   | "wrench";
 
 export interface Service {
-  id: string;
   icon: ServiceIcon;
   title: string;
   description: string;
@@ -19,7 +18,6 @@ export interface Service {
 
 export const services: Service[] = [
   {
-    id: "web-development",
     icon: "code",
     title: "Web Development",
     description:
@@ -45,7 +43,6 @@ export const services: Service[] = [
     ],
   },
   {
-    id: "mobile-development",
     icon: "smartphone",
     title: "Mobile App Development",
     description:
@@ -70,7 +67,6 @@ export const services: Service[] = [
     ],
   },
   {
-    id: "custom-software",
     icon: "box",
     title: "Custom Software Development",
     description: "Tailor-made software solutions for your unique business needs.",
@@ -94,7 +90,6 @@ export const services: Service[] = [
     ],
   },
   {
-    id: "digital-marketing",
     icon: "trending-up",
     title: "Digital Marketing",
     description:
@@ -119,7 +114,6 @@ export const services: Service[] = [
     ],
   },
   {
-    id: "e-commerce",
     icon: "shopping-cart",
     title: "E-Commerce",
     description: "High-performance online stores with seamless user experience.",
@@ -143,7 +137,6 @@ export const services: Service[] = [
     ],
   },
   {
-    id: "maintenance-support",
     icon: "wrench",
     title: "Maintenance & Support",
     description:

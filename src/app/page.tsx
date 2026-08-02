@@ -22,24 +22,35 @@ import { BackgroundBeams } from "@/components/ui/background-beams";
 import { StatsGrid } from "@/components/StatsGrid";
 import { BackgroundLines } from "@/components/ui/background-lines";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
-
-// Used by the trust bar below, currently hidden — re-enable together.
-// const CLIENTS = [
-//   "Startups",
-//   "Scale-ups",
-//   "Enterprise",
-//   "SaaS",
-//   "FinTech",
-//   "HealthTech",
-//   "E-Commerce",
-//   "EdTech",
-// ];
+import { cn, CTA_CLASS } from "@/lib/utils";
+import { Eyebrow } from "@/components/ui/primitives";
 
 const STATS = [
   { end: 50, suffix: "+", label: "projects delivered" },
   { end: 6, suffix: "", label: "core disciplines" },
   { end: 24, suffix: "/7", label: "support & monitoring" },
   { end: 98, suffix: "%", label: "client retention" },
+];
+
+const VALUE_PROPS = [
+  {
+    icon: Clock,
+    title: "Fast delivery",
+    description:
+      "Around-the-clock progress with our cross-border teams working in sprints.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Enterprise quality",
+    description:
+      "Security, testing, and compliance built into every line of code we ship.",
+  },
+  {
+    icon: ChartLineUp,
+    title: "Cost efficient",
+    description:
+      "Rapid scaling and cost-efficient development without compromising on quality.",
+  },
 ];
 
 const TECH_STACK = [
@@ -59,23 +70,6 @@ export default function Home() {
   return (
     <>
       <GlassHero />
-
-      {/* ── Trust bar — hidden for now, re-enable when ready ──
-      <section className="border-y border-border/40 bg-white/60">
-        <div className="container py-6">
-          <p className="mb-4 text-center text-xs font-medium uppercase tracking-widest text-muted">
-            Trusted across industries
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
-            {CLIENTS.map((name) => (
-              <span key={name} className="text-sm font-semibold text-ink/30">
-                {name}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-      */}
 
       {/* ── Intro statement — like Arcade's "You're the storyteller" ── */}
       <section className="py-20 md:py-28">
@@ -106,9 +100,7 @@ export default function Home() {
           <div className="container">
             <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                  What we do
-                </p>
+                <Eyebrow>What we do</Eyebrow>
                 <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">
                   Six disciplines, one team
                 </h2>
@@ -137,9 +129,7 @@ export default function Home() {
       <section className="py-20 md:py-28">
         <div className="container">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              How we work
-            </p>
+            <Eyebrow>How we work</Eyebrow>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">
               The fastest way to ship your product.
             </h2>
@@ -206,9 +196,7 @@ export default function Home() {
         <BackgroundLines className="absolute inset-0" />
         <div className="container relative z-10">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              Why Speeir
-            </p>
+            <Eyebrow>Why Speeir</Eyebrow>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-4xl">
               A blended model that delivers.
             </h2>
@@ -219,42 +207,17 @@ export default function Home() {
           </div>
 
           <div className="mx-auto mt-12 grid max-w-4xl gap-8 md:grid-cols-3">
-            <div className="text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                <Clock size={22} weight="duotone" />
+            {VALUE_PROPS.map((prop) => (
+              <div key={prop.title} className="text-center">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                  <prop.icon size={22} weight="duotone" />
+                </div>
+                <h3 className="mt-4 text-base font-semibold text-ink">
+                  {prop.title}
+                </h3>
+                <p className="mt-2 text-sm text-muted">{prop.description}</p>
               </div>
-              <h3 className="mt-4 text-base font-semibold text-ink">
-                Fast delivery
-              </h3>
-              <p className="mt-2 text-sm text-muted">
-                Around-the-clock progress with our cross-border teams working in
-                sprints.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                <ShieldCheck size={22} weight="duotone" />
-              </div>
-              <h3 className="mt-4 text-base font-semibold text-ink">
-                Enterprise quality
-              </h3>
-              <p className="mt-2 text-sm text-muted">
-                Security, testing, and compliance built into every line of code
-                we ship.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                <ChartLineUp size={22} weight="duotone" />
-              </div>
-              <h3 className="mt-4 text-base font-semibold text-ink">
-                Cost efficient
-              </h3>
-              <p className="mt-2 text-sm text-muted">
-                Rapid scaling and cost-efficient development without
-                compromising on quality.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
         </div>
@@ -277,7 +240,7 @@ export default function Home() {
             <div className="flex flex-wrap items-center gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                className={cn(CTA_CLASS, "px-7 py-3.5 transition-all hover:shadow-lg")}
               >
                 Start a project
                 <ArrowRight size={16} />

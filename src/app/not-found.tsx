@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { cn, CTA_SM_CLASS } from "@/lib/utils";
+import { Eyebrow } from "@/components/ui/primitives";
 
 export default function NotFound() {
   return (
     <div className="container flex min-h-[70vh] flex-col items-center justify-center py-20 text-center">
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">404</p>
+      <Eyebrow>404</Eyebrow>
       <h1 className="mt-4 text-3xl font-semibold tracking-tight text-ink md:text-4xl">
         This page could not be found
       </h1>
@@ -13,7 +15,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="mt-8 inline-flex items-center gap-2 rounded-full bg-ink px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+        className={cn(CTA_SM_CLASS, "mt-8 px-6 py-2.5")}
       >
         Back home
         <ArrowRight size={16} />

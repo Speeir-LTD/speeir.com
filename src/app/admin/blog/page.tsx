@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { toast } from "sonner";
 import { MagnifyingGlass, PencilSimple, Plus, Trash } from "@phosphor-icons/react";
 import type { BlogPost } from "@/types/post";
+import { CTA_SM_CLASS } from "@/lib/utils";
 import { BlogFormModal } from "./BlogFormModal";
 
 const STATUS_STYLES: Record<string, string> = {
@@ -64,7 +65,7 @@ export default function AdminBlogPage() {
             setEditingPost(null);
             setModalOpen(true);
           }}
-          className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+          className={CTA_SM_CLASS}
         >
           <Plus size={16} />
           New post

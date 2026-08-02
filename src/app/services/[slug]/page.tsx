@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { pageMeta } from "@/lib/metadata";
-import Link from "next/link";
+import { breadcrumbs, pageMeta } from "@/lib/metadata";
+import { BackLink, CTACard } from "@/components/ui/primitives";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Check } from "@phosphor-icons/react/dist/ssr";
+import { Check } from "@phosphor-icons/react/dist/ssr";
 import { services, getServiceBySlug } from "@/data/services";
 import { ServiceIcon } from "@/components/ServiceIcon";
 
@@ -45,18 +45,10 @@ export default async function ServiceDetailPage({
         areaServed: "IE",
         url: `https://speeir.com/services/${slug}`,
       },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Services", item: "https://speeir.com/services" },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: service.title,
-            item: `https://speeir.com/services/${slug}`,
-          },
-        ],
-      },
+      breadcrumbs([
+        { name: "Services", path: "/services" },
+        { name: service.title, path: `/services/${slug}` },
+      ]),
     ],
   };
 
@@ -66,13 +58,7 @@ export default async function ServiceDetailPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <Link
-        href="/services"
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-muted hover:text-primary"
-      >
-        <ArrowLeft size={14} />
-        All services
-      </Link>
+      <BackLink href="/services">All services</BackLink>
 
       <div className="mx-auto mt-8 max-w-2xl text-center">
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
@@ -125,18 +111,7 @@ export default async function ServiceDetailPage({
         </div>
       </div>
 
-      <div className="mx-auto mt-20 max-w-2xl rounded-2xl border border-border/40 bg-white p-8 text-center shadow-md">
-        <h2 className="text-xl font-semibold text-ink">
-          Ready to talk {service.title.toLowerCase()}?
-        </h2>
-        <Link
-          href="/contact"
-          className="mt-5 inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
-        >
-          Start a project
-          <ArrowRight size={16} />
-        </Link>
-      </div>
+      <CTACard heading={`Ready to talk ${service.title.toLowerCase()}?`} />
     </div>
   );
 }

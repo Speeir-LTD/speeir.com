@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ArrowSquareOut, Sparkle } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, ArrowSquareOut, Sparkle } from "@phosphor-icons/react/dist/ssr";
 import type { PortfolioItem, Section } from "@/data/portfolio";
 import { breadcrumbs } from "@/lib/metadata";
+import { CTA_CLASS, CTA_SM_CLASS } from "@/lib/utils";
+import { BackLink, CTACard, Eyebrow } from "@/components/ui/primitives";
 
 const TAG_CLASS =
   "rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary";
-const CTA_CLASS =
-  "inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5";
 
 function Tags({ tags, className }: { tags: string[]; className?: string }) {
   if (tags.length === 0) return null;
@@ -26,9 +26,7 @@ export function PortfolioList({ section }: { section: Section }) {
   return (
     <div className="container py-20 md:py-28">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          {section.eyebrow}
-        </p>
+        <Eyebrow>{section.eyebrow}</Eyebrow>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-ink md:text-5xl">
           {section.heading}
         </h1>
@@ -51,10 +49,7 @@ export function PortfolioList({ section }: { section: Section }) {
             <p className="mt-2 text-sm leading-relaxed text-muted">
               {section.emptyBody}
             </p>
-            <Link
-              href="/contact"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-ink px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
-            >
+            <Link href="/contact" className={`mt-6 ${CTA_SM_CLASS}`}>
               Start a project
               <ArrowRight size={16} />
             </Link>
@@ -64,7 +59,7 @@ export function PortfolioList({ section }: { section: Section }) {
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {section.items.map((item) => (
             <Link
-              key={item.id}
+              key={item.slug}
               href={`${section.path}/${item.slug}`}
               className="group relative flex flex-col rounded-2xl border border-border/40 bg-white p-6 shadow-md transition-transform hover:-translate-y-1"
             >
@@ -124,13 +119,7 @@ export function PortfolioDetail({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <Link
-        href={section.path}
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-muted hover:text-primary"
-      >
-        <ArrowLeft size={14} />
-        {section.backLabel}
-      </Link>
+      <BackLink href={section.path}>{section.backLabel}</BackLink>
 
       <div className="mx-auto mt-8 max-w-2xl text-center">
         <h1 className="text-4xl font-semibold tracking-tight text-ink md:text-5xl">
@@ -195,15 +184,7 @@ export function PortfolioDetail({
         </div>
       )}
 
-      <div className="mx-auto mt-20 max-w-2xl rounded-2xl border border-border/40 bg-white p-8 text-center shadow-md">
-        <h2 className="text-xl font-semibold text-ink">
-          Want something like {item.title}?
-        </h2>
-        <Link href="/contact" className={`mt-5 ${CTA_CLASS}`}>
-          Start a project
-          <ArrowRight size={16} />
-        </Link>
-      </div>
+      <CTACard heading={`Want something like ${item.title}?`} />
     </div>
   );
 }

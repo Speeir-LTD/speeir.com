@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/metadata";
+import { Eyebrow } from "@/components/ui/primitives";
+import { cn, PROSE_CLASS } from "@/lib/utils";
 
 export const metadata: Metadata = pageMeta({
   title: "Terms of Service",
@@ -12,16 +14,14 @@ export default function TermsPage() {
   return (
     <div className="container py-20 md:py-28">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          Legal
-        </p>
+        <Eyebrow>Legal</Eyebrow>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-ink md:text-5xl">
           Terms of Service
         </h1>
         <p className="mt-4 text-sm text-muted">Last updated: August 2026</p>
       </div>
 
-      <div className="prose prose-neutral mx-auto mt-16 max-w-2xl prose-headings:font-semibold prose-headings:text-ink prose-p:text-muted prose-a:text-primary prose-strong:text-ink prose-li:text-muted">
+      <div className={cn(PROSE_CLASS, "mx-auto mt-16 max-w-2xl")}>
         <p>
           These terms govern your use of speeir.com, operated by Speeir LTD
           (&quot;Speeir&quot;, &quot;we&quot;, &quot;us&quot;), based in Dublin, Ireland. By using

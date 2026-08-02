@@ -1,5 +1,4 @@
 export interface PortfolioItem {
-  id: string;
   slug: string;
   title: string;
   summary: string;

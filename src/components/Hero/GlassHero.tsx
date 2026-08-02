@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "@phosphor-icons/react";
 import { MeshGradient } from "@/components/MeshGradient";
-import { GRAIN_STYLE } from "@/lib/utils";
+import { cn, CTA_CLASS, GRAIN_STYLE } from "@/lib/utils";
 
 export function GlassHero() {
   const reduceMotion = useReducedMotion();
@@ -65,7 +65,7 @@ export function GlassHero() {
             >
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                className={cn(CTA_CLASS, "px-7 py-3.5 transition-all hover:shadow-lg")}
               >
                 Start a project
                 <ArrowRight size={16} />

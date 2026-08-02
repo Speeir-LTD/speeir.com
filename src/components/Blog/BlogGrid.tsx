@@ -6,6 +6,7 @@ import { ArrowRight, Clock } from "@phosphor-icons/react";
 import type { BlogPost } from "@/types/post";
 import { readingTime } from "@/utils/readingTime";
 import { PostCover } from "./PostCover";
+import { Eyebrow } from "@/components/ui/primitives";
 
 function excerpt(content: string, length: number): string {
   const plain = content.replace(/[#*_`>-]/g, "");
@@ -86,9 +87,7 @@ export function BlogGrid({ posts }: { posts: BlogPost[] }) {
             <PostCover seed={featured.slug} title={featured.title} image={featured.coverImage} />
           </div>
           <div className="flex flex-1 flex-col justify-center p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              Latest
-            </p>
+            <Eyebrow>Latest</Eyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-ink md:text-3xl">
               {featured.title}
             </h2>

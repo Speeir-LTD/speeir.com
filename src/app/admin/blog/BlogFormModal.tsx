@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { X, Plus, Spinner, Sparkle, UploadSimple, ArrowsClockwise, ImageSquare } from "@phosphor-icons/react";
 import type { BlogPost, CoverImageCredit } from "@/types/post";
+import { cn, CTA_SM_CLASS } from "@/lib/utils";
 
 type FormState = {
   title: string;
@@ -461,7 +462,7 @@ export function BlogFormModal({
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
+              className={cn(CTA_SM_CLASS, "disabled:opacity-60")}
             >
               {saving && <Spinner size={16} className="animate-spin" />}
               {isEdit ? "Save changes" : "Create post"}

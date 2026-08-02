@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/metadata";
 import { services } from "@/data/services";
 import { ServiceCard } from "@/components/ServiceCard";
+import { Eyebrow } from "@/components/ui/primitives";
 
 export const metadata: Metadata = pageMeta({
   title: "Services",
@@ -14,9 +15,7 @@ export default function ServicesPage() {
   return (
     <div className="container py-20 md:py-28">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          Services
-        </p>
+        <Eyebrow>Services</Eyebrow>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-ink md:text-5xl">
           What we build
         </h1>
@@ -28,7 +27,7 @@ export default function ServicesPage() {
 
       <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => (
-          <ServiceCard key={service.id} service={service} />
+          <ServiceCard key={service.slug} service={service} />
         ))}
       </div>
     </div>

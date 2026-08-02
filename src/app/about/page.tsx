@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/metadata";
+import { CTA_CLASS } from "@/lib/utils";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -8,6 +9,8 @@ import {
   RocketLaunch,
   ArrowsClockwise,
 } from "@phosphor-icons/react/dist/ssr";
+import { Eyebrow } from "@/components/ui/primitives";
+import { process } from "@/data/process";
 
 export const metadata: Metadata = pageMeta({
   title: "About",
@@ -16,40 +19,14 @@ export const metadata: Metadata = pageMeta({
   path: "/about",
 });
 
-const PROCESS = [
-  {
-    title: "Consultation & Planning",
-    description:
-      "We take time to understand your goals, challenges, and vision to design a roadmap that fits your business.",
-    icon: ClipboardText,
-  },
-  {
-    title: "Agile Development",
-    description:
-      "Our cross-border teams work in sprints to deliver fast, iterative progress with ongoing feedback and transparency.",
-    icon: ArrowsClockwise,
-  },
-  {
-    title: "Quality & Compliance",
-    description:
-      "Rigorous testing, security practices, and adherence to international standards are baked into everything we do.",
-    icon: SealCheck,
-  },
-  {
-    title: "Support & Scaling",
-    description:
-      "After launch, we remain your technology partner, offering maintenance, enhancements, and scaling support as your needs grow.",
-    icon: RocketLaunch,
-  },
-];
+// Icons for `process`, by index.
+const PROCESS_ICONS = [ClipboardText, ArrowsClockwise, SealCheck, RocketLaunch];
 
 export default function AboutPage() {
   return (
     <div className="container py-20 md:py-28">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          About Speeir
-        </p>
+        <Eyebrow>About Speeir</Eyebrow>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-ink md:text-5xl">
           Redefining digital innovation
         </h1>
@@ -84,7 +61,9 @@ export default function AboutPage() {
         </p>
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2">
-          {PROCESS.map((item) => (
+          {process.map((item, i) => {
+            const Icon = PROCESS_ICONS[i];
+            return (
             <div
               key={item.title}
               className="group relative rounded-2xl border border-border/40 bg-white p-6 shadow-md"
@@ -96,7 +75,7 @@ export default function AboutPage() {
               />
               <div className="relative z-10">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <item.icon size={18} weight="duotone" />
+                  <Icon size={18} weight="duotone" />
                 </div>
                 <h3 className="mt-4 text-base font-semibold text-ink">
                   {item.title}
@@ -106,7 +85,8 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="mt-8 rounded-2xl bg-ink p-8 text-center">
@@ -121,7 +101,7 @@ export default function AboutPage() {
       <div className="mx-auto mt-20 max-w-2xl text-center">
         <Link
           href="/contact"
-          className="inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+          className={CTA_CLASS}
         >
           Start a project
           <ArrowRight size={16} />

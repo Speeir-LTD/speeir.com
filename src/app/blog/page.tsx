@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/metadata";
+import { cn, CTA_SM_CLASS } from "@/lib/utils";
 import Link from "next/link";
 import { ArrowRight, Sparkle } from "@phosphor-icons/react/dist/ssr";
 import { getDb } from "@/utils/dbConnect";
 import type { BlogPost } from "@/types/post";
 import { BlogGrid } from "@/components/Blog/BlogGrid";
 import { resolveCover } from "@/utils/unsplash";
+import { Eyebrow } from "@/components/ui/primitives";
 
 export const metadata: Metadata = pageMeta({
   title: "Blog",
@@ -44,9 +46,7 @@ export default async function BlogPage() {
   return (
     <div className="container py-20 md:py-28">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          Blog
-        </p>
+        <Eyebrow>Blog</Eyebrow>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-ink md:text-5xl">
           Insights from Speeir
         </h1>
@@ -73,7 +73,7 @@ export default async function BlogPage() {
             </p>
             <Link
               href="/contact"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-ink px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+              className={cn(CTA_SM_CLASS, "mt-6 px-6 py-2.5")}
             >
               Start a project
               <ArrowRight size={16} />

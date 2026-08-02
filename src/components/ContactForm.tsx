@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowRight, Spinner } from "@phosphor-icons/react";
+import { cn, CTA_CLASS } from "@/lib/utils";
 
 const inputClasses =
   "w-full rounded-xl border border-border/40 bg-white px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-primary";
@@ -88,7 +89,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={sending}
-        className="mt-6 inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+        className={cn(CTA_CLASS, "mt-6 disabled:cursor-not-allowed disabled:opacity-60")}
       >
         {sending && <Spinner size={16} className="animate-spin" />}
         {sending ? "Sending..." : "Send message"}

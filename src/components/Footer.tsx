@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { InstagramLogo, FacebookLogo, LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
+import { services } from "@/data/services";
 import { Logo } from "./Logo";
 import { TextHoverEffect } from "./ui/text-hover-effect";
 
@@ -13,17 +14,20 @@ const SOCIAL_LINKS = [
   },
 ];
 
+// Shorter labels than the service titles, where the full title is too long
+// for a footer column.
+const SHORT_LABELS: Record<string, string> = {
+  "mobile-development": "Mobile Apps",
+  "maintenance-support": "Maintenance",
+};
+
 const COLUMNS = [
   {
     title: "Services",
-    links: [
-      { href: "/services/web-development", label: "Web Development" },
-      { href: "/services/mobile-development", label: "Mobile Apps" },
-      { href: "/services/custom-software", label: "Custom Software" },
-      { href: "/services/e-commerce", label: "E-Commerce" },
-      { href: "/services/digital-marketing", label: "Digital Marketing" },
-      { href: "/services/maintenance-support", label: "Maintenance" },
-    ],
+    links: services.map((service) => ({
+      href: `/services/${service.slug}`,
+      label: SHORT_LABELS[service.slug] ?? service.title,
+    })),
   },
   {
     title: "Company",
@@ -39,6 +43,7 @@ const COLUMNS = [
   },
   {
     title: "Connect",
+    social: true,
     links: [
       { href: "mailto:info@speeir.com", label: "info@speeir.com" },
     ],
@@ -74,7 +79,7 @@ export function Footer() {
                 ))}
               </ul>
 
-              {col.title === "Connect" && (
+              {col.social && (
                 <ul className="mt-4 flex items-center gap-3">
                   {SOCIAL_LINKS.map((social) => (
                     <li key={social.href}>

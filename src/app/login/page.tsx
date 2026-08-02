@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Envelope, LockKey, Eye, EyeSlash } from "@phosphor-icons/react";
 import { Logo } from "@/components/Logo";
+import { cn, CTA_CLASS } from "@/lib/utils";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -102,7 +103,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="mt-2 w-full rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+            className={cn(CTA_CLASS, "mt-2 w-full justify-center px-6 py-3 disabled:cursor-not-allowed disabled:opacity-60")}
           >
             {isLoading ? "Signing in..." : "Sign in"}
           </button>

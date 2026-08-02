@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/metadata";
 import { EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
 import { ContactForm } from "@/components/ContactForm";
+import { Eyebrow } from "@/components/ui/primitives";
 
 export const metadata: Metadata = pageMeta({
   title: "Contact",
@@ -14,9 +15,7 @@ export default function ContactPage() {
   return (
     <div className="container py-20 md:py-28">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          Contact
-        </p>
+        <Eyebrow>Contact</Eyebrow>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-ink md:text-5xl">
           Let&apos;s build something
         </h1>

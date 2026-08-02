@@ -64,7 +64,7 @@ export function ServiceSpotlightGrid() {
     <div className="grid sm:grid-cols-2 lg:grid-cols-3">
       {services.map((service, index) => (
         <ServiceSpotlightCard
-          key={service.id}
+          key={service.slug}
           service={service}
           isGridHovered={hoveredIndex === index}
           onHoverStart={() => setHoveredIndex(index)}

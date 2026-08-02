@@ -5,6 +5,17 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// The dark pill CTA, in the only two sizes the site actually uses. Import
+// these instead of retyping the chain — it had drifted into six near-variants.
+export const CTA_CLASS =
+  "inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5";
+export const CTA_SM_CLASS =
+  "inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5";
+
+// Long-form body copy (legal pages, rendered markdown).
+export const PROSE_CLASS =
+  "prose prose-neutral prose-headings:font-semibold prose-headings:text-ink prose-p:text-muted prose-a:text-primary prose-strong:text-ink prose-li:text-muted";
+
 // Tiled fractal-noise grain, used as a texture overlay on glass/gradient surfaces.
 export const GRAIN_STYLE = {
   backgroundImage:
