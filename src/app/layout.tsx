@@ -27,6 +27,7 @@ const home = pageMeta({
   title: "Software agency that builds what it pitches",
   description: HOME_DESCRIPTION,
   path: "/",
+  cardSubtitle: "Web, mobile, and custom software, building our own products first.",
 });
 
 export const metadata: Metadata = {

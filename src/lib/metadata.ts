@@ -10,12 +10,15 @@ export function pageMeta({
   path,
   type = "website",
   images,
+  cardSubtitle,
 }: {
   title: string;
   description: string;
   path: string;
   type?: "website" | "article";
   images?: { url: string; width: number; height: number; alt: string }[];
+  /** Shorter line for the share card, when the SEO description reads long. */
+  cardSubtitle?: string;
 }): Metadata {
   const fullTitle = `${title} | Speeir`;
 
@@ -23,7 +26,7 @@ export function pageMeta({
   // supplies a real image (a blog post's cover photo).
   const cards = images ?? [
     {
-      url: `/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(description)}`,
+      url: `/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(cardSubtitle ?? description)}`,
       width: 1200,
       height: 630,
       alt: fullTitle,

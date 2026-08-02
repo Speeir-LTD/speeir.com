@@ -17,9 +17,9 @@ const TAGLINE = "Software agency · Dublin, Ireland";
 // Regenerate after a logo change:
 //   node -e 'const s=require("sharp"),f=require("fs");s("public/logo.svg",{density:600}).resize({width:304}).png({compressionLevel:9,palette:true}).toBuffer().then(b=>f.writeFileSync("src/app/api/og/logo.ts",`export const LOGO_DATA_URI =\n  "data:image/png;base64,${b.toString("base64")}";\n`))'
 
-// Chat clients (WhatsApp especially) crop the 1.91:1 card toward square in
-// their large preview, so everything lives in a vertically centred block
-// rather than being pushed to the top and bottom edges.
+// Chat clients crop the 1.91:1 card toward square in their large preview, so
+// everything sits in a vertically centred block rather than being pushed to
+// the top and bottom edges.
 export function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const title = searchParams.get("title")?.slice(0, 120) || "Speeir";
