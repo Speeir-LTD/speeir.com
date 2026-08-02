@@ -3,6 +3,10 @@ import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  // Auth.js only trusts the request host automatically in dev or on Vercel.
+  // Netlify (and `next start`) need this, or every /api/auth/* call fails
+  // with UntrustedHost before it reaches a provider.
+  trustHost: true,
   pages: { signIn: "/login" },
   session: { strategy: "jwt" },
   providers: [
