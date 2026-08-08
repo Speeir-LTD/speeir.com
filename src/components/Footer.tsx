@@ -114,7 +114,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-4 h-96 w-full">
+        <div className="mt-4 aspect-[3/1] w-full">
           <TextHoverEffect text="Speeir" />
         </div>
       </div>

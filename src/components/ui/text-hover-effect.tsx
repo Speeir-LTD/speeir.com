@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 // All three layers sit in the same place; only the paint differs.
 const TEXT_PROPS = {
   x: "50%",
-  y: "66%",
+  y: "50%",
   textAnchor: "middle",
   dominantBaseline: "middle",
   strokeWidth: "0.3",
@@ -37,7 +37,6 @@ export const TextHoverEffect = ({ text }: { text: string }) => {
       width="100%"
       height="100%"
       viewBox="0 0 300 100"
-      preserveAspectRatio="none"
       xmlns="http://www.w3.org/2000/svg"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
