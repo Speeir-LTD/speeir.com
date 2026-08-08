@@ -1,18 +1,8 @@
 import Link from "next/link";
-import { InstagramLogo, FacebookLogo, LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
 import { services } from "@/data/services";
+import { SOCIAL_LINKS } from "@/data/social";
 import { Logo } from "./Logo";
 import { TextHoverEffect } from "./ui/text-hover-effect";
-
-const SOCIAL_LINKS = [
-  { href: "https://ie.linkedin.com/company/speeir", label: "LinkedIn", icon: LinkedinLogo },
-  { href: "https://www.instagram.com/speeir.ltd/", label: "Instagram", icon: InstagramLogo },
-  {
-    href: "https://www.facebook.com/people/Speeir/61576228562819/",
-    label: "Facebook",
-    icon: FacebookLogo,
-  },
-];
 
 // Shorter labels than the service titles, where the full title is too long
 // for a footer column.
