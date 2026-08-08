@@ -15,7 +15,10 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header />
-      <main className="flex-1">{children}</main>
+      {/* Header is `fixed`, so it takes no flow space. Pages clear it with
+          their own py-28 on desktop; on mobile py-20 (80px) is shorter than
+          the 96px bar, so main makes up the difference. */}
+      <main className="flex-1 pt-12 lg:pt-0">{children}</main>
       <Footer />
     </>
   );
