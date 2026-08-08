@@ -8,11 +8,7 @@ function variantFor(seed: string): number {
   return Math.abs(hash) % 3;
 }
 
-const VARIANTS = [
-  "bg-void bg-blob-a bg-[length:160%_160%] bg-[position:20%_10%]",
-  "bg-void bg-blob-b bg-[length:150%_150%] bg-[position:80%_30%]",
-  "bg-ink bg-blob-a bg-[length:180%_180%] bg-[position:60%_70%]",
-];
+const VARIANTS = ["bg-cover-1", "bg-cover-2", "bg-cover-3"];
 
 export function PostCover({
   seed,

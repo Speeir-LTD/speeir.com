@@ -44,6 +44,13 @@ export const TextHoverEffect = ({ text }: { text: string }) => {
       className="select-none"
     >
       <defs>
+        {/* Always-on brand wash — same purple→amber pairing as the blog covers. */}
+        <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#A15FDC" />
+          <stop offset="55%" stopColor="#7B3FA0" />
+          <stop offset="100%" stopColor="#D4A043" />
+        </linearGradient>
+
         <linearGradient
           id="textGradient"
           gradientUnits="userSpaceOnUse"
@@ -85,14 +92,17 @@ export const TextHoverEffect = ({ text }: { text: string }) => {
       </defs>
       <text
         {...TEXT_PROPS}
-        className={`fill-ink/[0.04] stroke-border ${TEXT_CLASS}`}
-        style={{ opacity: hovered ? 0.7 : 0 }}
+        fill="url(#brandGradient)"
+        className={`stroke-primary/20 ${TEXT_CLASS}`}
+        style={{ opacity: hovered ? 0.32 : 0 }}
       >
         {text}
       </text>
       <motion.text
         {...TEXT_PROPS}
-        className={`fill-ink/[0.04] stroke-border ${TEXT_CLASS}`}
+        fill="url(#brandGradient)"
+        fillOpacity={0.16}
+        className={`stroke-primary/20 ${TEXT_CLASS}`}
         initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
         animate={{
           strokeDashoffset: 0,

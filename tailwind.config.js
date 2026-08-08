@@ -29,8 +29,23 @@ module.exports = {
         border: "#C7CDD6",
       },
       backgroundImage: {
-        "blob-a": "radial-gradient(circle at 35% 30%, rgba(161,95,220,0.55), rgba(161,95,220,0) 70%)",
-        "blob-b": "radial-gradient(circle at 60% 60%, rgba(161,95,220,0.22), rgba(161,95,220,0) 70%)",
+        // Blog cover fallbacks. Each is self-contained (two brand radials over
+        // a tinted base) so consumers don't need extra bg-position/size classes.
+        "cover-1": [
+          "radial-gradient(circle at 18% 12%, rgba(161,95,220,0.55), rgba(161,95,220,0) 58%)",
+          "radial-gradient(circle at 88% 82%, rgba(212,160,67,0.30), rgba(212,160,67,0) 55%)",
+          "linear-gradient(140deg, #1B1030 0%, #110D18 100%)",
+        ].join(","),
+        "cover-2": [
+          "radial-gradient(circle at 82% 18%, rgba(161,95,220,0.48), rgba(161,95,220,0) 55%)",
+          "radial-gradient(circle at 20% 85%, rgba(212,160,67,0.24), rgba(212,160,67,0) 58%)",
+          "linear-gradient(140deg, #14181C 0%, #1B1226 100%)",
+        ].join(","),
+        "cover-3": [
+          "radial-gradient(circle at 50% 22%, rgba(161,95,220,0.50), rgba(161,95,220,0) 62%)",
+          "radial-gradient(circle at 12% 88%, rgba(212,160,67,0.22), rgba(212,160,67,0) 55%)",
+          "linear-gradient(160deg, #110D18 0%, #171A22 100%)",
+        ].join(","),
       },
       keyframes: {
         move: {
