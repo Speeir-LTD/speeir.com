@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/metadata";
-import { CTA_CLASS } from "@/lib/utils";
+import { cn, CTA_CLASS } from "@/lib/utils";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -28,45 +28,51 @@ export default function AboutPage() {
       <div className="mx-auto max-w-2xl text-center">
         <Eyebrow>About Speeir</Eyebrow>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-ink md:text-5xl">
-          Redefining digital innovation
+          Redefining <span className="text-primary">digital innovation</span>
         </h1>
-      </div>
-
-      <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-border/40 bg-white p-8 shadow-md md:p-10">
-        <p className="text-lg leading-relaxed text-ink/80">
-          At <span className="font-semibold text-primary">Speeir LTD</span>,
+        <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted">
+          At <span className="font-semibold text-ink">Speeir LTD</span>,
           we&apos;re passionate about building reliable, scalable, and
           innovative software solutions tailored to the unique needs of our
           clients. Headquartered in Ireland, we bring together a team of
           experienced professionals committed to delivering excellence.
         </p>
-        <p className="mt-6 text-lg leading-relaxed text-ink/80">
-          Our mission is to bridge the gap between business and technology,
-          transforming ideas into powerful digital products that drive growth
-          and create exceptional user experiences.
+      </div>
+
+      <div className="mx-auto mt-14 max-w-2xl border-l-2 border-primary/40 pl-6 md:pl-8">
+        <Eyebrow>Our mission</Eyebrow>
+        <p className="mt-3 text-xl leading-relaxed text-ink md:text-2xl">
+          To bridge the gap between business and technology, transforming
+          ideas into powerful digital products that drive growth and create
+          exceptional user experiences.
         </p>
       </div>
 
-      <div className="mx-auto mt-20 max-w-3xl">
-        <h2 className="text-2xl font-semibold tracking-tight text-ink">
-          Our methodology
-        </h2>
-        <p className="mt-4 rounded-2xl bg-primary/5 p-6 text-base leading-relaxed text-ink/80">
-          We operate with a{" "}
-          <span className="font-semibold">flexible, client-first approach</span>{" "}
-          that combines local expertise with global capabilities. Our extended
-          development network ensures rapid scaling, around-the-clock
-          progress, and cost-efficient development without compromising on
-          quality.
-        </p>
+      <div className="mt-24">
+        <div className="mx-auto max-w-2xl text-center">
+          <Eyebrow>How we work</Eyebrow>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink md:text-4xl">
+            Our methodology
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-muted">
+            We operate with a{" "}
+            <span className="font-semibold text-ink">
+              flexible, client-first approach
+            </span>{" "}
+            that combines local expertise with global capabilities. Our
+            extended development network ensures rapid scaling,
+            around-the-clock progress, and cost-efficient development without
+            compromising on quality.
+          </p>
+        </div>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2">
+        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {process.map((item, i) => {
             const Icon = PROCESS_ICONS[i];
             return (
             <div
               key={item.title}
-              className="group relative rounded-2xl border border-border/40 bg-white p-6 shadow-md"
+              className="group relative flex flex-col rounded-2xl border border-border/40 bg-white p-6 shadow-md"
             >
               <Glow />
               <div className="relative z-10">
@@ -84,21 +90,14 @@ export default function AboutPage() {
             );
           })}
         </div>
-
-        <div className="mt-8 rounded-2xl bg-ink p-8 text-center">
-          <p className="text-base leading-relaxed text-white">
-            With our <span className="font-semibold">blended model</span>, you
-            get the best of both worlds: local accountability with global
-            reach.
-          </p>
-        </div>
       </div>
 
-      <div className="mx-auto mt-20 max-w-2xl text-center">
-        <Link
-          href="/contact"
-          className={CTA_CLASS}
-        >
+      <div className="mt-24 rounded-3xl bg-ink px-8 py-16 text-center">
+        <p className="mx-auto max-w-2xl text-xl leading-relaxed text-white md:text-2xl">
+          With our <span className="font-semibold">blended model</span>, you
+          get the best of both worlds: local accountability with global reach.
+        </p>
+        <Link href="/contact" className={cn(CTA_CLASS, "mt-8 bg-white text-ink")}>
           Start a project
           <ArrowRight size={16} />
         </Link>
