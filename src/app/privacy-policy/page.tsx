@@ -7,7 +7,7 @@ export const metadata: Metadata = pageMeta({
   title: "Privacy Policy",
   description:
     "How Speeir collects, uses, and protects your information.",
-  path: "/privacy",
+  path: "/privacy-policy",
 });
 
 export default function PrivacyPage() {

@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },
 
+  async redirects() {
+    return [{ source: "/privacy", destination: "/privacy-policy", permanent: true }];
+  },
+
   async headers() {
     return [
       {

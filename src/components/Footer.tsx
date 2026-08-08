@@ -105,7 +105,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Speeir LTD. All rights reserved.
           </p>
           <div className="flex items-center gap-5">
-            <Link href="/privacy" className="text-sm text-muted transition-colors hover:text-primary">
+            <Link href="/privacy-policy" className="text-sm text-muted transition-colors hover:text-primary">
               Privacy Policy
             </Link>
             <Link href="/terms" className="text-sm text-muted transition-colors hover:text-primary">
