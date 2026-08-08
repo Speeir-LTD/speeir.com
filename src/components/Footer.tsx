@@ -104,7 +104,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-4 aspect-[3/1] w-full">
+        {/* Brand sign-off — dissolves into the page edge instead of ending on a hard cut. */}
+        <div className="mt-4 aspect-[3/1] w-full [-webkit-mask-image:linear-gradient(to_bottom,black_45%,transparent_92%)] [mask-image:linear-gradient(to_bottom,black_45%,transparent_92%)]">
           <TextHoverEffect text="Speeir" />
         </div>
       </div>
