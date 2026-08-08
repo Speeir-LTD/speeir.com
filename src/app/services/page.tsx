@@ -7,7 +7,7 @@ import { Eyebrow } from "@/components/ui/primitives";
 export const metadata: Metadata = pageMeta({
   title: "Services",
   description:
-    "What Speeir builds: web, mobile, custom software, e-commerce, and more.",
+    "Web development, mobile apps, custom software, digital marketing, e-commerce, and maintenance — built by a Dublin-based team for clients worldwide.",
   path: "/services",
 });
 

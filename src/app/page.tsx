@@ -24,13 +24,7 @@ import { BackgroundLines } from "@/components/ui/background-lines";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { cn, CTA_CLASS } from "@/lib/utils";
 import { Eyebrow } from "@/components/ui/primitives";
-
-const STATS = [
-  { end: 50, suffix: "+", label: "projects delivered" },
-  { end: 6, suffix: "", label: "core disciplines" },
-  { end: 24, suffix: "/7", label: "support & monitoring" },
-  { end: 98, suffix: "%", label: "client retention" },
-];
+import { STATS } from "@/data/stats";
 
 const VALUE_PROPS = [
   {

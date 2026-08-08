@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { breadcrumbs, pageMeta } from "@/lib/metadata";
-import { BackLink, CTACard } from "@/components/ui/primitives";
+import { BackLink, CTACard, Eyebrow, FaqAccordion } from "@/components/ui/primitives";
 import { notFound } from "next/navigation";
-import { Check } from "@phosphor-icons/react/dist/ssr";
+import { Check, ListChecks, Flag, Question } from "@phosphor-icons/react/dist/ssr";
 import { services, getServiceBySlug } from "@/data/services";
 import { ServiceIcon } from "@/components/ServiceIcon";
+import { ServiceCard } from "@/components/ServiceCard";
 import { JsonLd } from "@/components/ui/json-ld";
+import { StatsGrid } from "@/components/StatsGrid";
+import { STATS } from "@/data/stats";
+import { cn } from "@/lib/utils";
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
@@ -50,8 +54,18 @@ export default async function ServiceDetailPage({
         { name: "Services", path: "/services" },
         { name: service.title, path: `/services/${slug}` },
       ]),
+      {
+        "@type": "FAQPage",
+        mainEntity: service.faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: { "@type": "Answer", text: faq.answer },
+        })),
+      },
     ],
   };
+
+  const related = services.filter((s) => s.slug !== slug).slice(0, 3);
 
   return (
     <div className="container py-20 md:py-28">
@@ -70,42 +84,96 @@ export default async function ServiceDetailPage({
         </p>
       </div>
 
-      <div className="mx-auto mt-16 grid max-w-4xl gap-12 md:grid-cols-2">
-        <div>
-          <h2 className="text-lg font-semibold text-ink">
-            Benefits
-          </h2>
-          <ul className="mt-5 space-y-3">
+      <div className="mx-auto max-w-4xl">
+        <StatsGrid stats={STATS} />
+      </div>
+
+      <div className="mx-auto mt-20 grid max-w-4xl gap-6 md:grid-cols-2 md:items-start">
+        <div className="rounded-2xl border border-border/40 bg-white p-8 shadow-md transition-shadow duration-300 hover:shadow-lg">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <ListChecks size={18} weight="duotone" />
+            </div>
+            <h2 className="text-lg font-semibold text-ink">Benefits</h2>
+          </div>
+          <ul className="mt-2 divide-y divide-border/40">
             {service.benefits.map((benefit) => (
-              <li key={benefit} className="flex items-start gap-3 text-sm text-muted">
-                <Check size={16} className="mt-0.5 shrink-0 text-primary" />
-                {benefit}
+              <li key={benefit} className="flex items-start gap-3.5 py-4 text-sm text-muted">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <Check size={14} weight="bold" />
+                </span>
+                <span className="pt-1">{benefit}</span>
               </li>
             ))}
           </ul>
         </div>
 
-        <div>
+        <div className="rounded-2xl border border-border/40 bg-white p-8 shadow-md transition-shadow duration-300 hover:shadow-lg">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <Flag size={18} weight="duotone" />
+            </div>
+            <h2 className="text-lg font-semibold text-ink">Our process</h2>
+          </div>
+          <div className="relative mt-6">
+            <div
+              aria-hidden="true"
+              className="absolute bottom-5 left-5 top-5 w-px bg-border"
+            />
+            <ol className="space-y-6">
+              {service.process.map((step, index) => {
+                const isLast = index === service.process.length - 1;
+                return (
+                  <li key={step.title} className="flex gap-4">
+                    <span
+                      className={cn(
+                        "relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold",
+                        isLast
+                          ? "bg-primary text-white"
+                          : "border-2 border-primary/20 bg-white text-primary"
+                      )}
+                    >
+                      {isLast ? <Check size={16} weight="bold" /> : index + 1}
+                    </span>
+                    <div className="pt-2">
+                      <p className="text-sm font-semibold text-ink">
+                        {step.title}
+                      </p>
+                      <p className="mt-0.5 text-sm text-muted">
+                        {step.description}
+                      </p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto mt-20 max-w-2xl">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <Question size={18} weight="duotone" />
+          </div>
           <h2 className="text-lg font-semibold text-ink">
-            Our process
+            Frequently asked questions
           </h2>
-          <ol className="mt-5 space-y-5">
-            {service.process.map((step, index) => (
-              <li key={step.title} className="flex gap-4">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-                  {index + 1}
-                </span>
-                <div>
-                  <p className="text-sm font-semibold text-ink">
-                    {step.title}
-                  </p>
-                  <p className="mt-0.5 text-sm text-muted">
-                    {step.description}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
+        </div>
+        <div className="mt-5">
+          <FaqAccordion faqs={service.faqs} />
+        </div>
+      </div>
+
+      <div className="mx-auto mt-20 max-w-4xl">
+        <Eyebrow className="text-center">Explore more</Eyebrow>
+        <h2 className="mt-2 text-center text-lg font-semibold text-ink">
+          Related services
+        </h2>
+        <div className="mt-6 grid gap-6 sm:grid-cols-3">
+          {related.map((s) => (
+            <ServiceCard key={s.slug} service={s} />
+          ))}
         </div>
       </div>
 

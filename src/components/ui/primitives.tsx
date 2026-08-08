@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Sparkle } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft, ArrowRight, Plus, Sparkle } from "@phosphor-icons/react/dist/ssr";
 import { cn, CTA_CLASS, CTA_SM_CLASS } from "@/lib/utils";
 
 /** Small uppercase label that sits above a section heading. */
@@ -60,6 +60,31 @@ export function Glow() {
       aria-hidden="true"
       className="pointer-events-none absolute -inset-px rounded-2xl bg-primary/10 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100"
     />
+  );
+}
+
+/** Question/answer accordion, shared by /faq and every service detail page. */
+export function FaqAccordion({
+  faqs,
+}: {
+  faqs: { question: string; answer: string }[];
+}) {
+  return (
+    <div className="divide-y divide-border/40 overflow-hidden rounded-2xl border border-border/40 bg-white shadow-md transition-shadow duration-300 hover:shadow-lg">
+      {faqs.map((faq) => (
+        <details key={faq.question} className="group">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-6 text-sm font-semibold text-ink marker:content-none transition-colors hover:bg-primary/[0.03]">
+            {faq.question}
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-transform duration-300 group-open:rotate-45">
+              <Plus size={14} weight="bold" />
+            </span>
+          </summary>
+          <p className="-mt-2 px-6 pb-6 text-sm leading-relaxed text-muted">
+            {faq.answer}
+          </p>
+        </details>
+      ))}
+    </div>
   );
 }
 
