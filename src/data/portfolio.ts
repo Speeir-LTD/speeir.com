@@ -5,6 +5,11 @@ export interface PortfolioItem {
   images: string[];
   tags: string[];
   liveUrl?: string;
+  /** Card tile: wordmark, three phone screens, and the product's own brand colour. */
+  logo?: string;
+  /** Phone screens for the card fan, in order: left, centre, right. */
+  screens?: [string, string, string];
+  brand?: string;
   caseStudy?: string;
   updatedAt: string;
 }
@@ -14,7 +19,49 @@ export interface PortfolioItem {
 // `caseStudy` is rendered as plain paragraphs split on blank lines — no markdown.
 
 // Speeir's own products.
-export const work: PortfolioItem[] = [];
+export const work: PortfolioItem[] = [
+  {
+    slug: "trackhq",
+    title: "TrackHQ",
+    summary:
+      "The training log trainers prescribe into and clients actually fill in. Workout plans built on the web, logged set by set on iOS and Android.",
+    images: [
+      "/images/work/trackhq/client-today.png",
+      "/images/work/trackhq/workout-session.png",
+      "/images/work/trackhq/trainer-today.png",
+      "/images/work/trackhq/progress.png",
+    ],
+    logo: "/images/work/trackhq/logo.png",
+    screens: [
+      "/images/work/trackhq/workout-session.png",
+      "/images/work/trackhq/client-today.png",
+      "/images/work/trackhq/trainer-today.png",
+    ],
+    brand: "#A15FDC",
+    tags: ["Fitness", "iOS & Android", "Web dashboard", "Go + gRPC"],
+    updatedAt: "2026-10-04",
+  },
+  {
+    slug: "easysave",
+    title: "easySave",
+    summary:
+      "A marketplace for food nearing its expiry date. Shoppers find discounted items nearby, and shops sell stock that would otherwise be binned.",
+    images: [
+      "/images/work/easysave/feature.png",
+      "/images/work/easysave/shopper-feed.png",
+      "/images/work/easysave/shop-dashboard.png",
+    ],
+    logo: "/images/work/easysave/logo.png",
+    screens: [
+      "/images/work/easysave/favorites.png",
+      "/images/work/easysave/shopper-feed.png",
+      "/images/work/easysave/shop-dashboard.png",
+    ],
+    brand: "#3FB27A",
+    tags: ["Marketplace", "Sustainability", "iOS & Android", "Flutter"],
+    updatedAt: "2026-10-04",
+  },
+];
 
 // Client/brand work.
 const caseStudies: PortfolioItem[] = [];
@@ -24,15 +71,15 @@ export const SECTIONS = {
   work: {
     path: "/work",
     items: work,
-    eyebrow: "Work",
-    heading: "What we've built",
-    metaTitle: "Work",
-    metaDescription: "Products built by Speeir.",
+    eyebrow: "Products",
+    heading: "Products we've built",
+    metaTitle: "Products",
+    metaDescription: "TrackHQ, easySave and other products designed, built and run by Speeir.",
     emptyHeading: "Products coming soon",
     emptyBody:
       "We're putting together the products we've shipped. Check back shortly, or see what we can build for you.",
-    backLabel: "All work",
-    itemCta: "View project",
+    backLabel: "All products",
+    itemCta: "View product",
   },
   "case-studies": {
     path: "/case-studies",

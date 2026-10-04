@@ -19,15 +19,7 @@ type NavLink = { name: string; link: string; children?: { name: string; link: st
 const NAV_LINKS: NavLink[] = [
   { name: "About", link: "/about" },
   { name: "Services", link: "/services" },
-  // Hidden for now, re-enable when ready.
-  // {
-  //   name: "Work",
-  //   link: "/work",
-  //   children: [
-  //     { name: "Products", link: "/work" },
-  //     { name: "Case Studies", link: "/case-studies" },
-  //   ],
-  // },
+  { name: "Products", link: "/work" },
   { name: "Blog", link: "/blog" },
   { name: "Contact", link: "/contact" },
 ];

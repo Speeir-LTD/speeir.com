@@ -7,7 +7,7 @@ import { cn, CTA_CLASS } from "@/lib/utils";
 const inputClasses =
   "w-full rounded-xl border border-border/40 bg-white px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-primary";
 
-export function ContactForm() {
+export function ContactForm({ defaultMessage }: { defaultMessage?: string }) {
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
@@ -80,6 +80,7 @@ export function ContactForm() {
           name="message"
           rows={5}
           required
+          defaultValue={defaultMessage}
           className={`mt-2 ${inputClasses}`}
         />
       </div>

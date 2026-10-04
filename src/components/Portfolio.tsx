@@ -23,6 +23,42 @@ function Tags({ tags, className }: { tags: string[]; className?: string }) {
   );
 }
 
+const PHONE_CLASS =
+  "absolute overflow-hidden rounded-[1.4rem] border-[5px] border-ink bg-ink shadow-2xl transition-transform duration-500 ease-out";
+
+/** Logo over a soft wash of the product's brand colour, with a fan of three phones rising from the bottom edge. */
+function ProductTile({ item }: { item: PortfolioItem }) {
+  const [left, centre, right] = item.screens!;
+  const phone = (src: string) => (
+    <Image src={src} alt="" width={460} height={1000} className="h-auto w-full" />
+  );
+  return (
+    <div
+      className="relative mb-5 flex aspect-[4/3] sm:aspect-[16/11] flex-col items-center overflow-hidden rounded-xl border border-border/40"
+      style={{
+        background: `radial-gradient(120% 90% at 50% 0%, ${item.brand}26 0%, transparent 60%), radial-gradient(80% 60% at 100% 100%, ${item.brand}1f 0%, transparent 70%), #fff`,
+      }}
+    >
+      <Image
+        src={item.logo!}
+        alt={item.title}
+        width={400}
+        height={100}
+        className="relative z-20 mt-7 h-7 w-auto"
+      />
+      <div className={`${PHONE_CLASS} left-[13%] top-[6.5rem] z-0 w-[30%] max-w-[10rem] -rotate-[8deg] group-hover:-translate-x-2 group-hover:-rotate-[11deg]`}>
+        {phone(left)}
+      </div>
+      <div className={`${PHONE_CLASS} right-[13%] top-[6.5rem] z-0 w-[30%] max-w-[10rem] rotate-[8deg] group-hover:translate-x-2 group-hover:rotate-[11deg]`}>
+        {phone(right)}
+      </div>
+      <div className={`${PHONE_CLASS} left-1/2 top-[4.75rem] z-10 w-[36%] max-w-[12rem] -translate-x-1/2 group-hover:-translate-y-2`}>
+        {phone(centre)}
+      </div>
+    </div>
+  );
+}
+
 export function PortfolioList({ section }: { section: Section }) {
   return (
     <div className="container py-20 md:py-28">
@@ -36,7 +72,7 @@ export function PortfolioList({ section }: { section: Section }) {
       {section.items.length === 0 ? (
         <EmptyState heading={section.emptyHeading} body={section.emptyBody} />
       ) : (
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto mt-16 grid max-w-5xl gap-6 sm:grid-cols-2">
           {section.items.map((item) => (
             <Link
               key={item.slug}
@@ -45,16 +81,20 @@ export function PortfolioList({ section }: { section: Section }) {
             >
               <Glow />
               <div className="relative z-10 flex flex-1 flex-col">
-                {item.images[0] && (
-                  <div className="mb-5 overflow-hidden rounded-xl border border-border/40">
-                    <Image
-                      src={item.images[0]}
-                      alt={item.title}
-                      width={640}
-                      height={400}
-                      className="h-auto w-full"
-                    />
-                  </div>
+                {item.logo && item.screens ? (
+                  <ProductTile item={item} />
+                ) : (
+                  item.images[0] && (
+                    <div className="mb-5 overflow-hidden rounded-xl border border-border/40">
+                      <Image
+                        src={item.images[0]}
+                        alt={item.title}
+                        width={640}
+                        height={400}
+                        className="aspect-[16/10] w-full object-cover object-top"
+                      />
+                    </div>
+                  )
                 )}
                 <h3 className="text-lg font-semibold text-ink">{item.title}</h3>
                 <p className="mt-2 flex-1 text-sm text-muted">{item.summary}</p>
@@ -117,14 +157,14 @@ export function PortfolioDetail({
       </div>
 
       {cover && (
-        <div className="mx-auto mt-16 max-w-4xl overflow-hidden rounded-2xl border border-border/40 shadow-md">
+        <div className="mx-auto mt-16 w-fit max-w-4xl overflow-hidden rounded-2xl border border-border/40 shadow-md">
           <Image
             src={cover}
             alt={item.title}
             width={1600}
             height={900}
             priority
-            className="h-auto w-full"
+            className="h-auto max-h-[70vh] w-auto"
           />
         </div>
       )}
@@ -140,7 +180,7 @@ export function PortfolioDetail({
       )}
 
       {gallery.length > 0 && (
-        <div className="mx-auto mt-16 grid max-w-4xl gap-6 sm:grid-cols-2">
+        <div className="mx-auto mt-16 grid max-w-4xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {gallery.map((src) => (
             <div
               key={src}

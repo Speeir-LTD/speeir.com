@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PortfolioDetail } from "@/components/Portfolio";
+import { ProductShowcase } from "@/components/ProductShowcase";
+import { PRODUCTS } from "@/data/products";
 import { SECTIONS, getItem } from "@/data/portfolio";
 import { pageMeta } from "@/lib/metadata";
 
@@ -16,6 +18,16 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  const product = PRODUCTS[slug];
+  if (product) {
+    return pageMeta({
+      title: `${product.name}: ${product.hero.heading}`,
+      description: product.metaDescription,
+      path: `${section.path}/${slug}`,
+      images: product.ogImage && [{ ...product.ogImage, alt: product.name }],
+    });
+  }
+
   const item = getItem("work", slug);
   if (!item) return {};
 
@@ -33,6 +45,9 @@ export default async function WorkDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const product = PRODUCTS[slug];
+  if (product) return <ProductShowcase product={product} />;
+
   const item = getItem("work", slug);
   if (!item) notFound();
 

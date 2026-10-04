@@ -24,7 +24,7 @@ const COLUMNS = [
     links: [
       { href: "/about", label: "About" },
       // Hidden for now, re-enable when ready (matches Header.tsx).
-      // { href: "/work", label: "Work" },
+      { href: "/work", label: "Products" },
       { href: "/case-studies", label: "Case Studies" },
       { href: "/blog", label: "Blog" },
       { href: "/faq", label: "FAQ" },

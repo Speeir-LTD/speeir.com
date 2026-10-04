@@ -12,7 +12,15 @@ export const metadata: Metadata = pageMeta({
   path: "/contact",
 });
 
-export default function ContactPage() {
+// Product pages link here with ?subject=… so the enquiry arrives pre-labelled.
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ subject?: string | string[] }>;
+}) {
+  const { subject } = await searchParams;
+  const topic = typeof subject === "string" ? subject.slice(0, 120) : undefined;
+
   return (
     <div className="container py-20 md:py-28">
       <div className="mx-auto max-w-2xl text-center">
@@ -26,7 +34,7 @@ export default function ContactPage() {
       </div>
 
       <div className="mx-auto mt-16 grid max-w-5xl gap-6 lg:grid-cols-[1fr_22rem] lg:items-start">
-        <ContactForm />
+        <ContactForm defaultMessage={topic && `${topic}\n\n`} />
 
         <aside className="rounded-2xl border border-border/40 bg-white p-8 shadow-md transition-shadow duration-300 hover:shadow-lg">
           <h2 className="text-lg font-semibold text-ink">Get in touch</h2>
