@@ -1,8 +1,16 @@
 # Deploy with the Netlify CLI: builds locally and uploads, so it works even
 # though Netlify can't build this private org repo from GitHub.
-# One-time setup: `netlify login` then `netlify link`.
+# One-time setup per machine: `make login`.
 
-.PHONY: deploy-test deploy-prod
+.PHONY: login switch deploy-test deploy-prod
+
+login:
+	netlify login
+	netlify link
+
+# Pick which saved Netlify account the CLI uses, or log in to a new one.
+switch:
+	netlify switch
 
 # Draft deploy: prints a preview URL, leaves speeir.com untouched.
 deploy-test:
